@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guia de Reunião · Closer Suri</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #eef1f8;
+    --surface: #ffffff;
+    --surface2: #f4f6fc;
+    --border: #dde3f0;
+    --navy: #0f1e3d;
+    --blue: #3d4fd6;
+    --blue-light: #eef0fd;
+    --green: #00c896;
+    --green-light: #e6faf5;
+    --gray: #8a96b0;
+    --text: #1a2240;
+    --text-muted: #64718f;
+    --radius: 14px;
+    --shadow: 0 2px 12px rgba(15,30,61,0.08);
+    --shadow-md: 0 4px 24px rgba(15,30,61,0.12);
+    --gold: #ffb703;
+  }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOPO FIXO (header + barra de fases + progresso) ── */
+  .top-fixed {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 8px rgba(15,30,61,0.06);
+  }
+  .logo img { height: 32px; width: auto; display: block; }
+  .header-meta { display: flex; align-items: center; gap: 14px; }
+  .header-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .header-sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .score-pill {
+    background: linear-gradient(120deg, #3d4fd6, #00c896);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 7px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(61,79,214,0.3);
+    transition: transform 0.15s;
+  }
+  .score-pill.bump { transform: scale(1.12); }
+
+  /* ── PROGRESS BAR (navegação âncora entre fases) ── */
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+  }
+  .progress-steps {
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+  }
+  .step-tab {
+    flex: 1;
+    min-width: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 8px 14px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .step-tab:hover { background: var(--surface2); }
+  .step-tab.complete { border-bottom-color: var(--green); }
+  .step-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--gray);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .step-tab.complete .step-num { background: var(--green); color: #fff; }
+  .step-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--gray);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .step-tab.complete .step-label { color: var(--green); font-weight: 700; }
+
+  /* ── OVERALL SCORE BAR (fixa, dentro do topo sticky) ── */
+  .overall-score-wrap {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 40px;
+  }
+  .overall-score-card {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .overall-score-label { font-size: 12px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+  .overall-bar-bg { flex: 1; height: 10px; background: var(--surface2); border-radius: 100px; overflow: hidden; }
+  .overall-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3d4fd6, #00c896);
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+  .overall-score-num { font-size: 13px; font-weight: 800; color: var(--blue); white-space: nowrap; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 28px 20px 100px;
+  }
+
+  /* ── FRASE MOTIVACIONAL ── */
+  .motivation-banner {
+    background: linear-gradient(120deg, #3d4fd6, #00c896);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px 22px;
+    margin-bottom: 16px;
+    color: #fff;
+    text-align: center;
+  }
+  .motivation-quote {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .motivation-source {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── FASE CARD (bloco estilo nível de jogo) ── */
+  .phase-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s;
+    position: relative;
+    scroll-margin-top: 180px;
+  }
+  .phase-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--phase-color, var(--blue));
+    opacity: 0.9;
+  }
+  .phase-card:hover { box-shadow: 0 6px 20px rgba(15,30,61,0.12); }
+  .phase-card.complete { border-color: var(--green); }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 22px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .phase-badge {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .phase-card:hover .phase-badge { transform: scale(1.08) rotate(-3deg); }
+  .phase-badge .phase-check {
+    display: none;
+    position: absolute;
+    top: -6px; right: -6px;
+    width: 18px; height: 18px;
+    background: var(--green);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+  }
+  .phase-card.complete .phase-badge .phase-check { display: flex; }
+  .phase-info { flex: 1; min-width: 0; }
+  .phase-name {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .phase-tag {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .phase-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .phase-bar-bg { flex: 1; height: 6px; background: var(--surface2); border-radius: 100px; overflow: hidden; max-width: 240px; }
+  .phase-bar-fill { height: 100%; border-radius: 100px; transition: width 0.3s ease; }
+  .phase-count { font-size: 10.5px; font-weight: 700; color: var(--gray); white-space: nowrap; }
+  .phase-arrow {
+    font-size: 13px;
+    color: var(--gray);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .phase-card.expanded .phase-arrow { transform: rotate(90deg); }
+  .phase-weight-badge {
+    display: inline-block;
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 9px;
+    border-radius: 100px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .phase-body {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+  .phase-card.expanded .phase-body { display: block; }
+
+  /* ── ITEMS ── */
+  .item-list { padding: 6px 0; }
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--surface2);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: var(--surface2); }
+  .item.checked { background: var(--green-light); }
+
+  .item-checkbox {
+    width: 22px; height: 22px;
+    border-radius: 7px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+    transition: all 0.15s;
+  }
+  .item.checked .item-checkbox { background: var(--green); border-color: var(--green); }
+  .item-check-svg { display: none; }
+  .item.checked .item-check-svg { display: block; }
+
+  .item-content { flex: 1; min-width: 0; }
+  .item-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.45;
+    transition: color 0.15s;
+  }
+  .item.checked .item-text { color: var(--text-muted); text-decoration: line-through; text-decoration-color: #a8c8bd; }
+  .item.item-highlight .item-text { color: var(--green); font-size: 15px; }
+  .item.item-highlight .item-text::before { content: "⭐ "; }
+  .item.item-highlight { background: linear-gradient(90deg, rgba(0,200,150,0.05), transparent); }
+
+  /* ── INSTRUÇÃO RECOLHIDA ── */
+  .instr-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue);
+    cursor: pointer;
+    padding: 3px 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+  .instr-toggle:hover { color: var(--navy); }
+  .instr-arrow { transition: transform 0.2s; display: inline-block; }
+  .instr-toggle.open .instr-arrow { transform: rotate(90deg); }
+
+  .instr-box {
+    display: none;
+    margin-top: 8px;
+    border-radius: 10px;
+    background: var(--navy);
+    padding: 12px 16px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #e3e8f7;
+  }
+  .instr-box.open { display: block; }
+
+  /* ── AVISO CONDICIONAL ── */
+  .item-condition {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #b45309;
+    background: #fff8e0;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    padding: 3px 8px;
+  }
+  .item-condition::before { content: "⚠️ "; }
+
+  /* ── NÃO SE APLICA (itens condicionais) ── */
+  .item-na-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 3px 8px 3px 3px;
+    border-radius: 100px;
+    background: var(--surface2);
+    transition: all 0.15s;
+  }
+  .item-na-toggle:hover { background: var(--border); }
+  .item-na-toggle.active { background: var(--gray); color: #fff; }
+  .item-na-box {
+    width: 16px; height: 16px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .item-na-toggle.active .item-na-box { background: rgba(255,255,255,0.25); border-color: transparent; }
+  .item-na-svg { display: none; }
+  .item-na-toggle.active .item-na-svg { display: block; }
+  .item.na { background: var(--surface2); }
+  .item.na .item-text { color: var(--text-muted); font-style: italic; }
+  .item.na .item-checkbox { border-color: var(--border); opacity: 0.5; }
+
+  /* ── OPÇÕES (A / B) ── */
+  .option-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #e3e8f7;
+  }
+  .option-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .option-item:first-child { padding-top: 0; }
+  .option-letter {
+    min-width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── CARD "SEMPRE VÁLIDO" (Comunicação e Técnica — lembrete, não pontua) ── */
+  .always-card {
+    background: linear-gradient(135deg, var(--navy), #16294f);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 2px solid transparent;
+  }
+  .always-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 22px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .always-badge {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: rgba(255,183,3,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+  .always-info { flex: 1; min-width: 0; }
+  .always-tag {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .always-pill {
+    background: rgba(255,183,3,0.18);
+    color: var(--gold);
+    font-size: 8.5px;
+    font-weight: 800;
+    padding: 1px 7px;
+    border-radius: 100px;
+    letter-spacing: 0.3px;
+  }
+  .always-name { font-size: 15.5px; font-weight: 700; color: #fff; }
+  .always-sub { font-size: 11px; color: #9aa5cc; margin-top: 3px; }
+  .always-arrow { font-size: 13px; color: #9aa5cc; transition: transform 0.25s; flex-shrink: 0; }
+  .always-card.expanded .always-arrow { transform: rotate(90deg); }
+  .always-body { display: none; border-top: 1px solid rgba(255,255,255,0.1); }
+  .always-card.expanded .always-body { display: block; }
+  .always-item {
+    padding: 14px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .always-item:last-child { border-bottom: none; }
+  .always-item-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.4;
+  }
+  .always-item-text::before { content: "✦ "; color: var(--gold); }
+  .always-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #8ab4ff;
+    cursor: pointer;
+    padding: 3px 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+  .always-toggle.open .instr-arrow { transform: rotate(90deg); }
+  .always-instr-box {
+    display: none;
+    margin-top: 8px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.25);
+    padding: 10px 14px;
+  }
+  .always-instr-box.open { display: block; }
+
+  /* ── BOTÃO FINALIZAR ── */
+  .finish-wrap { text-align: center; margin-top: 24px; }
+  .btn-finish {
+    background: linear-gradient(120deg, #3d4fd6, #00c896);
+    color: #fff;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 12px;
+    font-family: 'Sora', sans-serif;
+    font-size: 14.5px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(61,79,214,0.3);
+    transition: transform 0.15s;
+  }
+  .btn-finish:hover { transform: translateY(-2px); }
+
+  /* ── TELA DE RESULTADO FINAL ── */
+  .result-screen { display: none; }
+  .result-screen.visible { display: block; }
+  .result-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 40px 32px;
+    text-align: center;
+  }
+  .result-trophy { font-size: 52px; margin-bottom: 8px; }
+  .result-rank { font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
+  .result-score { font-size: 46px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .result-score span { font-size: 20px; color: var(--gray); font-weight: 700; }
+  .result-message { font-size: 13.5px; color: var(--text-muted); margin-bottom: 26px; }
+  .result-breakdown { text-align: left; max-width: 400px; margin: 0 auto 26px; }
+  .result-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--surface2);
+    font-size: 12.5px;
+  }
+  .result-row:last-child { border-bottom: none; }
+  .result-row-name { font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .result-row-score { font-weight: 800; color: var(--blue); }
+  .result-btns { display: flex; gap: 10px; justify-content: center; }
+  .btn-back, .btn-restart {
+    border: none;
+    padding: 10px 22px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+  }
+  .btn-back { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+  .btn-restart { background: var(--blue-light); color: var(--blue); }
+  .btn-restart:hover { background: #dde3fb; }
+
+</style>
+</head>
+<body>
+
+<div class="top-fixed">
+  <header>
+    <div class="logo">
+      <img alt="Suri" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAe4AAADHCAYAAADfw7AcAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDcuMi1jMDAwIDc5LjFiNjVhNzliNCwgMjAyMi8wNi8xMy0yMjowMTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIzLjUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkQ1QzZDREExQjczRjExRUU4MERGQUYyOUE4OTNCNTlCIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkQ1QzZDREEyQjczRjExRUU4MERGQUYyOUE4OTNCNTlCIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDVDNkNEOUZCNzNGMTFFRTgwREZBRjI5QTg5M0I1OUIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDVDNkNEQTBCNzNGMTFFRTgwREZBRjI5QTg5M0I1OUIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4EMcIcAAAfLklEQVR42uyd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"/>
+    </div>
+    <div class="header-meta">
+      <div>
+        <div class="header-title">Guia de Reunião</div>
+        <div class="header-sub">Closer · Uso interno</div>
+      </div>
+      <div class="score-pill" id="scorePill">🏆 <span id="scoreText">0%</span></div>
+    </div>
+  </header>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-steps" id="progressSteps"></div>
+  </div>
+
+  <div class="overall-score-wrap">
+    <div class="overall-score-card">
+      <div class="overall-score-label">Progresso da reunião</div>
+      <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallFill" style="width:0%"></div></div>
+      <div class="overall-score-num" id="overallNum">0%</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="motivation-banner">
+    <div class="motivation-quote">"As pessoas não compram o que você faz, elas compram por que você acredita no que faz." — Simon Sinek</div>
+    <div class="motivation-source">Inspirado em SPIN Selling, SPICED e técnicas modernas de vendas consultivas</div>
+  </div>
+
+  <div id="blocksContainer"></div>
+
+  <div id="alwaysCardWrap"></div>
+
+  <div class="finish-wrap" id="finishWrap">
+    <button class="btn-finish" onclick="showResult()">🏁 Finalizar reunião e ver pontuação</button>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-card">
+      <div class="result-trophy" id="resultTrophy">🏆</div>
+      <div class="result-rank" id="resultRank">RESULTADO</div>
+      <div class="result-score"><span id="resultScoreNum">0</span><span>%</span></div>
+      <div class="result-message" id="resultMessage"></div>
+      <div class="result-breakdown" id="resultBreakdown"></div>
+      <div class="result-btns">
+        <button class="btn-back" onclick="hideResult()">← Voltar ao guia</button>
+        <button class="btn-restart" onclick="restart()">↺ Nova reunião</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// ─────────────────────────────────────────────
+// AUTENTICAÇÃO — verifica sessão do HUB (login único compartilhado)
+// Se não estiver autenticado ou a sessão tiver expirado, volta pro HUB.
+// ─────────────────────────────────────────────
+(function checkHubAuth() {
+  const raw = localStorage.getItem('suri_hub_auth');
+  if (!raw) { window.location.href = '../index.html'; return; }
+  try {
+    const session = JSON.parse(raw);
+    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+    if (!session.ok || (Date.now() - session.ts) > THIRTY_DAYS) {
+      localStorage.removeItem('suri_hub_auth');
+      window.location.href = '../index.html';
+    }
+  } catch (e) {
+    window.location.href = '../index.html';
+  }
+})();
+
+// ─────────────────────────────────────────────
+// BLUEPRINT — cada item tem: text (ação) + options (2 alternativas de instrução)
+// A pontuação é normalizada pela soma dos pesos dos 5 blocos (90),
+// já que Comunicação e Técnica agora é lembrete e não pontua.
+// ─────────────────────────────────────────────
+const BLOCKS = [
+  {
+    id: 1,
+    icon: "🎯",
+    title: "Abertura e Postura",
+    weight: 15,
+    color: "#3d4fd6",
+    items: [
+      {
+        text: "Se identifique como especialista da Suri",
+        options: [
+          "Me chamo [nome], sou especialista da Suri.",
+          "Oi, aqui é o [nome], vou conduzir nossa conversa como especialista da Suri."
+        ]
+      },
+      {
+        text: "Agradeça a disponibilidade do lead",
+        options: [
+          "Antes de começar, obrigado por reservar esse tempo — sei que a agenda de vocês é corrida.",
+          "Valeu por topar essa conversa. Vamos aproveitar bem esse tempo."
+        ]
+      },
+      {
+        text: "Alinhe o tempo disponível para a reunião",
+        options: [
+          "Combinamos 30 minutos, certo? Consegue esse tempo hoje?",
+          "Quanto tempo você tem disponível agora? Quero respeitar sua agenda."
+        ]
+      },
+      {
+        text: "Alinhe expectativas e estrutura da reunião logo no início",
+        options: [
+          "Vou entender melhor o cenário de vocês, mostrar como a Suri se encaixa, e a gente fecha os detalhes pra dar andamento.",
+          "Minha ideia é: primeiro entender a situação de vocês hoje, depois mostrar a solução, e ao final definimos os próximos passos."
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    icon: "🔍",
+    title: "Diagnóstico",
+    weight: 20,
+    color: "#7c5cbf",
+    items: [
+      {
+        text: "Mencione ao menos uma informação trazida pelo SDR na qualificação",
+        options: [
+          "O [SDR] me passou que vocês têm alto volume de leads pelo Instagram — isso ainda é verdade?",
+          "Vi aqui que o gargalo de vocês é X. Continua sendo essa a prioridade?"
+        ]
+      },
+      {
+        text: "Investigue o papel e responsabilidade do lead na empresa",
+        options: [
+          "Qual é seu papel hoje na operação comercial da empresa?",
+          "Você é quem decide sobre esse tipo de ferramenta ou também envolve mais alguém?"
+        ]
+      },
+      {
+        text: "Demonstre entendimento do modelo de negócio do lead",
+        options: [
+          "No mercado de [segmento], é bem comum o gargalo estar em [característica do setor] — é algo que faz sentido pra vocês também?",
+          "Uma coisa que costuma acontecer em negócios de [segmento] é [dinâmica do setor]. Vocês sentem isso no dia a dia?"
+        ]
+      },
+      {
+        text: "Identifique o objetivo principal do lead com a solução",
+        options: [
+          "Se a Suri resolver um problema nos próximos 90 dias, qual seria o impacto mais importante pra você?",
+          "O que faria você dizer que essa implementação valeu a pena daqui a 3 meses?"
+        ]
+      },
+      {
+        text: "Explore impactos, consequências e ganhos esperados",
+        options: [
+          "Hoje, quanto vocês estimam que perdem em vendas por demora no atendimento?",
+          "Se isso continuar do jeito que está, qual o custo real pra operação nos próximos meses?"
+        ]
+      },
+      {
+        text: "Entenda a volumetria de contatos no WhatsApp (por dia ou mês)",
+        options: [
+          "Mais ou menos quantas conversas chegam no WhatsApp de vocês por dia?",
+          "Dá pra estimar o volume mensal de contatos que vocês recebem?"
+        ]
+      },
+      {
+        text: "Investigue orçamento disponível",
+        options: [
+          "Vocês já têm um orçamento definido pra esse tipo de solução, ou ainda estão validando?",
+          "Existe uma faixa de investimento que vocês têm em mente pra resolver isso?"
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    icon: "💡",
+    title: "Apresentação da Solução",
+    weight: 15,
+    color: "#3d6fd4",
+    items: [
+      {
+        text: "Gere autoridade mencionando o endosso da Suri",
+        options: [
+          "A Suri faz parte da TOTVS, a maior empresa de tecnologia do Brasil, e é especializada em IA para vendas e atendimento conversacional.",
+          "Somos parte da TOTVS, maior empresa de tecnologia do Brasil, e desenvolvemos IA aplicada a vendas e atendimento via WhatsApp."
+        ]
+      },
+      {
+        text: "Conecte as dores do lead à solução Suri antes de apresentar",
+        options: [
+          "Você mencionou [dor específica]. A Suri resolve exatamente isso automatizando [processo]. Deixa eu te mostrar.",
+          "Com base no que você me contou, vou focar em mostrar como resolvemos [dor], não em passar a plataforma inteira."
+        ]
+      },
+      {
+        text: "Apresente o produto com foco nas funcionalidades relevantes ao cenário do lead",
+        options: [
+          "Baseado no volume que você me passou, essa funcionalidade de [X] vai ser essencial pra vocês.",
+          "Já que vocês recebem [volume] de contatos, o recurso de [Y] resolve exatamente esse gargalo."
+        ]
+      },
+      {
+        text: "Seja convincente ao apresentar benefícios e implicações práticas",
+        options: [
+          "Na prática, isso significa que vocês deixam de perder vendas por demora, e ganham tempo da equipe.",
+          "O impacto direto disso é: menos tempo de resposta, mais conversão, sem aumentar a equipe."
+        ]
+      },
+      {
+        text: "Traga exemplos ou cases conectados ao contexto do lead",
+        options: [
+          "Tem uma empresa de [segmento parecido] que enfrentava o mesmo problema — depois de implantar, [resultado].",
+          "Um cliente com volume parecido com o seu conseguiu [resultado específico] em [prazo]."
+        ]
+      },
+      {
+        text: "Confirme interesse e valide se a Suri atende as necessidades",
+        options: [
+          "Baseado em tudo que vimos, isso resolve o que você precisa?",
+          "Ficou claro como a Suri se encaixa no seu cenário, ou tem algo que ainda não ficou claro?"
+        ]
+      }
+    ]
+  },
+  {
+    id: 4,
+    icon: "💬",
+    title: "Negociação e Objeções",
+    weight: 15,
+    color: "#ffb703",
+    textColor: "#1a2240",
+    items: [
+      {
+        text: "Explique o processo de jornada de ativação/treinamento",
+        options: [
+          "A jornada de ativação/treinamento leva até 30 dias corridos, com 6 encontros com nosso time pra deixar tudo configurado.",
+          "Em até 30 dias vocês já estão operando — são 6 sessões durante a jornada de ativação/treinamento nesse período."
+        ]
+      },
+      {
+        text: "Explique de forma clara o conceito de interação (receptiva e ativa)",
+        options: [
+          "Interação é contabilizada por mês: Contato Receptivo é quando o cliente chama vocês — conta 1 vez no mês, não importa quantas mensagens ele mande. Mensagem Ativa é quando vocês enviam um template pra ele — cada envio conta como uma interação.",
+          "Existem dois tipos de interação: quando o cliente entra em contato com vocês (conta 1 por mês, mesmo com várias conversas) e quando vocês enviam uma mensagem ativa pra ele (cada envio conta como 1)."
+        ]
+      },
+      {
+        text: "Apresente valores e formas de pagamento com segurança",
+        options: [
+          "O investimento é R$ [X]/mês. Você pode parcelar em até 12x no cartão ou fechar à vista com desconto.",
+          "Nosso plano de entrada é R$ [X]. Aceita cartão parcelado ou boleto — qual funciona melhor pra vocês?"
+        ]
+      },
+      {
+        text: "Investigue o que está por trás da objeção antes de responder",
+        options: [
+          "O que exatamente te preocupa nessa objeção — é o valor em si ou o momento pra investir?",
+          "Antes de eu responder, me ajuda a entender: o que está pesando mais nessa decisão?"
+        ]
+      },
+      {
+        text: "Redirecione para o custo de não resolver o problema",
+        condition: "Apenas se houve objeção de preço",
+        options: [
+          "Entendo a preocupação com o valor. Mas quanto vocês já perderam esse mês por demora no atendimento?",
+          "Faz sentido pensar no investimento. Só que o custo de continuar sem resolver isso também é real — quanto isso representa hoje?"
+        ]
+      },
+      {
+        text: "Valide se as objeções foram resolvidas",
+        options: [
+          "Isso esclarece sua dúvida, ou ainda tem algo que te deixa inseguro?",
+          "Com essa explicação, você sente que faz sentido avançar?"
+        ]
+      },
+      {
+        text: "Use contrapartida clara (prazo ou condições)",
+        condition: "Apenas se houve desconto",
+        options: [
+          "Consigo esse desconto se fecharmos ainda hoje, ou se for num plano anual.",
+          "Esse valor especial vale se você confirmar até [prazo] ou optar pelo plano de [X] meses."
+        ]
+      }
+    ]
+  },
+  {
+    id: 5,
+    icon: "🏁",
+    title: "Fechamento e Próximos Passos",
+    weight: 25,
+    color: "#00c896",
+    items: [
+      {
+        text: "Peça a venda",
+        highlight: true,
+        options: [
+          "Com base em tudo que vimos, a gente consegue dar andamento hoje?",
+          "Podemos dar continuidade aos próximos passos do contrato pra iniciarmos a jornada de ativação/treinamento ainda essa semana?"
+        ]
+      },
+      {
+        text: "Não ofereça desconto sem o cliente pedir",
+        options: [
+          "Aguardar o lead trazer a objeção de preço antes de mencionar qualquer desconto.",
+          "Sustentar o valor cheio até que o lead explicitamente questione o investimento."
+        ]
+      },
+      {
+        text: "Ofereça o desconto em troca de um prazo ou condição",
+        condition: "Apenas se houve desconto",
+        options: [
+          "Consigo um desconto se fecharmos até [data] ou no plano anual.",
+          "Esse valor eu libero se for uma decisão hoje ou com um compromisso de [condição]."
+        ]
+      },
+      {
+        text: "Explique o aviso prévio de 90 dias para cancelamento do contrato sem multa",
+        options: [
+          "O contrato prevê aviso prévio de 90 dias pra cancelamento sem multa — é importante você saber disso.",
+          "Só um detalhe importante: caso queira cancelar no futuro, o aviso prévio é de 90 dias, sem multa."
+        ]
+      },
+      {
+        text: "Agende data e hora para novo contato",
+        condition: "Apenas se o fechamento não foi bem-sucedido na reunião",
+        options: [
+          "Vamos marcar um retorno pra [dia] às [hora] pra fechar os últimos detalhes?",
+          "Consigo te ligar [dia] de manhã pra darmos sequência? Fica bom?"
+        ]
+      }
+    ]
+  }
+];
+
+// ─────────────────────────────────────────────
+// LEMBRETE PERMANENTE — Comunicação e Técnica
+// Não pontua, não tem checkbox. Vale para a reunião inteira.
+// ─────────────────────────────────────────────
+const REMINDERS = [
+  {
+    text: "Evite vícios de linguagem, jargões, clichês ou postura robótica",
+    options: [
+      "Falar de forma natural, sem repetir 'né', 'então', 'tipo assim' excessivamente.",
+      "Manter fluidez na fala, evitando parecer um script decorado."
+    ]
+  },
+  {
+    text: "Transmita bom humor, entusiasmo e segurança",
+    options: [
+      "Demonstrar energia genuína ao falar da solução, sem soar ansioso ou robótico.",
+      "Manter tom confiante e positivo durante toda a reunião, mesmo diante de objeções."
+    ]
+  },
+  {
+    text: "Mantenha o controle da condução da reunião, sem deixar o lead dominar nem monopolizar a conversa",
+    options: [
+      "Entendi seu ponto — deixa eu voltar pra esse tema que você trouxe daqui a pouco, porque agora quero fechar uma parte importante antes.",
+      "Boa pergunta. Antes de responder, deixa eu terminar de te mostrar esse ponto, porque isso vai esclarecer também o que você perguntou."
+    ]
+  }
+];
+
+// ── STATE ──
+let checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
+let notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
+let expanded = new Array(BLOCKS.length).fill(false);
+let alwaysExpanded = false;
+const TOTAL_WEIGHT = BLOCKS.reduce((s, b) => s + b.weight, 0); // 90 — normaliza pra 100%
+
+function totalItems() { return BLOCKS.reduce((s,b) => s + b.items.length, 0); }
+function isDone(bi, ii) { return checked[bi][ii] || notApplicable[bi][ii]; }
+function blockChecked(bi) { return checked[bi].filter((v,ii) => isDone(bi,ii)).length; }
+
+function weightedScore() {
+  let score = 0;
+  BLOCKS.forEach((b, bi) => {
+    const frac = b.items.length ? blockChecked(bi) / b.items.length : 0;
+    score += frac * b.weight;
+  });
+  return (score / TOTAL_WEIGHT) * 100; // normalizado 0-100
+}
+
+function render() {
+  renderProgressSteps();
+  renderBlocks();
+  renderAlwaysCard();
+  updateScore();
+}
+
+function renderProgressSteps() {
+  const el = document.getElementById('progressSteps');
+  el.innerHTML = BLOCKS.map((b, i) => {
+    const complete = blockChecked(i) === b.items.length;
+    const cls = complete ? 'complete' : '';
+    return `<div class="step-tab ${cls}" onclick="jumpToBlock(${i})">
+      <div class="step-num">${complete ? '✓' : (i+1)}</div>
+      <div class="step-label">${b.title}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderBlocks() {
+  const container = document.getElementById('blocksContainer');
+
+  container.innerHTML = BLOCKS.map((b, bi) => {
+    const textColor = b.textColor || '#ffffff';
+    const count = blockChecked(bi);
+    const total = b.items.length;
+    const pct = Math.round((count/total)*100);
+    const complete = count === total;
+
+    const itemsHTML = b.items.map((item, ii) => {
+      const key = `${bi}-${ii}`;
+      const isChecked = checked[bi][ii];
+      const isNA = notApplicable[bi][ii];
+      const checkedCls = isChecked ? ' checked' : '';
+      const naCls = isNA ? ' na' : '';
+      const highlightCls = item.highlight ? ' item-highlight' : '';
+
+      const optsHTML = item.options.map((opt, oi) =>
+        `<div class="option-item"><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`
+      ).join('');
+
+      const naToggleHTML = item.condition ? `<div class="item-na-toggle${isNA ? ' active' : ''}" onclick="toggleNA(event,${bi},${ii})">
+          <div class="item-na-box">
+            <svg class="item-na-svg" width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>Não se aplica — contar automaticamente</span>
+        </div>` : '';
+
+      return `<div class="item${checkedCls}${naCls}${highlightCls}" onclick="toggleCheck(${bi},${ii})">
+        <div class="item-checkbox">
+          <svg class="item-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="item-text">${item.text}</div>
+          ${item.condition ? `<div class="item-condition">${item.condition}</div>` : ''}
+          ${naToggleHTML}
+          <button class="instr-toggle" onclick="toggleInstr(event,'instr-${key}',this)">
+            <span class="instr-arrow">▶</span> ver instrução
+          </button>
+          <div class="instr-box" id="instr-${key}">${optsHTML}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="phase-card ${complete ? 'complete' : ''} ${expanded[bi] ? 'expanded' : ''}" id="block-${bi}" style="--phase-color:${b.color}">
+      <div class="phase-header" onclick="togglePhase(${bi})">
+        <div class="phase-badge" style="background:${b.color};color:${textColor}">
+          ${b.icon}
+          <div class="phase-check">✓</div>
+        </div>
+        <div class="phase-info">
+          <div class="phase-tag">Fase ${bi+1}</div>
+          <div class="phase-name">${b.title} <span class="phase-weight-badge">${b.weight}%</span></div>
+          <div class="phase-progress-row">
+            <div class="phase-bar-bg"><div class="phase-bar-fill" style="width:${pct}%;background:${b.color}"></div></div>
+            <div class="phase-count">${count}/${total}</div>
+          </div>
+        </div>
+        <div class="phase-arrow">▶</div>
+      </div>
+      <div class="phase-body">
+        <div class="item-list">${itemsHTML}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderAlwaysCard() {
+  const wrap = document.getElementById('alwaysCardWrap');
+  const itemsHTML = REMINDERS.map((r, ri) => {
+    const optsHTML = r.options.map((opt, oi) =>
+      `<div class="option-item"><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`
+    ).join('');
+    return `<div class="always-item">
+      <div class="always-item-text">${r.text}</div>
+      <button class="always-toggle" onclick="toggleAlwaysInstr(event,'always-instr-${ri}',this)">
+        <span class="instr-arrow">▶</span> ver instrução
+      </button>
+      <div class="always-instr-box" id="always-instr-${ri}">${optsHTML}</div>
+    </div>`;
+  }).join('');
+
+  wrap.innerHTML = `<div class="always-card ${alwaysExpanded ? 'expanded' : ''}">
+    <div class="always-header" onclick="toggleAlwaysCard()">
+      <div class="always-badge">💬</div>
+      <div class="always-info">
+        <div class="always-tag">Lembrete <span class="always-pill">SEMPRE VÁLIDO</span></div>
+        <div class="always-name">Comunicação e Técnica</div>
+        <div class="always-sub">Vale para a reunião inteira — não pontua, é orientação de postura</div>
+      </div>
+      <div class="always-arrow">▶</div>
+    </div>
+    <div class="always-body">${itemsHTML}</div>
+  </div>`;
+}
+
+function toggleAlwaysCard() {
+  alwaysExpanded = !alwaysExpanded;
+  renderAlwaysCard();
+}
+
+function toggleAlwaysInstr(e, id, btn) {
+  e.stopPropagation();
+  const box = document.getElementById(id);
+  box.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function scrollToBlock(bi) {
+  const el = document.getElementById('block-' + bi);
+  const headerEl = document.querySelector('.top-fixed');
+  if (!el || !headerEl) return;
+  const headerHeight = headerEl.offsetHeight;
+  const rect = el.getBoundingClientRect();
+  const targetY = window.scrollY + rect.top - headerHeight - 14;
+  window.scrollTo({ top: Math.max(targetY, 0), behavior: 'smooth' });
+}
+
+function togglePhase(bi) {
+  const opening = !expanded[bi];
+  expanded[bi] = !expanded[bi];
+  render();
+  if (opening) {
+    setTimeout(() => scrollToBlock(bi), 50);
+  }
+}
+
+function jumpToBlock(bi) {
+  expanded[bi] = true;
+  render();
+  setTimeout(() => scrollToBlock(bi), 50);
+}
+
+function toggleCheck(bi, ii) {
+  checked[bi][ii] = !checked[bi][ii];
+  if (checked[bi][ii]) notApplicable[bi][ii] = false;
+  render();
+  const pill = document.getElementById('scorePill');
+  pill.classList.add('bump');
+  setTimeout(() => pill.classList.remove('bump'), 200);
+}
+
+function toggleNA(e, bi, ii) {
+  e.stopPropagation();
+  notApplicable[bi][ii] = !notApplicable[bi][ii];
+  if (notApplicable[bi][ii]) checked[bi][ii] = false;
+  render();
+  const pill = document.getElementById('scorePill');
+  pill.classList.add('bump');
+  setTimeout(() => pill.classList.remove('bump'), 200);
+}
+
+function toggleInstr(e, id, btn) {
+  e.stopPropagation();
+  const box = document.getElementById(id);
+  box.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function updateScore() {
+  const pct = Math.round(weightedScore());
+  document.getElementById('scoreText').textContent = `${pct}%`;
+  document.getElementById('overallFill').style.width = pct + '%';
+  document.getElementById('overallNum').textContent = pct + '%';
+}
+
+function showResult() {
+  const pct = Math.round(weightedScore());
+
+  let rank, trophy, message;
+  if (pct >= 90) { rank = 'Excelente'; trophy = '🏆'; message = 'Reunião completa! Execução no mais alto nível.'; }
+  else if (pct >= 70) { rank = 'Muito bem'; trophy = '🥈'; message = 'Ótima condução — só faltaram alguns detalhes.'; }
+  else if (pct >= 40) { rank = 'Bom progresso'; trophy = '🥉'; message = 'Vários pontos cumpridos, mas dá pra ir além.'; }
+  else { rank = 'Em construção'; trophy = '🚀'; message = 'Ainda no começo — use o guia como apoio na próxima.'; }
+
+  document.getElementById('resultTrophy').textContent = trophy;
+  document.getElementById('resultRank').textContent = rank;
+  document.getElementById('resultScoreNum').textContent = pct;
+  document.getElementById('resultMessage').textContent = message;
+
+  const rows = BLOCKS.map((b, bi) => {
+    const c = blockChecked(bi);
+    const frac = b.items.length ? c / b.items.length : 0;
+    const earned = ((frac * b.weight / TOTAL_WEIGHT) * 100).toFixed(1);
+    return `<div class="result-row">
+      <div class="result-row-name">${b.icon} ${b.title} <span class="phase-weight-badge">${b.weight}%</span></div>
+      <div class="result-row-score">${earned}%</div>
+    </div>`;
+  });
+  document.getElementById('resultBreakdown').innerHTML = rows.join('');
+
+  document.getElementById('blocksContainer').style.display = 'none';
+  document.getElementById('alwaysCardWrap').style.display = 'none';
+  document.getElementById('finishWrap').style.display = 'none';
+  document.getElementById('resultScreen').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hideResult() {
+  document.getElementById('resultScreen').classList.remove('visible');
+  document.getElementById('blocksContainer').style.display = '';
+  document.getElementById('alwaysCardWrap').style.display = '';
+  document.getElementById('finishWrap').style.display = '';
+}
+
+function restart() {
+  checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
+  notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
+  expanded = new Array(BLOCKS.length).fill(false);
+  alwaysExpanded = false;
+  hideResult();
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+render();
+</script>
+</body>
+</html>
