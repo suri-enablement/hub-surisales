@@ -235,6 +235,10 @@
     border-radius: 100px;
     margin-left: auto;
   }
+  .material-row:not(.disabled) .material-soon {
+    color: #7c5cbf;
+    background: #f1edff;
+  }
   .role-card-cta {
     display: inline-flex;
     align-items: center;
@@ -244,6 +248,18 @@
     color: var(--card-color, var(--blue));
   }
   .role-card-cta-arrow { transition: transform 0.2s; }
+  .role-card-disabled {
+    cursor: default;
+    opacity: 0.72;
+  }
+  .role-card-disabled:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+    border-color: transparent;
+  }
+  .role-card-cta-disabled {
+    color: var(--gray) !important;
+  }
   .role-card:hover .role-card-cta-arrow { transform: translateX(4px); }
 
   .hub-footer-note {
@@ -322,6 +338,34 @@
         <div class="role-card-cta">Acessar guia <span class="role-card-cta-arrow">→</span></div>
       </div>
     </a>
+
+    <a href="playbook/index.html" class="role-card" style="--card-color:#7c5cbf" onclick="return goTo(event,'playbook/index.html')">
+      <div class="role-card-top"></div>
+      <div class="role-card-body">
+        <div class="role-card-icon">📘</div>
+        <div class="role-card-title">Playbook</div>
+        <div class="role-card-desc">Playbook comercial completo — metodologia, processos e diretrizes de vendas da Suri.</div>
+        <div class="role-card-materials">
+          <div class="material-row"><span class="material-dot"></span> Sobre a Suri, Rituais</div>
+          <div class="material-row disabled"><span class="material-dot"></span> Demais seções <span class="material-soon">EM MIGRAÇÃO</span></div>
+        </div>
+        <div class="role-card-cta">Acessar playbook <span class="role-card-cta-arrow">→</span></div>
+      </div>
+    </a>
+
+    <div class="role-card role-card-disabled" style="--card-color:#ffb703">
+      <div class="role-card-top"></div>
+      <div class="role-card-body">
+        <div class="role-card-icon">🗂️</div>
+        <div class="role-card-title">Materiais</div>
+        <div class="role-card-desc">Apresentações, demos interativas e arquivos gerais de apoio comercial.</div>
+        <div class="role-card-materials">
+          <div class="material-row disabled"><span class="material-dot"></span> Apresentações <span class="material-soon">EM BREVE</span></div>
+          <div class="material-row disabled"><span class="material-dot"></span> Demos interativas <span class="material-soon">EM BREVE</span></div>
+        </div>
+        <div class="role-card-cta role-card-cta-disabled">Em breve</div>
+      </div>
+    </div>
   </div>
 
   <div class="hub-footer-note">Mais materiais serão adicionados aqui em breve.</div>
