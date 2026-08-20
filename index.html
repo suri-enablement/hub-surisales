@@ -23,6 +23,7 @@
     --radius: 20px;
     --shadow: 0 8px 24px rgba(28,37,96,0.09);
     --shadow-hover: 0 16px 40px rgba(28,37,96,0.16);
+    --topbar-h: 78px;
   }
 
   body {
@@ -30,6 +31,7 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    padding-top: var(--topbar-h);
   }
 
   /* ── TOPBAR — dark gradient premium ── */
@@ -40,8 +42,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
     overflow: hidden;
   }
   .topbar::before {
@@ -256,26 +261,15 @@
   </div>
 
   <div class="card-grid">
-    <a href="closer/index.html" class="role-card" onclick="return goTo(event,'closer/index.html')">
+    <a href="guias/index.html" class="role-card" onclick="return goTo(event,'guias/index.html')">
       <div class="role-card-icon">🎯</div>
-      <div class="role-card-title">Closer</div>
-      <div class="role-card-desc">Guia gamificado de reunião com scorecard ponderado, dicas de SPICED e lembretes de comunicação.</div>
+      <div class="role-card-title">Guias</div>
+      <div class="role-card-desc">Guias gamificados de reunião e ligação, com scorecards ponderados, dicas de SPIN/SPICED e critérios de qualificação.</div>
       <div class="role-card-materials">
-        <div class="material-row"><span class="material-dot"></span> Guia de reunião</div>
-        <div class="material-row disabled"><span class="material-dot"></span> Apresentação do scorecard <span class="material-soon">EM BREVE</span></div>
+        <div class="material-row"><span class="material-dot"></span> Guia do Closer</div>
+        <div class="material-row"><span class="material-dot"></span> Guia do SDR</div>
       </div>
-      <div class="role-card-cta">Acessar guia <span class="role-card-cta-arrow">→</span></div>
-    </a>
-
-    <a href="sdr/index.html" class="role-card" onclick="return goTo(event,'sdr/index.html')">
-      <div class="role-card-icon">🤝</div>
-      <div class="role-card-title">SDR</div>
-      <div class="role-card-desc">Guia gamificado de ligação com scorecard ponderado (BANT), dicas de SPIN e critérios de qualificação.</div>
-      <div class="role-card-materials">
-        <div class="material-row"><span class="material-dot"></span> Guia de ligação</div>
-        <div class="material-row disabled"><span class="material-dot"></span> Apresentação do scorecard <span class="material-soon">EM BREVE</span></div>
-      </div>
-      <div class="role-card-cta">Acessar guia <span class="role-card-cta-arrow">→</span></div>
+      <div class="role-card-cta">Acessar guias <span class="role-card-cta-arrow">→</span></div>
     </a>
 
     <a href="playbook/index.html" class="role-card" onclick="return goTo(event,'playbook/index.html')">
@@ -290,8 +284,28 @@
     </a>
 
     <div class="role-card role-card-disabled">
+      <div class="role-card-icon">📄</div>
+      <div class="role-card-title">Proposta Comercial</div>
+      <div class="role-card-desc">Monte uma proposta comercial personalizada e baixe em PDF, pronta para enviar ao lead.</div>
+      <div class="role-card-materials">
+        <div class="material-row disabled"><span class="material-dot"></span> Montador de proposta <span class="material-soon">EM BREVE</span></div>
+      </div>
+      <div class="role-card-cta role-card-cta-disabled">Em breve</div>
+    </div>
+
+    <div class="role-card role-card-disabled">
+      <div class="role-card-icon">📊</div>
+      <div class="role-card-title">Apresentação Comercial</div>
+      <div class="role-card-desc">Apresentação institucional e comercial da Suri, pronta para uso em reuniões com leads.</div>
+      <div class="role-card-materials">
+        <div class="material-row disabled"><span class="material-dot"></span> Apresentação comercial <span class="material-soon">EM BREVE</span></div>
+      </div>
+      <div class="role-card-cta role-card-cta-disabled">Em breve</div>
+    </div>
+
+    <div class="role-card role-card-disabled">
       <div class="role-card-icon">🗂️</div>
-      <div class="role-card-title">Materiais</div>
+      <div class="role-card-title">Materiais Técnicos</div>
       <div class="role-card-desc">Apresentações, demos interativas e arquivos gerais de apoio comercial.</div>
       <div class="role-card-materials">
         <div class="material-row disabled"><span class="material-dot"></span> Apresentações <span class="material-soon">EM BREVE</span></div>
