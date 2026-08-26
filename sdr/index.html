@@ -9,21 +9,21 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #eef1fb;
-    --surface: #ffffff;
-    --surface2: #f4f6fc;
-    --border: #e2e6f5;
+    --bg: #080b1e;
+    --surface: #0e1235;
+    --surface2: #111538;
+    --border: #23284a;
     --navy: #0f1530;
-    --blue: #3d5af1;
-    --blue-light: #eaeefd;
-    --green: #1a9e6b;
-    --green-light: #e7f7f0;
-    --gray: #8a96b0;
-    --text: #0f1530;
-    --text-muted: #4a5170;
+    --blue: #4f56f0;
+    --blue-light: rgba(79,86,240,0.14);
+    --green: #00c48c;
+    --green-light: rgba(0,196,140,0.12);
+    --gray: #7d84ab;
+    --text: #ffffff;
+    --text-muted: #8a90b8;
     --radius: 14px;
-    --shadow: 0 2px 12px rgba(28,37,96,0.08);
-    --shadow-md: 0 4px 24px rgba(28,37,96,0.12);
+    --shadow: 0 2px 12px rgba(0,0,0,0.35);
+    --shadow-md: 0 4px 24px rgba(0,0,0,0.5);
     --gold: #ffb703;
   }
 
@@ -225,7 +225,7 @@
     width: 18px; height: 18px;
     background: var(--green);
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 2px solid var(--surface);
     align-items: center;
     justify-content: center;
     font-size: 10px;
@@ -306,7 +306,7 @@
     flex-shrink: 0;
     margin-top: 1px;
     display: flex; align-items: center; justify-content: center;
-    background: #fff;
+    background: var(--surface2);
     transition: all 0.15s;
   }
   .item.checked .item-checkbox { background: var(--green); border-color: var(--green); }
@@ -338,7 +338,7 @@
     background: none;
     font-family: inherit;
   }
-  .instr-toggle:hover { color: var(--navy); }
+  .instr-toggle:hover { color: #b6b8ff; }
   .instr-arrow { transition: transform 0.2s; display: inline-block; }
   .instr-toggle.open .instr-arrow { transform: rotate(90deg); }
 
@@ -362,9 +362,9 @@
     margin-top: 5px;
     font-size: 10.5px;
     font-weight: 600;
-    color: #b45309;
-    background: #fff8e0;
-    border: 1px solid #fde68a;
+    color: #e0c878;
+    background: rgba(217,180,64,0.12);
+    border: 1px solid rgba(217,180,64,0.3);
     border-radius: 6px;
     padding: 3px 8px;
   }
@@ -391,7 +391,7 @@
     width: 16px; height: 16px;
     border-radius: 5px;
     border: 1.5px solid var(--border);
-    background: #fff;
+    background: var(--surface2);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     transition: all 0.15s;
