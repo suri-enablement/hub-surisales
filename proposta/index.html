@@ -389,6 +389,28 @@
   .prop-list li b { color: var(--ink); font-weight: 600; }
 
   .prop-actions { display: flex; gap: 12px; margin-top: 8px; }
+
+  /* — rodapé em degradê verde (inspirado no slide de fechamento) — */
+  .prop-footer-banner {
+    margin-top: 28px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(155deg, #0a5c3e 0%, #0d7a52 45%, #12a06c 100%);
+    padding: 22px 26px 16px;
+  }
+  .pfb-eyebrow {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); margin-bottom: 10px;
+  }
+  .pfb-title {
+    font-size: 16.5px; font-weight: 800; color: #fff; line-height: 1.35; max-width: 520px;
+  }
+  .pfb-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.18);
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
   .btn-ghost {
     flex: 0 0 auto; border: 1.5px solid var(--line); background: transparent; cursor: pointer;
     border-radius: 14px; padding: 16px 22px; font-size: 13.5px; font-weight: 500; color: var(--ink-soft);
@@ -535,17 +557,62 @@
     .main-tabs { flex-wrap: wrap; }
   }
 
-  /* ── PRINT / PDF — mantém o tema escuro real da tela ── */
+  /* ── PRINT / PDF — mantém o tema escuro real da tela, compactado para 1 página ── */
   @media print {
+    @page { size: A4; margin: 9mm 11mm; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
-    body { padding-top: 0; background: var(--bg-page) !important; }
+    html, body { padding-top: 0; background: var(--bg-page) !important; font-size: 12px; }
     .topbar, .no-print, .main-tabs, .modal-overlay, #tab-impacto, #tab-roi { display: none !important; }
     #tab-proposta { display: block !important; }
     #screenConfig { display: none !important; }
     #screenProposta { display: block !important; }
-    .prop-wrap { max-width: 100%; padding: 24px; background: var(--bg-page) !important; }
-    .prop-sheet { box-shadow: none; background: var(--paper) !important; }
-    .tp-field input, .msg-row input { border-bottom-color: var(--line) !important; }
+
+    .prop-wrap { max-width: 100%; padding: 0; margin: 0; background: var(--bg-page) !important; }
+    .prop-sheet { box-shadow: none; background: var(--paper) !important; padding: 20px 24px; border-radius: 0; }
+
+    /* brand + hero */
+    .prop-brand { margin-bottom: 16px; }
+    .prop-brand img { height: 20px; }
+    .prop-lead-line { margin: -14px 0 16px !important; font-size: 11.5px; }
+    .prop-hero { padding-bottom: 16px; margin-bottom: 16px; }
+    .prop-hero-label { font-size: 9.5px; margin-bottom: 8px; }
+    .prop-hero-price { font-size: 34px; letter-spacing: -0.8px; }
+    .prop-hero-sub { font-size: 12px; margin-top: 5px; }
+    .prop-hero-extra { font-size: 10.5px; }
+
+    /* feature table */
+    .feature-table { margin-bottom: 14px; }
+    .feature-row { padding: 8px 14px; font-size: 12px; }
+    .feature-value.big { font-size: 15px; }
+    .feature-sub { font-size: 9.5px; }
+
+    /* total previsto */
+    .total-previsto { margin: 4px 0 16px; border-radius: 14px; }
+    .tp-head { padding: 14px 18px 2px; }
+    .tp-eyebrow { font-size: 9px; }
+    .tp-title { font-size: 13.5px; margin-top: 2px; }
+    .tp-grid { padding: 10px 18px 14px; gap: 10px; }
+    .tp-field label { font-size: 9px; margin-bottom: 4px; }
+    .tp-field input { font-size: 12.5px; padding: 2px 2px 5px; border-bottom-color: var(--line) !important; }
+    .tp-result { padding: 10px 12px; }
+    .tp-result-label { font-size: 9px; margin-bottom: 4px; }
+    .tp-result-value { font-size: 15px; }
+
+    /* benefícios */
+    .benefit-section-title { font-size: 12px; margin: 12px 0 8px !important; }
+    .benefit-list { gap: 6px 12px; margin-bottom: 16px !important; }
+    .benefit-item { padding: 8px 10px; }
+    .benefit-check { width: 16px; height: 16px; font-size: 9px; }
+    .benefit-label { font-size: 11.5px; line-height: 1.25; }
+
+    /* mensagens (passo 2 não aparece na proposta final, mas por segurança) */
+    .msg-row input { border-bottom-color: var(--line) !important; }
+
+    /* rodapé verde */
+    .prop-footer-banner { margin-top: 16px; padding: 14px 18px 10px; border-radius: 12px; }
+    .pfb-eyebrow { font-size: 8px; margin-bottom: 6px; }
+    .pfb-title { font-size: 12.5px; }
+    .pfb-bottom { margin-top: 10px; padding-top: 8px; font-size: 8px; }
   }
 </style>
 </head>
@@ -578,6 +645,13 @@
       <div class="hero-badge">Simule seu plano em tempo real</div>
       <h1>Quanto fica o seu plano?</h1>
       <div class="hero-rule"></div>
+    </div>
+
+    <!-- LEAD (opcional) -->
+    <div class="step-card">
+      <div class="step-title">Nome do lead <span class="step-optional-tag">Opcional</span></div>
+      <div class="step-desc">Aparece no topo da proposta gerada.</div>
+      <input type="text" id="leadName" placeholder="Ex.: João Silva — Loja XPTO" style="width:100%; font-family:'Sora',sans-serif; font-size:15px; font-weight:600; border:none; border-bottom:1.5px solid var(--line); padding:8px 2px 10px; color:var(--ink); background:transparent;"/>
     </div>
 
     <!-- PASSO 1 -->
@@ -697,6 +771,10 @@
         <div class="prop-brand-date" id="propDate"></div>
       </div>
 
+      <div class="prop-lead-line" id="propLeadLine" style="display:none; text-align:center; font-size:13px; font-weight:600; color:var(--ink-soft); margin:-24px 0 24px;">
+        Proposta para <span id="propLeadName" style="color:var(--ink); font-weight:700;"></span>
+      </div>
+
       <div class="prop-hero">
         <div class="prop-hero-label">Plano proposto</div>
         <div class="prop-hero-price" id="propPrice">R$ 4.350</div>
@@ -782,6 +860,15 @@
         <div class="benefit-item">
           <div class="benefit-check">✓</div>
           <div class="benefit-label">Alerta de consumo e trava de gasto</div>
+        </div>
+      </div>
+
+      <div class="prop-footer-banner">
+        <div class="pfb-eyebrow">Suri Shop · RD Station · TOTVS</div>
+        <div class="pfb-title">Mensagem ao preço da Meta. Plano simples. Você no controle do seu investimento.</div>
+        <div class="pfb-bottom">
+          <span>Proposta comercial</span>
+          <span id="propValidDate"></span>
         </div>
       </div>
 
@@ -1318,6 +1405,19 @@ function renderTotalPrevisto() {
 function verProposta() {
   document.getElementById('propDate').textContent =
     new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+  const validUntil = new Date();
+  validUntil.setDate(validUntil.getDate() + 7);
+  document.getElementById('propValidDate').textContent =
+    'Válida até ' + validUntil.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  const leadNameEl = document.getElementById('leadName');
+  const leadLine = document.getElementById('propLeadLine');
+  const leadName = leadNameEl ? leadNameEl.value.trim() : '';
+  if (leadName) {
+    document.getElementById('propLeadName').textContent = leadName;
+    leadLine.style.display = 'block';
+  } else {
+    leadLine.style.display = 'none';
+  }
   renderAll();
   renderTotalPrevisto();
   document.body.classList.add('show-proposal');
