@@ -674,7 +674,7 @@
 // ─────────────────────────────────────────────
 // BLUEPRINT — cada item tem: text (ação) + options (2 alternativas de instrução)
 // A pontuação é normalizada pela soma dos pesos dos 5 blocos (90),
-// já que Comunicação e Técnica agora é lembrete e não pontua.
+// já que Comunicação e Técnica é lembrete e não pontua.
 // ─────────────────────────────────────────────
 const BLOCKS = [
   {
@@ -757,10 +757,10 @@ const BLOCKS = [
         ]
       },
       {
-        text: "Entenda a volumetria de contatos no WhatsApp (por dia ou mês)",
+        text: "Entenda a volumetria de contatos/clientes atendidos no WhatsApp (por dia ou mês)",
         options: [
           "Mais ou menos quantas conversas chegam no WhatsApp de vocês por dia?",
-          "Dá pra estimar o volume mensal de contatos que vocês recebem?"
+          "Dá pra estimar quantos clientes diferentes vocês atendem por mês?"
         ]
       },
       {
@@ -808,10 +808,10 @@ const BLOCKS = [
         ]
       },
       {
-        text: "Traga exemplos ou cases conectados ao contexto do lead",
+        text: "Gere autoridade com dados, cases, clientes ou premiações",
         options: [
-          "Tem uma empresa de [segmento parecido] que enfrentava o mesmo problema — depois de implantar, [resultado].",
-          "Um cliente com volume parecido com o seu conseguiu [resultado específico] em [prazo]."
+          "Temos mais de [X] clientes ativos e fomos reconhecidos com [prêmio/certificação]. Um cliente parecido com você, de [segmento], teve [resultado].",
+          "Hoje atendemos [X] empresas do seu segmento, e um dos cases mais recentes foi [resultado numérico] em [prazo]."
         ]
       },
       {
@@ -839,24 +839,17 @@ const BLOCKS = [
         ]
       },
       {
-        text: "Explique de forma clara o novo modelo de cobrança (plataforma + mensagens Meta)",
+        text: "Explique de forma clara o conceito de contato/cliente atendido no mês",
         options: [
-          "Antes, tudo vinha misturado numa métrica só de interações. Agora ficou mais simples e mais barato: você paga a plataforma pelo número de clientes atendidos no mês, e as mensagens da Meta entram separado, pelo preço real dela — sem markup nosso. A mensageria embutida no modelo antigo inflava sua conta; separando, você paga só o que usa.",
-          "Mudou pra melhor: hoje você paga por atendidos no plano, e as mensagens da Meta são cobradas pelo preço de tabela dela — Marketing R$ 0,36, Utilidade e Serviço R$ 0,04. Isso já é bem mais barato que os R$ 0,49 a R$ 0,66 que muita operação pagava escondido dentro da mensageria antiga."
+          "O plano é dimensionado pelo número de clientes únicos que vocês atendem no mês — não importa quantas mensagens trocam com cada um, conta como 1 atendido.",
+          "Atendido é cada cliente diferente que fala com vocês no WhatsApp durante o mês. Se ele manda 20 mensagens, ainda conta como 1 — o que muda o plano é quantas pessoas diferentes, não quantas mensagens."
         ]
       },
       {
-        text: "Apresente o teto de gasto como controle e previsibilidade — não como custo novo",
+        text: "Apresente valores, plano e formas de pagamento com segurança",
         options: [
-          "E o melhor: você define um teto de gasto só pra mensagens da Meta. Ao bater 100% do teto, os envios pausam sozinhos — sua fatura nunca passa do que você autorizou. Isso não existe em nenhum concorrente.",
-          "Você escolhe até quanto quer investir em mensagens por mês. Chegou no limite, a plataforma pausa os envios automaticamente. Zero surpresa na fatura — você sabe exatamente o teto máximo antes mesmo de fechar."
-        ]
-      },
-      {
-        text: "Apresente valores e formas de pagamento com segurança",
-        options: [
-          "O investimento no plano é R$ [X]/mês pra [Y] atendidos, e as mensagens da Meta entram à parte, pelo preço real dela — sem markup nosso. No fim, costuma sair mais barato que o modelo antigo. Você pode parcelar em até 12x no cartão ou fechar à vista com desconto.",
-          "Nosso plano de entrada é R$ [X]. Aceita cartão parcelado ou boleto — qual funciona melhor pra vocês?"
+          "O investimento no plano é R$ [X]/mês pra [Y] atendidos, e as mensagens da Meta entram à parte, pelo preço real dela — sem markup nosso. Você pode parcelar em até 12x no cartão ou fechar à vista com desconto.",
+          "Nosso plano de entrada é R$ [X] pra [Y] atendidos por mês. Aceita cartão parcelado ou boleto — qual funciona melhor pra vocês?"
         ]
       },
       {
@@ -922,10 +915,10 @@ const BLOCKS = [
         ]
       },
       {
-        text: "Explique o aviso prévio de 90 dias para cancelamento do contrato sem multa",
+        text: "Explique que o contrato tem 12 meses de duração",
         options: [
-          "O contrato prevê aviso prévio de 90 dias pra cancelamento sem multa — é importante você saber disso.",
-          "Só um detalhe importante: caso queira cancelar no futuro, o aviso prévio é de 90 dias, sem multa."
+          "O contrato tem duração de 12 meses — é importante você já saber disso antes de fecharmos.",
+          "Só um detalhe importante: nosso contrato padrão é de 12 meses. Faz sentido pra vocês?"
         ]
       },
       {
@@ -941,8 +934,7 @@ const BLOCKS = [
 ];
 
 // ─────────────────────────────────────────────
-// LEMBRETE PERMANENTE — Comunicação e Técnica
-// Não pontua, não tem checkbox. Vale para a reunião inteira.
+// LEMBRETE PERMANENTE — não pontua, não tem checkbox. Vale para a reunião inteira.
 // ─────────────────────────────────────────────
 const REMINDERS = [
   {
@@ -971,7 +963,7 @@ const REMINDERS = [
 // ── STATE ──
 let checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
 let notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
-let expanded = new Array(BLOCKS.length).fill(false);
+let expanded = BLOCKS.map((b, i) => i === 0);
 let alwaysExpanded = false;
 const TOTAL_WEIGHT = BLOCKS.reduce((s, b) => s + b.weight, 0); // 90 — normaliza pra 100%
 
@@ -996,6 +988,9 @@ function render() {
 }
 
 function renderProgressSteps() {
+  const wrap = document.getElementById('progressSteps').closest('.progress-bar-wrap');
+  if (BLOCKS.length <= 1) { if (wrap) wrap.style.display = 'none'; return; }
+  if (wrap) wrap.style.display = '';
   const el = document.getElementById('progressSteps');
   el.innerHTML = BLOCKS.map((b, i) => {
     const complete = blockChecked(i) === b.items.length;
@@ -1061,7 +1056,7 @@ function renderBlocks() {
           <div class="phase-check">✓</div>
         </div>
         <div class="phase-info">
-          <div class="phase-tag">Fase ${bi+1}</div>
+          <div class="phase-tag">${BLOCKS.length > 1 ? 'Fase ' + (bi+1) : 'Scorecard'}</div>
           <div class="phase-name">${b.title} <span class="phase-weight-badge">${b.weight}%</span></div>
           <div class="phase-progress-row">
             <div class="phase-bar-bg"><div class="phase-bar-fill" style="width:${pct}%;background:${b.color}"></div></div>
@@ -1130,7 +1125,11 @@ function scrollToBlock(bi) {
 
 function togglePhase(bi) {
   const opening = !expanded[bi];
-  expanded[bi] = !expanded[bi];
+  if (opening) {
+    expanded = expanded.map((v, i) => i === bi);
+  } else {
+    expanded[bi] = false;
+  }
   render();
   if (opening) {
     setTimeout(() => scrollToBlock(bi), 50);
@@ -1138,14 +1137,27 @@ function togglePhase(bi) {
 }
 
 function jumpToBlock(bi) {
-  expanded[bi] = true;
+  expanded = expanded.map((v, i) => i === bi);
   render();
   setTimeout(() => scrollToBlock(bi), 50);
+}
+
+function maybeAutoAdvance(bi) {
+  const b = BLOCKS[bi];
+  const complete = blockChecked(bi) === b.items.length;
+  if (!complete) return;
+  expanded[bi] = false;
+  const next = bi + 1;
+  if (next < BLOCKS.length) {
+    expanded[next] = true;
+    setTimeout(() => scrollToBlock(next), 250);
+  }
 }
 
 function toggleCheck(bi, ii) {
   checked[bi][ii] = !checked[bi][ii];
   if (checked[bi][ii]) notApplicable[bi][ii] = false;
+  maybeAutoAdvance(bi);
   render();
   const pill = document.getElementById('scorePill');
   pill.classList.add('bump');
@@ -1156,6 +1168,7 @@ function toggleNA(e, bi, ii) {
   e.stopPropagation();
   notApplicable[bi][ii] = !notApplicable[bi][ii];
   if (notApplicable[bi][ii]) checked[bi][ii] = false;
+  maybeAutoAdvance(bi);
   render();
   const pill = document.getElementById('scorePill');
   pill.classList.add('bump');
@@ -1218,7 +1231,7 @@ function hideResult() {
 function restart() {
   checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
   notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
-  expanded = new Array(BLOCKS.length).fill(false);
+  expanded = BLOCKS.map((b, i) => i === 0);
   alwaysExpanded = false;
   hideResult();
   render();
