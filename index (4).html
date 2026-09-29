@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Proposta Comercial · Suri</title>
+<link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/hub.css"/>
+<script src="../assets/hub.js"></script>
+<script>Hub.guard('../');</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* tokens da proposta mapeados para o padrão Acervo (hub.css) */
+    --navy-deep: #020519;
+    --navy: #020519;
+    --blue: #4A54FF;
+    --lavender: #000F9B;
+    --coral: #B4740E;
+    --green-live: #00B914;
+    --ink: #020519;
+    --ink-soft: #55607A;
+    --ink-faint: #868EAC;
+    --line: #E1E7F3;
+    --bg-page: #F6F9FF;
+    --paper: #FFFFFF;
+    --wash: #EEF2FA;
+    --shadow: 0 1px 2px rgba(14,27,46,.05), 0 1px 1px rgba(14,27,46,.04);
+    --topbar-h: 76px;
+  }
+
+  body { padding-top: var(--topbar-h); }
+
+  /* ── TOPBAR (usa .topnav do hub.css, fixa) ── */
+  .topnav.fixed { position: fixed; top: 0; left: 0; right: 0; }
+  .topnav .btn-ghost { padding: 8px 15px; border-radius: 999px; font-size: 12.5px; font-weight: 600; background: var(--paper); border: 1px solid var(--border-strong); color: var(--ink); }
+  .topnav .btn-ghost:hover { border-color: var(--blue); color: var(--lavender); }
+  @media (max-width: 620px) { .btn-explicar { font-size: 11px; padding: 7px 12px; } }
+  .topbar-price { font-size: 13px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; background: var(--wash); border: 1px solid var(--line); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+
+  /* ══════════════════════ SCREEN 1 — CONFIGURADOR ══════════════════════ */
+  #screenConfig { display: block; }
+  body.show-proposal #screenConfig { display: none; }
+
+  .config-wrap { max-width: 900px; margin: 0 auto; padding: 56px 32px 60px; }
+
+  .hero { text-align: center; margin-bottom: 44px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; background: var(--paper);
+    border: 1px solid var(--line); border-radius: 100px; padding: 9px 20px;
+    font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-size: 44px; font-weight: 700; letter-spacing: -.02em; color: var(--ink);
+    line-height: 1.08;
+  }
+  .hero-rule { width: 46px; height: 3px; background: var(--grad); border-radius: 2px; margin: 18px auto 0; }
+
+  .step-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 22px;
+    box-shadow: var(--shadow); padding: 30px 32px; margin-bottom: 20px;
+  }
+  .step-eyebrow {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 6px;
+  }
+  .step-title { font-size: 19px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--ink-soft); font-weight: 500; margin-bottom: 24px; }
+
+  /* — Passo 1: volumetria — */
+  .price-display { text-align: center; margin-bottom: 22px; }
+  .price-value {
+    font-size: 52px; font-weight: 700; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; width: fit-content; margin: 0 auto; letter-spacing: -1.3px; color: var(--ink);
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .price-value.pulse { animation: pulse 0.35s ease; }
+  @keyframes pulse { 0% { opacity: 0.4; transform: scale(0.985); } 100% { opacity: 1; transform: scale(1); } }
+  .price-meta { margin-top: 8px; font-size: 16px; color: var(--ink); font-weight: 700; }
+  .price-meta #priceAtendidos { color: var(--lavender); font-weight: 800; transition: opacity 0.15s; }
+  .price-meta #priceAtendidos.pulse { animation: pulse 0.35s ease; }
+  .price-meta .discount { color: var(--blue); font-weight: 600; font-size: 13px; }
+
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+    border-radius: 10px; outline: none; margin: 6px 0 14px; cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%;
+    background: #fff; border: 4px solid var(--blue); cursor: pointer;
+    box-shadow: 0 2px 8px rgba(74,84,255,0.35); margin-top: -1px;
+  }
+  input[type="range"]::-moz-range-track { height: 6px; border-radius: 10px; background: var(--line); }
+  input[type="range"]::-moz-range-thumb {
+    width: 24px; height: 24px; border-radius: 50%; background: #fff;
+    border: 4px solid var(--blue); cursor: pointer; box-shadow: 0 2px 8px rgba(74,84,255,0.35);
+  }
+  .range-marks { position: relative; height: 18px; }
+  .range-marks span {
+    position: absolute; top: 0;
+    font-size: 11px; font-weight: 600; color: var(--ink-faint); cursor: pointer;
+    padding: 2px 3px; white-space: nowrap;
+  }
+  .range-marks span.active { color: var(--blue); font-weight: 700; }
+  .range-marks span:hover { color: var(--ink); }
+  .tier-note {
+    display: none; margin-top: 14px; font-size: 11.5px; color: var(--ink-faint);
+    font-weight: 500; text-align: center;
+  }
+  .tier-note.show { display: block; }
+
+  /* — Passo 2: canais — */
+  .canal { border-top: 1px solid var(--line); padding: 18px 0; }
+  .canal:last-child { border-bottom: 1px solid var(--line); }
+  .canal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .canal-name { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+  .canal-sub { font-size: 11.5px; color: var(--ink-faint); margin-top: 2px; font-weight: 500; }
+
+  .switch {
+    width: 40px; height: 24px; border-radius: 100px; background: var(--line);
+    position: relative; cursor: pointer; flex-shrink: 0; border: none; padding: 0;
+    transition: background 0.15s;
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
+    border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    transition: transform 0.15s;
+  }
+  .switch.on { background: var(--blue); }
+  .switch.on::after { transform: translateX(16px); }
+
+  .canal-fields {
+    display: none; grid-template-columns: 1fr 1fr auto; gap: 20px;
+    align-items: end; margin-top: 16px;
+  }
+  .canal.on .canal-fields { display: grid; }
+  .canal-field label {
+    display: block; font-size: 10.5px; font-weight: 600; color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 7px;
+  }
+  .canal-field input {
+    width: 100%; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600;
+    border: none; border-bottom: 1.5px solid var(--line); padding: 4px 2px 8px;
+    color: var(--ink); background: transparent; font-variant-numeric: tabular-nums;
+  }
+  .canal-field input:focus { outline: none; border-color: var(--blue); }
+  .canal-field input::placeholder { color: var(--ink-faint); font-weight: 500; }
+  .canal-result { text-align: right; white-space: nowrap; }
+  .canal-result-label { font-size: 10.5px; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 7px; }
+  .canal-result-value { font-size: 17px; font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; }
+
+  .total-line {
+    display: none; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line);
+    align-items: baseline; justify-content: space-between;
+  }
+  .total-line.show { display: flex; }
+  .total-line-label { font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+  .total-line-value { font-size: 18px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* — Passo 3: teto — */
+  .teto-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 22px; }
+  .teto-card {
+    border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 6px;
+    text-align: center; cursor: pointer; background: var(--paper);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .teto-card:hover { border-color: var(--ink-faint); }
+  .teto-card.active { border-color: transparent; background: var(--grad); }
+  .teto-card-n { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .teto-card.active .teto-card-n { color: #fff; }
+
+  .fatura-box {
+    background: var(--wash); border-radius: 14px; padding: 18px 20px;
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .fatura-label { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+  .fatura-formula { font-size: 12px; color: var(--ink-faint); font-weight: 500; margin-top: 3px; }
+  .fatura-value { font-size: 22px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* — Passo 2 (novo): consumo de mensagens — */
+  .msg-table { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 4px; }
+  .msg-head-row, .msg-row {
+    display: grid; grid-template-columns: 1.6fr 0.9fr 1fr 1fr; gap: 10px; align-items: center;
+    padding: 13px 16px;
+  }
+  .msg-head-row {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+    color: var(--ink-faint); background: var(--wash);
+  }
+  .msg-row { border-top: 1px solid var(--line); background: var(--paper); }
+  .msg-type { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .msg-type .msg-badge {
+    display: inline-block; margin-left: 6px; font-size: 9px; font-weight: 800;
+    color: #fff; background: var(--shop-green); padding: 1px 7px; border-radius: 100px; vertical-align: middle;
+  }
+  .msg-tarifa { font-size: 12.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .msg-row input {
+    width: 100%; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600;
+    border: none; border-bottom: 1.5px solid var(--line); padding: 4px 2px 6px;
+    color: var(--ink); background: transparent; font-variant-numeric: tabular-nums;
+  }
+  .msg-row input:focus { outline: none; border-color: var(--blue); }
+  .msg-row input::placeholder { color: var(--ink-faint); font-weight: 500; }
+  .msg-valor { font-size: 13.5px; font-weight: 700; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+  .msg-total-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 16px 20px; margin-top: 14px; background: var(--wash); border-radius: 14px;
+  }
+  .msg-total-label { font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+  .msg-total-value { font-size: 20px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* — Passo 3: teto (barra de consumo) — */
+  .teto-progress-wrap { margin-top: 20px; }
+  .teto-progress-label {
+    display: flex; justify-content: space-between; font-size: 12px; font-weight: 600;
+    color: var(--ink-soft); margin-bottom: 8px;
+  }
+  .teto-progress-label b { color: var(--ink); }
+  .teto-progress-bar {
+    height: 10px; border-radius: 100px; background: var(--wash); overflow: hidden; position: relative;
+  }
+  .teto-progress-fill {
+    height: 100%; border-radius: 100px; background: var(--grad);
+    transition: width 0.25s ease, background 0.25s ease;
+  }
+  .teto-progress-fill.warn { background: linear-gradient(90deg, #E3A008, #B4740E); }
+  .teto-progress-fill.over { background: linear-gradient(90deg, #E05C5C, #C43D3D); }
+  .teto-alert {
+    display: none; margin-top: 12px; padding: 12px 16px; border-radius: 12px;
+    background: var(--warning-soft); border: 1px solid #EED9AE;
+    font-size: 12px; color: #7A5308; line-height: 1.55;
+  }
+  .teto-alert.show { display: block; }
+  .teto-alert.over { background: var(--danger-soft); border-color: #F1CACA; color: var(--danger); }
+  .previsibility-box {
+    margin-top: 16px; padding: 16px 20px; border-radius: 14px;
+    background: var(--shop-green-soft); border: 1px solid #BDE9C2;
+  }
+  .previsibility-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+    color: var(--success); margin-bottom: 6px;
+  }
+  .previsibility-value { font-size: 17px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .previsibility-note { margin-top: 4px; font-size: 11.5px; color: var(--ink-faint); line-height: 1.5; }
+
+  /* — Passo 4: canais (opcional) — */
+  .step-card.optional { border-style: dashed; }
+  .step-optional-tag {
+    display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: 0.5px;
+    color: var(--ink-faint); background: var(--wash); padding: 2px 9px; border-radius: 100px; margin-left: 8px;
+    text-transform: uppercase; vertical-align: middle;
+  }
+
+  /* — TOTAL PREVISTO (investimento + ROI), tela da proposta — */
+  .total-previsto {
+    margin: 8px 0 32px; border-radius: 20px; overflow: hidden;
+    border: 1px solid #C9D3FF;
+    background: linear-gradient(165deg, var(--accent-soft-2), var(--paper) 60%);
+  }
+  .tp-head { padding: 22px 26px 4px; }
+  .tp-eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase; color: var(--lavender); }
+  .tp-title { font-size: 17px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+  .tp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 18px 26px 22px; }
+  .tp-field label {
+    display: block; font-size: 10.5px; font-weight: 600; color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 7px;
+  }
+  .tp-field input {
+    width: 100%; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600;
+    border: none; border-bottom: 1.5px solid var(--line); padding: 4px 2px 8px;
+    color: var(--ink); background: transparent; font-variant-numeric: tabular-nums;
+  }
+  .tp-field input:focus { outline: none; border-color: var(--blue); }
+  .tp-results { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+  .tp-result { background: var(--paper); padding: 18px 20px; }
+  .tp-result-label { font-size: 10.5px; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
+  .tp-result-value { font-size: 21px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .tp-result-value.positive { color: var(--success); }
+  .tp-result-value.investimento { color: var(--lavender); }
+
+  @media (max-width: 620px) {
+    .msg-head-row, .msg-row { grid-template-columns: 1.4fr 1fr; row-gap: 6px; }
+    .msg-tarifa { order: 3; } .msg-row input { order: 4; } .msg-valor { order: 5; text-align: left; }
+    .tp-grid { grid-template-columns: 1fr; }
+    .tp-results { grid-template-columns: 1fr; }
+  }
+
+  .cta-row { margin-top: 12px; }
+
+  .btn-primary {
+    width: 100%; border: none; cursor: pointer; border-radius: 999px;
+    background: var(--grad); color: #fff; box-shadow: var(--shadow-md);
+    font-size: 15px; font-weight: 600; padding: 17px; letter-spacing: 0.1px;
+    transition: box-shadow 0.15s, transform 0.1s;
+  }
+  .btn-primary:hover { box-shadow: 0 14px 32px -10px rgba(30,79,196,.45); }
+  .btn-primary:active { transform: scale(0.99); }
+
+  /* ══════════════════════ SCREEN 2 — PROPOSTA ══════════════════════ */
+  #screenProposta { display: none; }
+  body.show-proposal #screenProposta { display: block; }
+
+  .prop-wrap { max-width: 920px; margin: 0 auto; padding: 48px 32px 80px; }
+  .prop-sheet {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 24px;
+    box-shadow: var(--shadow); padding: 48px 48px 40px;
+  }
+
+  .prop-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
+  .prop-brand img { height: 34px; }
+  .prop-brand-name { font-size: 13px; font-weight: 600; color: var(--ink); letter-spacing: 0.2px; }
+  .prop-brand-date { margin-left: auto; font-size: 11.5px; color: var(--ink-faint); font-weight: 500; }
+
+  .prop-hero { text-align: center; padding-bottom: 36px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+  .prop-hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+  .prop-hero-price { font-size: 52px; font-weight: 800; letter-spacing: -1.3px; font-variant-numeric: tabular-nums; }
+  .prop-hero-sub { margin-top: 8px; font-size: 14px; color: var(--ink-soft); font-weight: 500; }
+  .prop-hero-sub .discount { color: var(--blue); }
+  .prop-hero-extra { margin-top: 6px; font-size: 12.5px; color: var(--ink-faint); font-weight: 500; }
+
+  .feature-table {
+    border-radius: 18px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 36px;
+  }
+  .feature-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 16px 22px;
+  }
+  .feature-row:nth-child(odd) { background: var(--wash); }
+  .feature-row:nth-child(even) { background: var(--paper); }
+  .feature-label { font-size: 13px; color: var(--ink-soft); font-weight: 500; line-height: 1.4; }
+  .feature-value { font-size: 13.5px; color: var(--ink); font-weight: 600; text-align: right; white-space: nowrap; }
+  .feature-value.big { font-size: 17px; font-weight: 700; }
+  .feature-sub { font-size: 11.5px; color: var(--ink-faint); font-weight: 500; }
+  .feature-check {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--grad);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0;
+  }
+
+  .benefit-section-title {
+    font-size: 13px; font-weight: 700; color: var(--ink-faint); text-transform: uppercase;
+    letter-spacing: 0.6px; margin: 32px 0 14px;
+  }
+  .benefit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 36px; }
+  .benefit-item {
+    display: flex; align-items: center; gap: 14px; background: var(--wash);
+    border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px;
+  }
+  .benefit-check {
+    width: 30px; height: 30px; border-radius: 50%; background: var(--shop-green);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 800; flex-shrink: 0;
+  }
+  .benefit-label { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.35; }
+
+  .prop-section { margin-bottom: 32px; }
+  .prop-section:last-of-type { margin-bottom: 40px; }
+  .prop-section-title { font-size: 15.5px; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+  .prop-group { margin-bottom: 22px; }
+  .prop-group:last-child { margin-bottom: 0; }
+  .prop-group-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 10px;
+  }
+  .prop-list { list-style: none; }
+  .prop-list li {
+    display: flex; gap: 12px; padding: 9px 0; font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.55; border-top: 1px solid var(--line);
+  }
+  .prop-list li:first-child { border-top: none; }
+  .prop-list li::before { content: "—"; color: var(--blue); font-weight: 500; flex-shrink: 0; }
+  .prop-list li span { flex: 1; min-width: 0; }
+  .prop-list li b { color: var(--ink); font-weight: 600; }
+
+  .prop-actions { display: flex; gap: 12px; margin-top: 8px; }
+
+  /* — rodapé em degradê verde (inspirado no slide de fechamento) — */
+  .prop-footer-banner {
+    margin-top: 28px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--grad);
+    padding: 22px 26px 16px;
+  }
+  .pfb-eyebrow {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); margin-bottom: 10px;
+  }
+  .pfb-title {
+    font-size: 17px; font-weight: 600; color: #fff; line-height: 1.35; max-width: 520px;
+  }
+  .pfb-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.18);
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .btn-ghost {
+    flex: 0 0 auto; border: 1.5px solid var(--line); background: transparent; cursor: pointer;
+    border-radius: 14px; padding: 16px 22px; font-size: 13.5px; font-weight: 500; color: var(--ink-soft);
+  }
+  .btn-ghost:hover { border-color: var(--ink-faint); color: var(--ink); }
+  .prop-actions .btn-primary { flex: 1; }
+
+  @media (max-width: 620px) {
+    .teto-grid { grid-template-columns: repeat(2, 1fr); }
+    .price-value { font-size: 42px; }
+    .prop-hero-price { font-size: 38px; }
+    .canal-fields { grid-template-columns: 1fr 1fr; }
+    .canal-result { grid-column: span 2; text-align: left; }
+    .feature-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .feature-value { text-align: left; }
+    .benefit-list { grid-template-columns: 1fr; }
+    .prop-sheet { padding: 32px 22px; }
+    .topbar-price { display: none; }
+  }
+
+  /* ── TAB VISIBILITY ── */
+  #tab-proposta, #tab-impacto, #tab-roi { display: none; }
+  body[data-tab="proposta"] #tab-proposta { display: block; }
+  body[data-tab="impacto"] #tab-impacto { display: block; }
+  body[data-tab="roi"] #tab-roi { display: block; }
+
+  /* ── MAIN TABS ── */
+  .main-tabs {
+    position: fixed; top: var(--topbar-h); left: 0; right: 0; z-index: 90;
+    background: rgba(246,249,255,.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: center; padding: 10px 16px;
+  }
+  .main-tabs-inner { display: flex; gap: 4px; background: var(--wash); border-radius: 999px; padding: 5px; flex-wrap: wrap; justify-content: center; }
+  .main-tab-btn {
+    border: none; background: transparent; cursor: pointer; color: var(--ink-soft);
+    font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 100px; transition: all .15s;
+  }
+  @media (max-width: 620px) { .main-tabs-inner { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; justify-content: flex-start; scrollbar-width: none; } .main-tab-btn { white-space: nowrap; padding: 8px 12px; } }
+  .main-tab-btn.active { background: var(--paper); color: var(--ink); box-shadow: var(--shadow); }
+  .main-tab-btn:hover { color: var(--ink); }
+  #tab-proposta, #tab-impacto, #tab-roi { margin-top: 58px; }
+
+  .btn-explicar {
+    background: var(--paper); border: 1px solid var(--border-strong); color: var(--ink);
+    font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600;
+    padding: 8px 16px; border-radius: 100px; cursor: pointer;
+  }
+  .btn-explicar:hover { border-color: var(--blue); color: var(--lavender); }
+
+  .lav { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .disclaimer-bar {
+    background: var(--warning-soft); border: 1px solid #EED9AE;
+    border-radius: 14px; padding: 13px 16px; font-size: 12px; color: #7A5308;
+    line-height: 1.5; margin-bottom: 20px;
+  }
+
+  /* ── IMPACT / ROI GRIDS ── */
+  .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .impact-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+  .impact-stat { background: var(--wash); border-radius: 14px; padding: 16px 18px; }
+  .impact-stat-label { font-size: 10.5px; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 6px; }
+  .impact-stat-value { font-size: 19px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* ── LIVE MESSAGE CARD (replica do print) ── */
+  .live-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin-top: 20px; }
+  .live-card-head { display: flex; justify-content: space-between; font-size: 10.5px; font-weight: 700; color: var(--ink-faint); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; }
+  .live-dot { color: var(--green-live); }
+  .live-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 12.5px; }
+  .live-row:first-of-type { border-top: none; }
+  .live-row span:first-child { font-weight: 700; color: var(--ink); flex: 0 0 70px; }
+  .live-row span:last-of-type { flex: 1; color: var(--ink-soft); }
+  .live-row b { color: var(--danger); font-weight: 700; font-family: var(--font-mono); }
+  .live-row.muted span, .live-row.muted b { color: var(--ink-faint); }
+  .live-total { display: flex; justify-content: space-between; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; font-weight: 700; }
+  .live-total span:last-child { font-size: 20px; }
+  .live-caption { font-size: 10.5px; color: var(--ink-faint); text-align: center; margin-top: 10px; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .compare-col { background: var(--wash); border-radius: 14px; padding: 20px; text-align: center; }
+  .compare-col.highlight { background: var(--accent-soft); border: 1px solid #C9D3FF; }
+  .compare-col-label { font-size: 11px; font-weight: 700; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 12px; }
+  .compare-col-value { font-size: 22px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .compare-col-sub { font-size: 11px; color: var(--ink-faint); margin: 4px 0 12px; }
+
+  /* ── MODAL — ENTENDER A MUDANÇA ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(2,5,25,0.55); backdrop-filter: blur(4px); z-index: 200;
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 40px 20px; overflow-y: auto;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-sheet { background: var(--paper); border-radius: 22px; max-width: 720px; width: 100%; border: 1px solid var(--line); }
+  .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 20px 26px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--paper); border-radius: 22px 22px 0 0; }
+  .modal-head-title { font-size: 14px; font-weight: 700; }
+  .modal-close { background: var(--wash); border: none; color: var(--ink-soft); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 13px; }
+  .modal-body { padding: 26px; }
+  .modal-hero { margin-bottom: 28px; }
+  .modal-hero h2 { font-size: 28px; font-weight: 700; margin-bottom: 10px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; width: fit-content; }
+  .modal-hero p, .modal-p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.65; }
+  .modal-hero p b, .modal-p b { color: var(--ink); }
+
+  .modal-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+  .mc-col { border-radius: 16px; padding: 18px; }
+  .mc-col.light { background: var(--wash); }
+  .mc-col.dark { background: var(--text); }
+  .mc-pill { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 5px 12px; border-radius: 100px; margin-bottom: 14px; }
+  .mc-pill.up { background: var(--danger-soft); color: var(--danger); }
+  .mc-pill.ok { background: rgba(0,185,20,0.2); color: #8FF09B; }
+  .mc-item { margin-bottom: 12px; }
+  .mc-col.light .mc-item b { display: block; font-size: 13px; color: var(--ink); margin-bottom: 3px; }
+  .mc-col.light .mc-item span { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .mc-col.dark .mc-item b { display: block; font-size: 13px; color: #fff; margin-bottom: 3px; }
+  .mc-col.dark .mc-item span { font-size: 12px; color: #a8adcf; line-height: 1.5; }
+  .mc-note { background: rgba(0,185,20,0.12); border: 1px solid rgba(0,185,20,0.3); border-radius: 10px; padding: 10px 12px; font-size: 11.5px; color: rgba(255,255,255,.75); line-height: 1.5; }
+  .mc-note b { color: #8FF09B; }
+
+  .modal-section { margin-bottom: 28px; }
+  .modal-section-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+  .modal-note { font-size: 11px; color: var(--ink-faint); margin-top: 8px; line-height: 1.5; }
+
+  .qa-table { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-bottom: 14px; }
+  .qa-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+  .qa-row:first-child { border-top: none; }
+  .qa-old, .qa-new { padding: 12px 16px; font-size: 12.5px; }
+  .qa-old { color: var(--ink-faint); }
+  .qa-new { color: var(--ink); font-weight: 600; border-left: 1px solid var(--line); }
+
+  .checklist { list-style: none; }
+  .checklist li {
+    position: relative; padding: 9px 0 9px 26px; font-size: 12.5px; color: var(--ink-soft);
+    line-height: 1.5; border-top: 1px solid var(--line);
+  }
+  .checklist li:first-child { border-top: none; }
+  .checklist li::before {
+    content: ""; position: absolute; left: 0; top: 11px; width: 14px; height: 14px;
+    border: 1.5px solid var(--ink-faint); border-radius: 4px;
+  }
+  .modal-footer-note { font-size: 10.5px; color: var(--ink-faint); line-height: 1.5; padding-top: 16px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 620px) {
+    .impact-grid { grid-template-columns: 1fr; }
+    .modal-compare { grid-template-columns: 1fr; }
+    .qa-row { grid-template-columns: 1fr; }
+    .qa-new { border-left: none; border-top: 1px solid var(--line); }
+    .main-tabs { flex-wrap: wrap; }
+  }
+
+  /* ── PRINT / PDF — tema claro Acervo, compactado para 1 página ── */
+  @media print {
+    @page { size: A4; margin: 9mm 11mm; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+    html, body { padding-top: 0; background: #fff !important; font-size: 12px; }
+    .topnav, .no-print, .main-tabs, .modal-overlay, #tab-impacto, #tab-roi { display: none !important; }
+    #tab-proposta { display: block !important; }
+    #screenConfig { display: none !important; }
+    #screenProposta { display: block !important; }
+
+    .prop-wrap { max-width: 100%; padding: 0; margin: 0; background: #fff !important; }
+    .prop-sheet { box-shadow: none; border: none; background: #fff !important; padding: 20px 24px; border-radius: 0; }
+
+    /* brand + hero */
+    .prop-brand { margin-bottom: 16px; }
+    .prop-brand img { height: 28px; }
+    .prop-lead-line { margin: -14px 0 16px !important; font-size: 11.5px; }
+    .prop-hero { padding-bottom: 16px; margin-bottom: 16px; }
+    .prop-hero-label { font-size: 9.5px; margin-bottom: 8px; }
+    .prop-hero-price { font-size: 34px; letter-spacing: -0.8px; }
+    .prop-hero-sub { font-size: 12px; margin-top: 5px; }
+    .prop-hero-extra { font-size: 10.5px; }
+
+    /* feature table */
+    .feature-table { margin-bottom: 14px; }
+    .feature-row { padding: 8px 14px; font-size: 12px; }
+    .feature-value.big { font-size: 15px; }
+    .feature-sub { font-size: 9.5px; }
+
+    /* total previsto */
+    .total-previsto { margin: 4px 0 16px; border-radius: 14px; }
+    .tp-head { padding: 14px 18px 2px; }
+    .tp-eyebrow { font-size: 9px; }
+    .tp-title { font-size: 13.5px; margin-top: 2px; }
+    .tp-grid { padding: 10px 18px 14px; gap: 10px; }
+    .tp-field label { font-size: 9px; margin-bottom: 4px; }
+    .tp-field input { font-size: 12.5px; padding: 2px 2px 5px; border-bottom-color: var(--line) !important; }
+    .tp-result { padding: 10px 12px; }
+    .tp-result-label { font-size: 9px; margin-bottom: 4px; }
+    .tp-result-value { font-size: 15px; }
+
+    /* benefícios */
+    .benefit-section-title { font-size: 12px; margin: 12px 0 8px !important; }
+    .benefit-list { gap: 6px 12px; margin-bottom: 16px !important; }
+    .benefit-item { padding: 8px 10px; }
+    .benefit-check { width: 16px; height: 16px; font-size: 9px; }
+    .benefit-label { font-size: 11.5px; line-height: 1.25; }
+
+    /* mensagens (passo 2 não aparece na proposta final, mas por segurança) */
+    .msg-row input { border-bottom-color: var(--line) !important; }
+
+    /* rodapé verde */
+    .prop-footer-banner { margin-top: 16px; padding: 14px 18px 10px; border-radius: 12px; }
+    .pfb-eyebrow { font-size: 8px; margin-bottom: 6px; }
+    .pfb-title { font-size: 12.5px; }
+    .pfb-bottom { margin-top: 10px; padding-top: 8px; font-size: 8px; }
+  }
+
+</style>
+</head>
+<body data-tab="proposta">
+
+<header class="topnav fixed no-print">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Voltar ao HUB">
+      <img src="../assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/>
+      <div class="crumb hide-sm"><div><div class="crumb-title">Proposta Comercial</div><div class="crumb-sub">HUB de Vendas · Uso interno</div></div></div>
+    </a>
+    <div class="nav-actions">
+      <button class="btn-explicar" onclick="openModal()">Entender a mudança</button>
+      <div class="topbar-price" id="topbarPrice">R$ 4.350/mês</div>
+      <a class="btn btn-ghost btn-sm hide-sm" href="../index.html">← HUB</a>
+    </div>
+  </div>
+</header>
+
+<div class="main-tabs no-print">
+  <div class="main-tabs-inner">
+  <button class="main-tab-btn active" data-tab="proposta" onclick="switchTab('proposta')">Proposta</button>
+  <button class="main-tab-btn" data-tab="impacto" onclick="switchTab('impacto')">Impacto da Cobrança</button>
+  <button class="main-tab-btn" data-tab="roi" onclick="switchTab('roi')">ROI do WhatsApp</button>
+  </div>
+</div>
+
+<div id="tab-proposta">
+<!-- ══════ TELA 1 — CONFIGURADOR ══════ -->
+<main id="screenConfig">
+  <div class="config-wrap">
+
+    <div class="hero">
+      <div class="hero-badge">Simule seu plano em tempo real</div>
+      <h1>Quanto fica o seu plano?</h1>
+      <div class="hero-rule"></div>
+    </div>
+
+    <!-- LEAD (opcional) -->
+    <div class="step-card">
+      <div class="step-title">Nome do lead <span class="step-optional-tag">Opcional</span></div>
+      <div class="step-desc">Aparece no topo da proposta gerada.</div>
+      <input type="text" id="leadName" placeholder="Ex.: João Silva — Loja XPTO" style="width:100%; font-family:'Sora',sans-serif; font-size:15px; font-weight:600; border:none; border-bottom:1.5px solid var(--line); padding:8px 2px 10px; color:var(--ink); background:transparent;"/>
+    </div>
+
+    <!-- PASSO 1 -->
+    <div class="step-card">
+      <div class="step-eyebrow">Passo 1</div>
+      <div class="step-title">Escolha sua volumetria</div>
+      <div class="step-desc">Quantos clientes atende por mês?</div>
+
+      <div class="price-display">
+        <div class="price-value" id="priceValue">R$ 4.350</div>
+        <div class="price-meta">
+          <span id="priceAtendidos">5.000</span> atendidos/mês
+          <span class="discount" id="priceDiscount"> · 33% de desconto por volume</span>
+        </div>
+      </div>
+
+      <input type="range" id="tierSlider" min="500" max="10000" step="500" value="5000"/>
+      <div class="range-marks" id="rangeMarks"></div>
+      <div class="tier-note" id="tierNote">valor estimado por interpolação — confirmar na tabela oficial</div>
+    </div>
+
+    <!-- PASSO 2 (novo) -->
+    <div class="step-card">
+      <div class="step-eyebrow">Passo 2</div>
+      <div class="step-title">Quanto sua operação consome em mensagens?</div>
+      <div class="step-desc">Informe a estimativa de mensagens enviadas por tipo — igual sua fatura da Meta.</div>
+
+      <div class="msg-table">
+        <div class="msg-head-row">
+          <div>Tipo</div><div>Tarifa</div><div>Enviadas/mês</div><div style="text-align:right">Valor</div>
+        </div>
+        <div class="msg-row">
+          <div class="msg-type">Marketing</div>
+          <div class="msg-tarifa">R$ 0,36</div>
+          <input type="number" min="0" step="1" placeholder="0" id="msg-marketing"/>
+          <div class="msg-valor" id="msgValor-marketing">R$ 0</div>
+        </div>
+        <div class="msg-row">
+          <div class="msg-type">Utilidade</div>
+          <div class="msg-tarifa">R$ 0,04</div>
+          <input type="number" min="0" step="1" placeholder="0" id="msg-utilidade"/>
+          <div class="msg-valor" id="msgValor-utilidade">R$ 0</div>
+        </div>
+        <div class="msg-row">
+          <div class="msg-type">Autenticação</div>
+          <div class="msg-tarifa">R$ 0,04</div>
+          <input type="number" min="0" step="1" placeholder="0" id="msg-autenticacao"/>
+          <div class="msg-valor" id="msgValor-autenticacao">R$ 0</div>
+        </div>
+        <div class="msg-row">
+          <div class="msg-type">Serviço <span class="msg-badge">NOVO</span></div>
+          <div class="msg-tarifa">R$ 0,04</div>
+          <input type="number" min="0" step="1" placeholder="0" id="msg-servico"/>
+          <div class="msg-valor" id="msgValor-servico">R$ 0</div>
+        </div>
+      </div>
+
+      <div class="msg-total-row">
+        <div class="msg-total-label">Total do consumo estimado</div>
+        <div class="msg-total-value" id="msgTotalValue">R$ 0</div>
+      </div>
+    </div>
+
+    <!-- PASSO 3 -->
+    <div class="step-card">
+      <div class="step-eyebrow">Passo 3</div>
+      <div class="step-title">Escolha seu teto de mensagens</div>
+      <div class="step-desc">Além do plano, até quanto quer investir em mensagens Meta por mês?</div>
+
+      <div class="teto-grid" id="tetoGrid"></div>
+
+      <div class="teto-progress-wrap">
+        <div class="teto-progress-label">
+          <span>Consumo estimado vs. teto</span>
+          <span><b id="tetoProgressText">R$ 0 de R$ 1.500</b></span>
+        </div>
+        <div class="teto-progress-bar"><div class="teto-progress-fill" id="tetoProgressFill" style="width:0%"></div></div>
+        <div class="teto-alert" id="tetoAlert">Alerta de consumo: ao chegar em 100% do teto, os envios pausam até o próximo mês — ou ajuste o teto quando quiser.</div>
+      </div>
+
+      <div class="previsibility-box">
+        <div class="previsibility-label">Previsibilidade · fatura no máximo</div>
+        <div class="previsibility-value" id="faturaValue">R$ 5.850</div>
+        <div class="previsibility-note" id="faturaFormula">R$ 4.350 plano + até R$ 1.500 teto — a fatura nunca passa desse valor.</div>
+      </div>
+    </div>
+
+    <!-- PASSO 4 (opcional) -->
+    <div class="step-card optional">
+      <div class="step-eyebrow">Passo 4 <span class="step-optional-tag">Opcional</span></div>
+      <div class="step-title">Projete o ganho com campanhas</div>
+      <div class="step-desc">Quais canais de disparo fazem parte da operação?</div>
+
+      <div id="canaisList"></div>
+
+      <div class="total-line" id="totalLine">
+        <div class="total-line-label">Total projetado de atendidos</div>
+        <div class="total-line-value" id="totalLineValue">5.000</div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <button class="btn-primary" onclick="verProposta()">Ver proposta</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════ TELA 2 — PROPOSTA FINAL ══════ -->
+<main id="screenProposta">
+  <div class="prop-wrap">
+    <div class="prop-sheet">
+
+      <div class="prop-brand">
+        <img alt="Suri Shop by TOTVS" src="../assets/img/logo-suri-shop.png"/>
+        <div class="prop-brand-name">Proposta comercial</div>
+        <div class="prop-brand-date" id="propDate"></div>
+      </div>
+
+      <div class="prop-lead-line" id="propLeadLine" style="display:none; text-align:center; font-size:13px; font-weight:600; color:var(--ink-soft); margin:-24px 0 24px;">
+        Proposta para <span id="propLeadName" style="color:var(--ink); font-weight:700;"></span>
+      </div>
+
+      <div class="prop-hero">
+        <div class="prop-hero-label">Plano proposto</div>
+        <div class="prop-hero-price" id="propPrice">R$ 4.350</div>
+        <div class="prop-hero-sub">
+          <span id="propAtendidos">5.000</span> atendidos/mês
+          <span class="discount" id="propDiscount"> · 33% de desconto por volume</span>
+        </div>
+        <div class="prop-hero-extra" id="propExtra"></div>
+      </div>
+
+      <div class="feature-table">
+        <div class="feature-row">
+          <div class="feature-label">Volumetria do plano</div>
+          <div class="feature-value big" id="propAtendidos2">5.000 atendidos/mês</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-label">Canais ativos</div>
+          <div class="feature-value" id="propCanais">—</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-label">Teto de mensagens</div>
+          <div class="feature-value" id="propTeto">R$ 1.500</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-label">Fatura prevista, no máximo</div>
+          <div class="feature-value big" id="propFatura">R$ 5.850</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-label">Mensagens de Marketing</div>
+          <div class="feature-value">R$ 0,36 <span class="feature-sub">(era R$0,49–0,66)</span></div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-label">Mensagens de Utilidade e Autenticação</div>
+          <div class="feature-value">R$ 0,04 <span class="feature-sub">(era R$0,25–0,66)</span></div>
+        </div>
+      </div>
+
+      <div class="total-previsto no-print-keep">
+        <div class="tp-head">
+          <div class="tp-eyebrow">Total previsto · Investimento e Retorno</div>
+          <div class="tp-title">Quanto entra e quanto sai com esse plano?</div>
+        </div>
+        <div class="tp-grid">
+          <div class="tp-field">
+            <label>Ticket médio por venda</label>
+            <input type="number" min="0" step="1" placeholder="R$ 0" id="tpTicket"/>
+          </div>
+          <div class="tp-field">
+            <label>Taxa de conversão estimada (%)</label>
+            <input type="number" min="0" max="100" step="1" placeholder="0" id="tpConversao"/>
+          </div>
+        </div>
+        <div class="tp-results">
+          <div class="tp-result">
+            <div class="tp-result-label">Investimento mensal previsto</div>
+            <div class="tp-result-value investimento" id="tpInvestimento">R$ 5.850</div>
+          </div>
+          <div class="tp-result">
+            <div class="tp-result-label">Retorno estimado (receita)</div>
+            <div class="tp-result-value" id="tpRetorno">R$ 0</div>
+          </div>
+          <div class="tp-result">
+            <div class="tp-result-label">ROI previsto</div>
+            <div class="tp-result-value positive" id="tpRoi">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="benefit-section-title">Benefícios inclusos</div>
+      <div class="benefit-list">
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-label">Atendentes ilimitados incluso</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-label">Service Agent e Commerce Agent (IA) inclusos</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-label">Webchat integrado ao WhatsApp</div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-label">Alerta de consumo e trava de gasto</div>
+        </div>
+      </div>
+
+      <div class="prop-footer-banner">
+        <div class="pfb-eyebrow">Suri Shop · RD Station · TOTVS</div>
+        <div class="pfb-title">Mensagem ao preço da Meta. Plano simples. Você no controle do seu investimento.</div>
+        <div class="pfb-bottom">
+          <span>Proposta comercial</span>
+          <span id="propValidDate"></span>
+        </div>
+      </div>
+
+      <div class="prop-actions no-print">
+        <button class="btn-ghost" onclick="editarProposta()">← Editar</button>
+        <button class="btn-primary" onclick="window.print()">Gerar PDF</button>
+      </div>
+
+    </div>
+  </div>
+</main>
+</div><!-- /tab-proposta -->
+
+<!-- ══════ ABA — CALCULADORA DE IMPACTO ══════ -->
+<main id="tab-impacto">
+  <div class="config-wrap">
+
+    <div class="hero">
+      <div class="hero-badge">A partir de 1º de outubro de 2026</div>
+      <h1>Quanto a nova cobrança <span class="lav">impacta sua operação?</span></h1>
+    </div>
+
+    <div class="disclaimer-bar no-print">
+      Valor sinalizado pela Meta para mensagens de Serviço (ainda não oficial) — o guia indica que deve equivaler ao preço atual de Utilidade, R$0,04, o mesmo valor usado na Proposta Comercial (modelo margem zero). A Meta publica a taxa oficial em 1º de setembro de 2026.
+    </div>
+
+    <div class="step-card">
+      <div class="step-title">Simule o custo por atendimento</div>
+      <div class="step-desc">Quantas mensagens de Serviço uma conversa típica consome, e quantos atendimentos sua operação faz por mês?</div>
+
+      <div class="impact-grid">
+        <div class="canal-field">
+          <label>Atendimentos/mês</label>
+          <input type="number" min="0" step="100" id="impAtendimentos" value="5000"/>
+        </div>
+        <div class="canal-field">
+          <label>Mensagens de serviço/atendimento</label>
+          <input type="number" min="0" step="1" id="impMensagens" value="40"/>
+        </div>
+        <div class="canal-field">
+          <label>Preço por mensagem (sinalizado)</label>
+          <input type="number" min="0" step="0.001" id="impPreco" value="0.04"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-desc" style="margin-bottom:8px;">Custo por conversa, a partir de outubro/26</div>
+      <div class="price-value" id="impCustoConversa" style="font-size:44px;">R$ 1,60</div>
+
+      <div class="live-card">
+        <div class="live-card-head">
+          <span>MENSAGENS DE SERVIÇO · A PARTIR DE OUT/26</span>
+          <span class="live-dot">● ao vivo</span>
+        </div>
+        <div class="live-row"><span>Atendente</span><span>Já está aprovada, chega em 2 dias.</span><b id="livePrice1">+R$0,04</b></div>
+        <div class="live-row"><span>Atendente</span><span>Vou verificar essa cor no estoque</span><b id="livePrice2">+R$0,04</b></div>
+        <div class="live-row"><span>Atendente</span><span>Sim! Vou gerar o novo link.</span><b id="livePrice3">+R$0,04</b></div>
+        <div class="live-row muted" id="liveRow4"><span>Atendente</span><span id="liveRestLabel">e mais 37 mensagens da conversa</span><b id="livePrice4">+R$1,48</b></div>
+        <div class="live-total"><span>Custo acumulado da conversa</span><span id="liveTotal">R$ 1,60</span></div>
+        <div class="live-caption" id="liveCaption">Simulação de uma conversa com 40 mensagens de serviço</div>
+      </div>
+
+      <div class="impact-stats">
+        <div class="impact-stat">
+          <div class="impact-stat-label">Volume mensal de mensagens de serviço</div>
+          <div class="impact-stat-value" id="impVolume">200.000</div>
+        </div>
+        <div class="impact-stat">
+          <div class="impact-stat-label">Custo mensal adicional estimado</div>
+          <div class="impact-stat-value" id="impCustoMensal">R$ 8.000</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════ ABA — CALCULADORA DE ROI ══════ -->
+<main id="tab-roi">
+  <div class="config-wrap">
+
+    <div class="hero">
+      <div class="hero-badge">Retorno do canal</div>
+      <h1>Qual o <span class="lav">ROI do WhatsApp</span> na sua operação?</h1>
+    </div>
+
+    <div class="disclaimer-bar no-print">
+      Fórmulas simplificadas para fins de planejamento. O custo efetivo depende das categorias de mensagem e das regras vigentes da Meta.
+    </div>
+
+    <div class="step-card">
+      <div class="step-title">Dados da operação</div>
+      <div class="impact-grid">
+        <div class="canal-field">
+          <label>Conversas/mês</label>
+          <input type="number" min="0" step="100" id="roiConversas" value="5000"/>
+        </div>
+        <div class="canal-field">
+          <label>Mensagens de serviço/conversa</label>
+          <input type="number" min="0" step="1" id="roiMensagens" value="40"/>
+        </div>
+        <div class="canal-field">
+          <label>Preço por mensagem</label>
+          <input type="number" min="0" step="0.001" id="roiPreco" value="0.04"/>
+        </div>
+        <div class="canal-field">
+          <label>Taxa de conversão (%)</label>
+          <input type="number" min="0" max="100" step="1" id="roiConversao" value="20"/>
+        </div>
+        <div class="canal-field">
+          <label>Ticket médio (R$)</label>
+          <input type="number" min="0" step="10" id="roiTicket" value="150"/>
+        </div>
+        <div class="canal-field">
+          <label>Simular c/ menos mensagens (opcional)</label>
+          <input type="number" min="0" step="1" id="roiMensagensOtim" placeholder="ex: 30"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="feature-table" id="roiTable" style="margin-bottom:0;">
+        <div class="feature-row"><div class="feature-label">Custo mensal de mensageria</div><div class="feature-value big" id="roiCustoMensal">—</div></div>
+        <div class="feature-row"><div class="feature-label">Custo por conversa</div><div class="feature-value" id="roiCustoConversa">—</div></div>
+        <div class="feature-row"><div class="feature-label">Número de vendas estimado</div><div class="feature-value" id="roiNumVendas">—</div></div>
+        <div class="feature-row"><div class="feature-label">Custo por venda</div><div class="feature-value big" id="roiCustoVenda">—</div></div>
+        <div class="feature-row"><div class="feature-label">Receita estimada</div><div class="feature-value big" id="roiReceita">—</div></div>
+        <div class="feature-row"><div class="feature-label">ROI do canal</div><div class="feature-value big" id="roiResultado" style="color:var(--lavender);">—</div></div>
+      </div>
+    </div>
+
+    <div class="step-card" id="roiCompareCard" style="display:none;">
+      <div class="step-title">Comparativo — reduzindo mensagens por conversa</div>
+      <div class="compare-grid">
+        <div class="compare-col">
+          <div class="compare-col-label">Hoje</div>
+          <div class="compare-col-value" id="roiHojeCusto">—</div>
+          <div class="compare-col-sub">custo por venda</div>
+          <div class="compare-col-value" id="roiHojeRoi">—</div>
+          <div class="compare-col-sub">ROI</div>
+        </div>
+        <div class="compare-col highlight">
+          <div class="compare-col-label">Com menos mensagens</div>
+          <div class="compare-col-value" id="roiOtimCusto">—</div>
+          <div class="compare-col-sub">custo por venda</div>
+          <div class="compare-col-value" id="roiOtimRoi">—</div>
+          <div class="compare-col-sub">ROI</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════ MODAL — ENTENDER A MUDANÇA ══════ -->
+<div class="modal-overlay no-print" id="modalEntender">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <div class="modal-head-title">Entender a mudança</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-hero">
+        <h2>O WhatsApp mudou.</h2>
+        <p>A partir de 1º de outubro de 2026, a Meta passa a cobrar também pelas <b>mensagens de Serviço</b> — as respostas de atendente ou automação dentro da janela de 24h, que até hoje eram gratuitas.</p>
+      </div>
+
+      <div class="modal-compare">
+        <div class="mc-col light">
+          <div class="mc-pill up">↑ Passa a ser cobrado</div>
+          <div class="mc-item"><b>Mensagens de serviço</b><span>Respostas de atendentes, automações ou IA durante uma conversa.</span></div>
+          <div class="mc-item"><b>Templates de utilidade na janela de 24h</b><span>Confirmações, atualizações de pedidos e lembretes.</span></div>
+        </div>
+        <div class="mc-col dark">
+          <div class="mc-pill ok">✓ Continua sem cobrança</div>
+          <div class="mc-item"><b>Janela gratuita de 72 horas</b><span>Iniciada quando o cliente chega por anúncios Click-to-WhatsApp ou botões de chamada do Facebook.</span></div>
+          <div class="mc-note"><b>Oportunidade:</b> orientar o cliente a aproveitar essa janela nos fluxos — argumento de venda.</div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">A pergunta mudou</div>
+        <div class="qa-table">
+          <div class="qa-row"><div class="qa-old">Quanto custa uma mensagem?</div><div class="qa-new">Quanto custa gerar um resultado?</div></div>
+          <div class="qa-row"><div class="qa-old">Quantas conversas atendemos?</div><div class="qa-new">Quantas mensagens precisamos para resolver?</div></div>
+          <div class="qa-row"><div class="qa-old">Quantas mensagens enviamos?</div><div class="qa-new">Quantas precisamos para vender?</div></div>
+          <div class="qa-row"><div class="qa-old">Quanto tempo demoramos para responder?</div><div class="qa-new">Quanto custa uma conversa resolvida?</div></div>
+        </div>
+        <p class="modal-p">O objetivo não é mandar menos mensagens. É precisar de menos mensagens para gerar mais resultado — é isso que chamamos de <b>Eficiência Conversacional</b>.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">IA e automação</div>
+        <p class="modal-p">Service Agent e Commerce Agent ajudam a chegar ao mesmo resultado com menos interações. Em uma operação de referência (varejo farmacêutico), o Commerce Agent reduziu em até <b>3x</b> a quantidade de mensagens trocadas até o fechamento da venda, comparado ao atendimento humano assistido.</p>
+        <p class="modal-note">Resultado observado internamente em operação de cliente Suri Shop — pode variar conforme jornada, setor e maturidade da operação. Não é garantia universal de resultado.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Canais integrados</div>
+        <p class="modal-p">Uma conversa pode começar no WhatsApp, seguir para o Webchat nas etapas que exigem mais trocas de mensagem — como finalizar um pedido — e voltar ao WhatsApp quando fizer sentido, com histórico e contexto preservados. O Webchat não tem custo de mensageria Meta.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">WhatsApp + mídia paga</div>
+        <p class="modal-p">Conversas iniciadas por um cliente a partir de um anúncio Click-to-WhatsApp (ou botão de call-to-action do Facebook) abrem uma janela de <b>72 horas gratuita</b>, mesmo para mensagens de Serviço. A exceção fica por conta de respostas do Meta Business Agent, que têm cobrança própria por token.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Checklist de preparação</div>
+        <ul class="checklist">
+          <li>Mapeamos quantas mensagens de Serviço nossa operação envia hoje, por fluxo e por time?</li>
+          <li>Sabemos quantas mensagens, em média, uma venda e um atendimento consomem do início ao fim?</li>
+          <li>Identificamos os fluxos com maior volume de mensagens repetidas ou desnecessárias?</li>
+          <li>Avaliamos onde um agente de IA pode reduzir o número de interações sem prejudicar a experiência?</li>
+          <li>Revisamos se etapas da jornada podem migrar para o Webchat sem custo de mensageria Meta?</li>
+          <li>Definimos um teto de investimento mensal para mensageria e como vamos acompanhá-lo?</li>
+        </ul>
+      </div>
+
+      <div class="modal-footer-note">
+        Fonte: Guia da Eficiência Conversacional 2026 (Suri Shop). Descrições de produto, benchmarks e valores sinalizados refletem esse material; a taxa oficial da Meta para mensagens de Serviço só é publicada em 1º de setembro de 2026.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+// ─────────────────────────────────────────────
+// DADOS
+// TIERS: apenas as 4 faixas de volumetria confirmadas nos prints.
+// A faixa acima de 10.000 ficou de fora até você confirmar o valor
+// certo (um print mostrava "20.000+", outro "100.000" para R$52.000).
+// TETOS: confirmados no print do Movimento 03 (Controle).
+// ─────────────────────────────────────────────
+const TIERS = [
+  { atendidos: 500,   preco: 650,  desconto: 0,  label: '500' },
+  { atendidos: 2500,  preco: 2350, desconto: 28, label: '2.500' },
+  { atendidos: 5000,  preco: 4350, desconto: 33, label: '5.000' },
+  { atendidos: 10000, preco: 8200, desconto: 37, label: '10.000' },
+];
+
+const TETOS = [
+  { valor: 500,  label: 'R$ 500' },
+  { valor: 1500, label: 'R$ 1.500' },
+  { valor: 3000, label: 'R$ 3.000' },
+  { valor: 5000, label: 'R$ 5.000' },
+  { valor: null, label: 'Sem teto' },
+];
+
+const CANAIS = [
+  { id: 'venda',       nome: 'Venda',       sub: 'Recuperação de compra · Marketing',   tarifa: 0.36 },
+  { id: 'atendimento', nome: 'Atendimento', sub: 'Status de pedido · Utilidade',         tarifa: 0.04 },
+  { id: 'marketing',   nome: 'Marketing',   sub: 'Campanhas de atração · Marketing',     tarifa: 0.36 },
+];
+
+const state = { atendidos: 5000, tetoIndex: 1, canais: {}, mensagens: { marketing: 0, utilidade: 0, autenticacao: 0, servico: 0 } };
+const TARIFAS = { marketing: 0.36, utilidade: 0.04, autenticacao: 0.04, servico: 0.04 };
+CANAIS.forEach(c => state.canais[c.id] = { ativo: false, disparos: 0, resposta: 0 });
+
+function fmtBRL(n) { return 'R$ ' + Math.round(n).toLocaleString('pt-BR'); }
+function fmtNum(n) { return Math.round(n).toLocaleString('pt-BR'); }
+
+// Interpola preço/desconto entre os 4 pontos confirmados.
+// Retorna { preco, desconto, confirmado } — confirmado=false quando o valor
+// não é um dos 4 pontos oficiais (500/2.500/5.000/10.000), e sim calculado
+// por interpolação linear entre os dois pontos vizinhos.
+function tierFor(atendidos) {
+  const exact = TIERS.find(t => t.atendidos === atendidos);
+  if (exact) return { preco: exact.preco, desconto: exact.desconto, confirmado: true };
+
+  let lo = TIERS[0], hi = TIERS[TIERS.length - 1];
+  for (let i = 0; i < TIERS.length - 1; i++) {
+    if (atendidos >= TIERS[i].atendidos && atendidos <= TIERS[i + 1].atendidos) {
+      lo = TIERS[i]; hi = TIERS[i + 1]; break;
+    }
+  }
+  const frac = (atendidos - lo.atendidos) / (hi.atendidos - lo.atendidos);
+  const preco = lo.preco + frac * (hi.preco - lo.preco);
+  const desconto = lo.desconto + frac * (hi.desconto - lo.desconto);
+  return { preco, desconto: Math.round(desconto), confirmado: false };
+}
+
+// Marcações visuais na régua — mais pontos de referência que os 4 preços
+// confirmados (TIERS). Os valores entre eles usam o preço interpolado normalmente.
+const MARKS = [500, 1000, 1500, 2500, 4000, 5000, 6500, 8000, 10000];
+
+// ── Passo 1: slider de volumetria (500 em 500) ──
+const tierSlider = document.getElementById('tierSlider');
+const rangeMarks = document.getElementById('rangeMarks');
+const MIN_AT = 500, MAX_AT = 10000;
+MARKS.forEach((atendidos) => {
+  const mark = document.createElement('span');
+  mark.textContent = fmtNum(atendidos);
+  const pct = ((atendidos - MIN_AT) / (MAX_AT - MIN_AT)) * 100;
+  if (pct <= 1) { mark.style.left = '0%'; }
+  else if (pct >= 99) { mark.style.right = '0%'; }
+  else { mark.style.left = pct + '%'; mark.style.transform = 'translateX(-50%)'; }
+  mark.dataset.atendidos = atendidos;
+  mark.onclick = () => { state.atendidos = atendidos; tierSlider.value = atendidos; renderAll(); };
+  rangeMarks.appendChild(mark);
+});
+tierSlider.addEventListener('input', () => { state.atendidos = parseInt(tierSlider.value, 10); renderAll(); });
+
+function updateSliderFill() {
+  const pct = ((state.atendidos - MIN_AT) / (MAX_AT - MIN_AT)) * 100;
+  tierSlider.style.background = `linear-gradient(to right, var(--blue) 0%, var(--blue) ${pct}%, var(--line) ${pct}%, var(--line) 100%)`;
+}
+
+// ── Passo 2: canais ──
+const canaisList = document.getElementById('canaisList');
+CANAIS.forEach(c => {
+  const row = document.createElement('div');
+  row.className = 'canal';
+  row.id = 'canal-' + c.id;
+  row.innerHTML = `
+    <div class="canal-head">
+      <div>
+        <div class="canal-name">${c.nome}</div>
+        <div class="canal-sub">${c.sub}</div>
+      </div>
+      <button class="switch" data-id="${c.id}"></button>
+    </div>
+    <div class="canal-fields">
+      <div class="canal-field">
+        <label>Disparos/mês</label>
+        <input type="number" min="0" step="1" placeholder="0" id="disparos-${c.id}"/>
+      </div>
+      <div class="canal-field">
+        <label>% Resposta</label>
+        <input type="number" min="0" max="100" step="1" placeholder="0" id="resposta-${c.id}"/>
+      </div>
+      <div class="canal-result">
+        <div class="canal-result-label">Atendidos a mais</div>
+        <div class="canal-result-value" id="extra-${c.id}">+0</div>
+      </div>
+    </div>
+  `;
+  canaisList.appendChild(row);
+});
+
+canaisList.addEventListener('click', (e) => {
+  const sw = e.target.closest('.switch');
+  if (!sw) return;
+  const id = sw.dataset.id;
+  const isOn = !state.canais[id].ativo;
+  state.canais[id].ativo = isOn;
+  sw.classList.toggle('on', isOn);
+  document.getElementById('canal-' + id).classList.toggle('on', isOn);
+  if (!isOn) {
+    state.canais[id].disparos = 0; state.canais[id].resposta = 0;
+    document.getElementById('disparos-' + id).value = '';
+    document.getElementById('resposta-' + id).value = '';
+    document.getElementById('extra-' + id).textContent = '+0';
+  }
+  renderAll();
+});
+
+canaisList.addEventListener('input', (e) => {
+  CANAIS.forEach(c => {
+    if (e.target.id === `disparos-${c.id}`) state.canais[c.id].disparos = parseFloat(e.target.value) || 0;
+    if (e.target.id === `resposta-${c.id}`) state.canais[c.id].resposta = parseFloat(e.target.value) || 0;
+  });
+  renderAll();
+});
+
+// ── Passo 3: teto grid ──
+const tetoGrid = document.getElementById('tetoGrid');
+TETOS.forEach((t, i) => {
+  const card = document.createElement('div');
+  card.className = 'teto-card' + (i === state.tetoIndex ? ' active' : '');
+  card.innerHTML = `<div class="teto-card-n">${t.label}</div>`;
+  card.onclick = () => { state.tetoIndex = i; renderAll(); };
+  tetoGrid.appendChild(card);
+});
+
+// ── render ──
+// ── Passo 2 (novo): consumo de mensagens ──
+Object.keys(TARIFAS).forEach(tipo => {
+  document.getElementById('msg-' + tipo).addEventListener('input', (e) => {
+    state.mensagens[tipo] = parseFloat(e.target.value) || 0;
+    renderAll();
+  });
+});
+
+function consumoTotal() {
+  return Object.keys(TARIFAS).reduce((acc, tipo) => acc + (state.mensagens[tipo] * TARIFAS[tipo]), 0);
+}
+
+function extraTotal() {
+  let total = 0;
+  CANAIS.forEach(c => {
+    const s = state.canais[c.id];
+    if (s.ativo) total += Math.round(s.disparos * (s.resposta / 100));
+  });
+  return total;
+}
+
+function renderAll() {
+  const tr = tierFor(state.atendidos);
+  const teto = TETOS[state.tetoIndex];
+  const extra = extraTotal();
+  const total = state.atendidos + extra;
+
+  tierSlider.value = state.atendidos;
+  updateSliderFill();
+  [...rangeMarks.children].forEach((el) => el.classList.toggle('active', parseInt(el.dataset.atendidos, 10) === state.atendidos));
+  [...tetoGrid.children].forEach((el, i) => el.classList.toggle('active', i === state.tetoIndex));
+
+  const priceEl = document.getElementById('priceValue');
+  priceEl.textContent = fmtBRL(tr.preco);
+  priceEl.classList.remove('pulse'); void priceEl.offsetWidth; priceEl.classList.add('pulse');
+  document.getElementById('priceAtendidos').textContent = fmtNum(state.atendidos);
+  const atEl = document.getElementById('priceAtendidos');
+  atEl.classList.remove('pulse'); void atEl.offsetWidth; atEl.classList.add('pulse');
+  document.getElementById('priceDiscount').textContent = tr.desconto > 0 ? ` · ${tr.desconto}% de desconto por volume` : '';
+  document.getElementById('topbarPrice').textContent = fmtBRL(tr.preco) + '/mês';
+  document.getElementById('tierNote').classList.toggle('show', !tr.confirmado);
+
+  CANAIS.forEach(c => {
+    const s = state.canais[c.id];
+    const val = s.ativo ? Math.round(s.disparos * (s.resposta / 100)) : 0;
+    document.getElementById('extra-' + c.id).textContent = '+' + fmtNum(val);
+  });
+
+  const totalLine = document.getElementById('totalLine');
+  totalLine.classList.toggle('show', extra > 0);
+  document.getElementById('totalLineValue').textContent = fmtNum(total);
+
+  // Passo 2 (novo): consumo de mensagens
+  const consumo = consumoTotal();
+  Object.keys(TARIFAS).forEach(tipo => {
+    const valor = state.mensagens[tipo] * TARIFAS[tipo];
+    document.getElementById('msgValor-' + tipo).textContent = fmtBRL(valor);
+  });
+  document.getElementById('msgTotalValue').textContent = fmtBRL(consumo);
+
+  // Passo 3: teto — barra de progresso + alerta + previsibilidade
+  const tetoFill = document.getElementById('tetoProgressFill');
+  const tetoText = document.getElementById('tetoProgressText');
+  const tetoAlert = document.getElementById('tetoAlert');
+  const faturaFormula = document.getElementById('faturaFormula');
+  const faturaValue = document.getElementById('faturaValue');
+
+  if (teto.valor === null) {
+    tetoText.innerHTML = `${fmtBRL(consumo)} consumidos · sem teto definido`;
+    tetoFill.style.width = '0%';
+    tetoFill.classList.remove('warn', 'over');
+    tetoAlert.classList.remove('show', 'over');
+    faturaFormula.textContent = `${fmtBRL(tr.preco)} plano + ${fmtBRL(consumo)} de mensagens estimadas — sem teto, a fatura acompanha o consumo real.`;
+    faturaValue.textContent = fmtBRL(tr.preco + consumo);
+  } else {
+    const pct = teto.valor > 0 ? Math.min((consumo / teto.valor) * 100, 100) : 0;
+    tetoText.innerHTML = `${fmtBRL(consumo)} de ${fmtBRL(teto.valor)} · ${Math.round((consumo / teto.valor) * 100)}%`;
+    tetoFill.style.width = pct + '%';
+    tetoFill.classList.toggle('warn', consumo / teto.valor >= 0.85 && consumo / teto.valor < 1);
+    tetoFill.classList.toggle('over', consumo / teto.valor >= 1);
+    const showAlert = consumo / teto.valor >= 0.85;
+    tetoAlert.classList.toggle('show', showAlert);
+    tetoAlert.classList.toggle('over', consumo / teto.valor >= 1);
+    tetoAlert.textContent = consumo / teto.valor >= 1
+      ? `Teto atingido: os envios de mensagens pausam até o próximo mês — ou ajuste o teto quando quiser.`
+      : `Alerta em ${Math.round((consumo / teto.valor) * 100)}%: ao chegar em 100% do teto, os envios pausam até o próximo mês — ou ajuste o teto quando quiser.`;
+    faturaFormula.textContent = `${fmtBRL(tr.preco)} plano + até ${fmtBRL(teto.valor)} teto — a fatura nunca passa desse valor, mesmo que o consumo real seja maior.`;
+    faturaValue.textContent = fmtBRL(tr.preco + teto.valor);
+  }
+
+  // investimento real previsto (plano + consumo, respeitando o teto quando definido)
+  const investimentoReal = tr.preco + (teto.valor === null ? consumo : Math.min(consumo, teto.valor));
+  document.getElementById('tpInvestimento').textContent = fmtBRL(investimentoReal);
+  window.__investimentoReal = investimentoReal;
+  window.__atendidosTotalAtual = total;
+
+  // tela da proposta
+  document.getElementById('propPrice').textContent = fmtBRL(tr.preco);
+  document.getElementById('propAtendidos').textContent = fmtNum(state.atendidos);
+  document.getElementById('propAtendidos2').textContent = fmtNum(state.atendidos) + ' atendidos/mês';
+  document.getElementById('propDiscount').textContent = tr.desconto > 0 ? ` · ${tr.desconto}% de desconto por volume` : '';
+  const propExtra = document.getElementById('propExtra');
+  propExtra.textContent = extra > 0 ? `+ ${fmtNum(extra)} atendidos projetados via canais ativos · total de ${fmtNum(total)}` : '';
+
+  const canaisAtivos = CANAIS.filter(c => state.canais[c.id].ativo).map(c => c.nome);
+  document.getElementById('propCanais').textContent = canaisAtivos.length ? canaisAtivos.join(', ') : 'Nenhum canal adicional';
+
+  document.getElementById('propTeto').textContent = teto.valor === null ? 'Sem teto definido' : fmtBRL(teto.valor) + '/mês';
+  document.getElementById('propFatura').textContent = teto.valor === null ? 'Sem limite' : fmtBRL(tr.preco + teto.valor);
+}
+
+// ── TOTAL PREVISTO (investimento real + retorno estimado) ──
+function renderTotalPrevisto() {
+  const ticketEl = document.getElementById('tpTicket');
+  const conversaoEl = document.getElementById('tpConversao');
+  if (!ticketEl || !conversaoEl) return;
+  const ticket = parseFloat(ticketEl.value) || 0;
+  const conversaoPct = parseFloat(conversaoEl.value) || 0;
+  const atendidos = window.__atendidosTotalAtual || state.atendidos;
+  const investimento = window.__investimentoReal || 0;
+
+  const receita = atendidos * (conversaoPct / 100) * ticket;
+  const roi = investimento > 0 ? ((receita - investimento) / investimento) * 100 : 0;
+
+  document.getElementById('tpRetorno').textContent = fmtBRL(receita);
+  const roiEl = document.getElementById('tpRoi');
+  if (ticket > 0 && conversaoPct > 0) {
+    roiEl.textContent = (roi >= 0 ? '+' : '') + Math.round(roi) + '%';
+    roiEl.classList.toggle('positive', roi >= 0);
+  } else {
+    roiEl.textContent = '—';
+  }
+}
+['tpTicket', 'tpConversao'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', renderTotalPrevisto);
+});
+
+function verProposta() {
+  document.getElementById('propDate').textContent =
+    new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+  const validUntil = new Date();
+  validUntil.setDate(validUntil.getDate() + 7);
+  document.getElementById('propValidDate').textContent =
+    'Válida até ' + validUntil.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  const leadNameEl = document.getElementById('leadName');
+  const leadLine = document.getElementById('propLeadLine');
+  const leadName = leadNameEl ? leadNameEl.value.trim() : '';
+  if (leadName) {
+    document.getElementById('propLeadName').textContent = leadName;
+    leadLine.style.display = 'block';
+  } else {
+    leadLine.style.display = 'none';
+  }
+  renderAll();
+  renderTotalPrevisto();
+  document.body.classList.add('show-proposal');
+  window.scrollTo(0, 0);
+}
+function editarProposta() {
+  document.body.classList.remove('show-proposal');
+  window.scrollTo(0, 0);
+}
+
+// ─────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────
+function switchTab(tab) {
+  document.body.dataset.tab = tab;
+  document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  window.scrollTo(0, 0);
+}
+
+// ─────────────────────────────────────────────
+// MODAL — Entender a mudança
+// ─────────────────────────────────────────────
+function openModal() {
+  document.getElementById('modalEntender').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalEntender').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ─────────────────────────────────────────────
+// CALCULADORA DE IMPACTO
+// ─────────────────────────────────────────────
+const impIds = ['impAtendimentos', 'impMensagens', 'impPreco'];
+function renderImpacto() {
+  const atendimentos = parseFloat(document.getElementById('impAtendimentos').value) || 0;
+  const mensagens = parseFloat(document.getElementById('impMensagens').value) || 0;
+  const preco = parseFloat(document.getElementById('impPreco').value) || 0;
+
+  const custoConversa = mensagens * preco;
+  const volumeMensal = atendimentos * mensagens;
+  const custoMensal = volumeMensal * preco;
+
+  document.getElementById('impCustoConversa').textContent = 'R$ ' + custoConversa.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  document.getElementById('impVolume').textContent = fmtNum(volumeMensal);
+  document.getElementById('impCustoMensal').textContent = fmtBRL(custoMensal);
+
+  // live card — 3 mensagens de exemplo (custo real de 1 mensagem cada) +
+  // uma linha agregada com o restante da conversa. O total bate exatamente
+  // com o "custo por conversa" acima, seja qual for o nº de mensagens.
+  const unit = 'R$ ' + preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const exemplosVisiveis = Math.min(mensagens, 3);
+  [1, 2, 3].forEach(n => {
+    const row = document.getElementById('livePrice' + n).closest('.live-row');
+    const visible = n <= exemplosVisiveis;
+    row.style.display = visible ? 'flex' : 'none';
+    if (visible) document.getElementById('livePrice' + n).textContent = '+' + unit;
+  });
+
+  const restante = Math.max(mensagens - exemplosVisiveis, 0);
+  const custoRestante = restante * preco;
+  document.getElementById('liveRestLabel').textContent = restante > 0
+    ? `e mais ${fmtNum(restante)} mensagens da conversa`
+    : 'sem mensagens adicionais';
+  document.getElementById('livePrice4').textContent = '+R$ ' + custoRestante.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  document.getElementById('liveRow4').style.display = restante > 0 ? 'flex' : 'none';
+
+  document.getElementById('liveTotal').textContent = 'R$ ' + custoConversa.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  document.getElementById('liveCaption').textContent = `Simulação de uma conversa com ${fmtNum(mensagens)} mensagens de serviço`;
+}
+impIds.forEach(id => document.getElementById(id).addEventListener('input', renderImpacto));
+
+// ─────────────────────────────────────────────
+// CALCULADORA DE ROI
+// ─────────────────────────────────────────────
+const roiIds = ['roiConversas', 'roiMensagens', 'roiPreco', 'roiConversao', 'roiTicket', 'roiMensagensOtim'];
+function calcRoi(conversas, mensagens, preco, conversaoPct, ticket) {
+  const custoMensal = conversas * mensagens * preco;
+  const numVendas = conversas * (conversaoPct / 100);
+  const custoConversa = conversas > 0 ? custoMensal / conversas : 0;
+  const custoVenda = numVendas > 0 ? custoMensal / numVendas : 0;
+  const receita = numVendas * ticket;
+  const roi = custoMensal > 0 ? (receita - custoMensal) / custoMensal : 0;
+  return { custoMensal, numVendas, custoConversa, custoVenda, receita, roi };
+}
+function renderRoi() {
+  const conversas = parseFloat(document.getElementById('roiConversas').value) || 0;
+  const mensagens = parseFloat(document.getElementById('roiMensagens').value) || 0;
+  const preco = parseFloat(document.getElementById('roiPreco').value) || 0;
+  const conversaoPct = parseFloat(document.getElementById('roiConversao').value) || 0;
+  const ticket = parseFloat(document.getElementById('roiTicket').value) || 0;
+  const otimRaw = document.getElementById('roiMensagensOtim').value;
+
+  const r = calcRoi(conversas, mensagens, preco, conversaoPct, ticket);
+
+  document.getElementById('roiCustoMensal').textContent = fmtBRL(r.custoMensal);
+  document.getElementById('roiCustoConversa').textContent = 'R$ ' + r.custoConversa.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  document.getElementById('roiNumVendas').textContent = fmtNum(r.numVendas);
+  document.getElementById('roiCustoVenda').textContent = 'R$ ' + r.custoVenda.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  document.getElementById('roiReceita').textContent = fmtBRL(r.receita);
+  document.getElementById('roiResultado').textContent = (r.roi * 100).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + '%';
+
+  const compareCard = document.getElementById('roiCompareCard');
+  if (otimRaw && parseFloat(otimRaw) > 0) {
+    const otim = calcRoi(conversas, parseFloat(otimRaw), preco, conversaoPct, ticket);
+    compareCard.style.display = 'block';
+    document.getElementById('roiHojeCusto').textContent = 'R$ ' + r.custoVenda.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('roiHojeRoi').textContent = (r.roi * 100).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + '%';
+    document.getElementById('roiOtimCusto').textContent = 'R$ ' + otim.custoVenda.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('roiOtimRoi').textContent = (otim.roi * 100).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + '%';
+  } else {
+    compareCard.style.display = 'none';
+  }
+}
+roiIds.forEach(id => document.getElementById(id).addEventListener('input', renderRoi));
+
+renderImpacto();
+renderRoi();
+renderAll();
+</script>
+</body>
+</html>

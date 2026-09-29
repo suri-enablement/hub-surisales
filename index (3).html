@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Playbook Comercial · Suri</title>
+<link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/hub.css"/>
+<script src="../assets/hub.js"></script>
+<script>Hub.guard('../');</script>
+<style>
+  .top-fixed{position:sticky;top:0;z-index:200;}
+  .top-fixed .topnav{position:relative;}
+
+  /* busca */
+  .search-input-wrap{position:relative;width:300px;max-width:32vw;}
+  .search-input{width:100%;padding:9px 16px 9px 38px;border:1.5px solid var(--border-strong);border-radius:var(--radius-full);font-size:13px;color:var(--text);outline:none;background:var(--surface);transition:border-color .15s,box-shadow .15s;}
+  .search-input::placeholder{color:var(--text-tertiary);}
+  .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(74,84,255,.12);}
+  .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-tertiary);display:flex;}
+  @media (max-width:760px){.search-input-wrap{display:none;}}
+
+  /* layout */
+  .page-wrap{max-width:var(--maxw);margin:0 auto;padding:32px 28px 80px;display:flex;gap:28px;align-items:flex-start;}
+  .sidebar{width:272px;flex-shrink:0;position:sticky;top:100px;}
+  .sidebar-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:10px;max-height:calc(100vh - 130px);overflow-y:auto;}
+  .sidebar-group-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--text-tertiary);text-transform:uppercase;padding:14px 12px 6px;}
+  .sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-secondary);transition:all .15s;margin-bottom:2px;}
+  .sidebar-item:hover{background:var(--surface-2);color:var(--text);}
+  .sidebar-item.active{background:var(--accent-soft);color:var(--accent-strong);font-weight:600;}
+  .sidebar-item-icon{font-size:15px;flex-shrink:0;width:18px;text-align:center;}
+  .sidebar-item-badge{margin-left:auto;font-size:9px;font-weight:700;letter-spacing:.04em;color:var(--text-tertiary);background:var(--surface-2);border:1px solid var(--border);padding:2px 7px;border-radius:var(--radius-full);white-space:nowrap;}
+  .sidebar-item-badge.new{color:#fff;background:var(--grad);border-color:transparent;}
+  .sidebar-item.active .sidebar-item-badge{background:var(--surface);}
+
+  main{flex:1;min-width:0;}
+  .content-section{display:none;}
+  .content-section.active{display:block;animation:fadeUp .3s ease both;}
+
+  .section-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:20px;}
+  .section-header{padding:28px 32px 22px;border-bottom:1px solid var(--border);}
+  .section-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.09em;color:var(--accent-strong);text-transform:uppercase;margin-bottom:8px;}
+  .section-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--grad);}
+  .section-title{font-size:26px;font-weight:700;letter-spacing:-.015em;color:var(--text);}
+  .section-body{padding:28px 32px 32px;}
+
+  .hero-banner{border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow-md);border:1px solid var(--border);}
+  .hero-banner img{width:100%;height:auto;display:block;}
+
+  .about-lead{font-size:15px;line-height:1.75;color:var(--text-secondary);font-weight:300;margin-bottom:16px;max-width:72ch;}
+  .about-lead strong{color:var(--text);font-weight:600;}
+
+  .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px;}
+  .value-card{background:var(--surface-2);border-radius:var(--radius-md);padding:20px;border-top:3px solid var(--card-color,var(--accent));}
+  .value-card-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.05em;}
+  .value-card ul{padding-left:18px;}
+  .value-card li,.value-card p{font-size:13.5px;color:var(--text-secondary);line-height:1.7;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:24px 0;}
+  .stat-box{background:var(--surface);padding:20px 22px;display:flex;flex-direction:column;gap:4px;}
+  .stat-num{font-size:30px;font-weight:700;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;width:fit-content;}
+  .stat-label{font-size:12.5px;color:var(--text-secondary);}
+
+  .blog-callout{display:flex;gap:14px;align-items:center;background:var(--text);border-radius:var(--radius-md);padding:16px 20px;margin-top:22px;}
+  .blog-callout-icon{font-size:22px;flex-shrink:0;}
+  .blog-callout-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;}
+  .blog-callout-text strong{color:#fff;}
+  .blog-callout-text a{color:#8FF09B;font-weight:600;text-decoration:none;}
+  .blog-callout-text a:hover{text-decoration:underline;}
+
+  .ritual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .ritual-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:22px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+  .ritual-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-color,var(--accent));}
+  .ritual-icon{font-size:22px;margin-bottom:10px;}
+  .ritual-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.35;}
+  .ritual-meta{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary);margin-bottom:6px;}
+  .ritual-meta-icon{width:16px;text-align:center;}
+
+  .doc-list{display:flex;flex-direction:column;gap:8px;}
+  .doc-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);transition:border-color .15s,box-shadow .15s;}
+  .doc-row.linked{cursor:pointer;}
+  .doc-row.linked:hover{border-color:var(--accent);box-shadow:var(--shadow-md);}
+  .doc-icon{width:36px;height:36px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .doc-info{flex:1;min-width:0;}
+  .doc-name{font-size:13.5px;font-weight:600;color:var(--text);}
+  .doc-status{font-size:11.5px;color:var(--text-tertiary);margin-top:1px;}
+  .doc-status.ready{color:var(--success);font-weight:600;}
+  .doc-arrow{color:var(--text-tertiary);font-size:13px;flex-shrink:0;}
+  .list-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--text-tertiary);text-transform:uppercase;margin:24px 0 10px;}
+
+  .pending-state{text-align:center;padding:52px 30px;}
+  .pending-icon{width:60px;height:60px;border-radius:16px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;}
+  .pending-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;}
+  .pending-desc{font-size:13.5px;color:var(--text-secondary);font-weight:300;max-width:400px;margin:0 auto;line-height:1.6;}
+  .pending-badge{display:inline-block;margin-top:16px;font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--warning);background:var(--warning-soft);padding:4px 12px;border-radius:var(--radius-full);}
+
+  @media (max-width:900px){
+    .page-wrap{flex-direction:column;padding:22px 16px 60px;}
+    .sidebar{width:100%;position:static;}
+    .sidebar-card{max-height:none;}
+    .value-grid,.ritual-grid,.stat-strip{grid-template-columns:1fr;}
+    .section-header,.section-body{padding-left:20px;padding-right:20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-fixed">
+  <header class="topnav">
+    <div class="wrap">
+      <a class="brand" href="../index.html" aria-label="Voltar ao HUB">
+        <img src="../assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/>
+        <div class="crumb"><div><div class="crumb-title">Playbook Comercial</div><div class="crumb-sub">HUB de Vendas · Uso interno</div></div></div>
+      </a>
+      <div class="nav-actions">
+        <div class="search-input-wrap">
+          <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+          <input class="search-input" id="searchInput" type="text" placeholder="Buscar no playbook..." oninput="filterSidebar(this.value)"/>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="../index.html">← HUB</a>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar">
+    <div class="sidebar-card" id="sidebarList"></div>
+  </aside>
+
+  <main id="mainContent"></main>
+</div>
+
+<script>
+
+
+// ─────────────────────────────────────────────
+// ESTRUTURA DO PLAYBOOK
+// ready:true = conteúdo completo já migrado
+// ready:false = aguardando conteúdo (placeholder)
+// ─────────────────────────────────────────────
+const SECTIONS = [
+  { id: 'sobre', icon: '🏢', title: 'Sobre a Suri', group: 'Institucional', ready: true },
+  { id: 'politica-vendas', icon: '📋', title: 'Política de Vendas', group: 'Institucional', ready: false },
+  { id: 'slas', icon: '🤝', title: "SLA's — SDR e Closer", group: 'Institucional', ready: false },
+  { id: 'diretrizes', icon: '📐', title: 'Diretrizes Internas', group: 'Institucional', ready: false },
+  { id: 'repositorio', icon: '🗂️', title: 'Repositório', group: 'Institucional', ready: true },
+  { id: 'playbook-closer', icon: '🎯', title: 'Playbook do Closer', group: 'Metodologia', ready: false },
+  { id: 'playbook-sdr', icon: '🤝', title: 'Playbook do SDR', group: 'Metodologia', ready: false },
+  { id: 'treinamentos', icon: '🎓', title: 'Treinamentos Essenciais', group: 'Metodologia', ready: true, isNew: true },
+  { id: 'alta-performance', icon: '📈', title: 'Time Alta Performance', group: 'Metodologia', ready: false },
+  { id: 'cases', icon: '🏆', title: 'Cases de Sucesso', group: 'Metodologia', ready: false },
+  { id: 'rituais', icon: '📅', title: 'Nossos Rituais', group: 'Rotina', ready: true },
+  { id: 'faqs', icon: '❓', title: "FAQ's", group: 'Rotina', ready: false },
+  { id: 'motivos-perda', icon: '📉', title: 'Motivos de Perda', group: 'Rotina', ready: false },
+  { id: 'concorrencia', icon: '🗺️', title: 'Mapa da Concorrência', group: 'Rotina', ready: false },
+  { id: 'estudos', icon: '📚', title: 'Estudos', group: 'Rotina', ready: false },
+  { id: 'lideranca', icon: '👥', title: 'Liderança', group: 'Rotina', ready: false },
+  { id: 'comissao', icon: '💰', title: 'Plano de Comissão', group: 'Rotina', ready: false },
+];
+
+let currentSection = 'sobre';
+
+function renderSidebar(filter) {
+  const el = document.getElementById('sidebarList');
+  const groups = [...new Set(SECTIONS.map(s => s.group))];
+  const f = (filter || '').toLowerCase();
+
+  el.innerHTML = groups.map(group => {
+    const items = SECTIONS.filter(s => s.group === group && s.title.toLowerCase().includes(f));
+    if (items.length === 0) return '';
+    return `<div class="sidebar-group-label">${group}</div>` + items.map(s => `
+      <div class="sidebar-item ${s.id === currentSection ? 'active' : ''}" onclick="goToSection('${s.id}')">
+        <span class="sidebar-item-icon">${s.icon}</span>
+        <span>${s.title}</span>
+        ${!s.ready ? '<span class="sidebar-item-badge">EM BREVE</span>' : (s.isNew ? '<span class="sidebar-item-badge new">NOVO</span>' : '')}
+      </div>
+    `).join('');
+  }).join('');
+}
+
+function filterSidebar(value) {
+  renderSidebar(value);
+}
+
+function goToSection(id) {
+  currentSection = id;
+  renderSidebar(document.getElementById('searchInput').value);
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('section-' + id);
+  if (target) target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function pendingHTML(section) {
+  return `<div class="section-card">
+    <div class="section-header">
+      <div class="section-tag">${section.group}</div>
+      <div class="section-title">${section.icon} ${section.title}</div>
+    </div>
+    <div class="section-body">
+      <div class="pending-state">
+        <div class="pending-icon">${section.icon}</div>
+        <div class="pending-title">Conteúdo em migração</div>
+        <div class="pending-desc">Essa seção ainda está no Notion e será trazida pra cá em breve. Assim que o conteúdo for enviado, ele aparece aqui.</div>
+        <div class="pending-badge">AGUARDANDO CONTEÚDO</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderMain() {
+  const main = document.getElementById('mainContent');
+  let html = '';
+
+  SECTIONS.forEach(s => {
+    html += `<div class="content-section ${s.id === currentSection ? 'active' : ''}" id="section-${s.id}">`;
+
+    if (!s.ready) {
+      html += pendingHTML(s);
+      html += '</div>';
+      return;
+    }
+
+    if (s.id === 'sobre') {
+      html += `
+        <div class="hero-banner">
+          <img src="../assets/img/banner-suri-rd.png" alt="Suri — Inteligência artificial para a nova fase do conversational commerce"/>
+        </div>
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-tag">Institucional</div>
+            <div class="section-title">🏢 Sobre a Suri</div>
+          </div>
+          <div class="section-body">
+            <p class="about-lead"><strong>Suri by ChatbotMaker, Inc.</strong> — uma empresa apaixonada por tecnologia, com a missão audaciosa de transformar a comunicação entre pessoas e marcas de forma simples e inteligente.</p>
+            <p class="about-lead">A Suri surgiu com o objetivo de resolver um problema cada vez mais comum no comércio digital: as empresas recebem muitas mensagens de clientes, mas têm dificuldade em transformar essas conversas em vendas.</p>
+            <p class="about-lead">Especializada em inteligência artificial aplicada a canais conversacionais, a empresa desenvolveu tecnologias capazes de automatizar atendimento e conduzir o cliente até a finalização da compra dentro da própria conversa.</p>
+            <p class="about-lead">Um dos principais produtos da empresa é o <strong>Suri Shop</strong>, plataforma que permite criar uma loja completa dentro do WhatsApp. A solução integra catálogo de produtos, gestão de pedidos, automação de atendimento e pagamento via Pix, crédito ou débito diretamente no chat.</p>
+
+            <div class="stat-strip">
+              <div class="stat-box"><div class="stat-num">35%+</div><div class="stat-label">Taxa de conversão no canal</div></div>
+              <div class="stat-box"><div class="stat-num">86%</div><div class="stat-label">Automação das vendas</div></div>
+              <div class="stat-box"><div class="stat-num">2027</div><div class="stat-label">Meta: líder em Conversational Commerce</div></div>
+            </div>
+
+            <div class="value-grid">
+              <div class="value-card" style="--card-color:#E3A008">
+                <div class="value-card-title">☀️ Valores</div>
+                <ul>
+                  <li>Fazemos o que precisa ser feito</li>
+                  <li>Focamos em resultados</li>
+                  <li>Nos desenvolvemos continuamente</li>
+                  <li>Somos orientados por dados</li>
+                </ul>
+              </div>
+              <div class="value-card" style="--card-color:#4A54FF">
+                <div class="value-card-title">💡 Visão</div>
+                <p>Tornar a Suri líder em Conversational Commerce até 2027.</p>
+              </div>
+              <div class="value-card" style="--card-color:#00B914">
+                <div class="value-card-title">🌍 Missão</div>
+                <p>Transformar conversas em vendas todos os dias.</p>
+              </div>
+            </div>
+
+            <div class="blog-callout">
+              <div class="blog-callout-icon">📰</div>
+              <div class="blog-callout-text">
+                <strong>Blog SURI</strong> — TOTVS conclui aquisição da Suri e reforça estratégia de IA para vendas conversacionais.<br/>
+                <a href="https://www.suri.ai/blog/totvs-conclui-aquisicao-da-suri-e-reforca-estrategia-de-ia-para-vendas-conversacionais" target="_blank" rel="noopener">Ler matéria completa ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    if (s.id === 'repositorio') {
+      const docs = [
+        { icon: '📊', name: 'Geral' },
+        { icon: '🎬', name: 'Demos Interativas' },
+        { icon: '📹', name: 'Reuniões Cases de Sucesso' },
+        { icon: '✍️', name: 'Como assinar seu contrato SURI' },
+        { icon: '🔗', name: 'Integrações' },
+        { icon: '🚀', name: 'Novidades/Deploys — Plataforma Suri' },
+        { icon: '📇', name: 'Suri — Guia de Campos do CRM | Pipeline de Vendas B2B' },
+        { icon: '🔌', name: 'Integração WinThor → Suri Shop' },
+      ];
+      html += `<div class="section-card">
+        <div class="section-header">
+          <div class="section-tag">Institucional</div>
+          <div class="section-title">🗂️ Repositório</div>
+        </div>
+        <div class="section-body">
+          <div class="doc-list">
+            ${docs.map(d => `<div class="doc-row"><div class="doc-icon">${d.icon}</div><div class="doc-info"><div class="doc-name">${d.name}</div><div class="doc-status">Aguardando migração do conteúdo</div></div></div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+    }
+
+    if (s.id === 'treinamentos') {
+      html += `<div class="section-card">
+        <div class="section-header">
+          <div class="section-tag">Metodologia</div>
+          <div class="section-title">🎓 Treinamentos Essenciais</div>
+        </div>
+        <div class="section-body">
+          <div class="doc-list">
+            <a class="doc-row linked" href="../treinamentos-rd/index.html" style="text-decoration:none">
+              <div class="doc-icon">🎬</div>
+              <div class="doc-info"><div class="doc-name">Treinamentos RD — Workshop de Vendas (23 a 25/09)</div><div class="doc-status ready">3 gravações + slides · no HUB</div></div>
+              <div class="doc-arrow">→</div>
+            </a>
+            <a class="doc-row linked" href="https://docs.google.com/forms/d/e/1FAIpQLScMpr39SP6Ja7Erw5VoDSM7MKARKoK0vDqTHiRFLSlCfzGE8g/alreadyresponded" target="_blank" rel="noopener" style="text-decoration:none">
+              <div class="doc-icon">🛍️</div>
+              <div class="doc-info"><div class="doc-name">Treinamento Suri Shop</div><div class="doc-status ready">Formulário disponível ↗</div></div>
+              <div class="doc-arrow">→</div>
+            </a>
+            <div class="doc-row"><div class="doc-icon">🎯</div><div class="doc-info"><div class="doc-name">SPIN Selling na prática</div><div class="doc-status">Aguardando migração do conteúdo</div></div></div>
+          </div>
+          <div class="list-label">Leituras Essenciais</div>
+          <div class="doc-list">
+            <div class="doc-row"><div class="doc-icon">📖</div><div class="doc-info"><div class="doc-name">Manual de Cultura e Redação</div><div class="doc-status">Aguardando migração do conteúdo</div></div></div>
+            <a class="doc-row linked" href="https://olist.com/blog/pt/como-empreender/e-commerce/o-que-e-e-commerce/" target="_blank" rel="noopener" style="text-decoration:none">
+              <div class="doc-icon">🛒</div>
+              <div class="doc-info"><div class="doc-name">Conhecendo mais sobre o mundo do E-commerce</div><div class="doc-status ready">Artigo Olist ↗</div></div>
+              <div class="doc-arrow">→</div>
+            </a>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    if (s.id === 'rituais') {
+      html += `<div class="section-card">
+        <div class="section-header">
+          <div class="section-tag">Rotina</div>
+          <div class="section-title">📅 Nossos Rituais</div>
+        </div>
+        <div class="section-body">
+          <div class="ritual-grid">
+            <div class="ritual-card" style="--card-color:#4A54FF">
+              <div class="ritual-icon">🚩</div>
+              <div class="ritual-name">Kickoff Mensal (Todos)</div>
+              <div class="ritual-meta"><span class="ritual-meta-icon">📆</span> 1º dia útil de todo mês</div>
+              <div class="ritual-meta"><span class="ritual-meta-icon">🕐</span> 9h – 11h</div>
+            </div>
+            <div class="ritual-card" style="--card-color:#6B4EE6">
+              <div class="ritual-icon">🚩</div>
+              <div class="ritual-name">Kickoff Semanal (Todos)</div>
+              <div class="ritual-meta"><span class="ritual-meta-icon">📆</span> Toda segunda-feira</div>
+              <div class="ritual-meta"><span class="ritual-meta-icon">🕐</span> 9h – 10h</div>
+            </div>
+            <div class="ritual-card" style="--card-color:#00B914">
+              <div class="ritual-icon">🚩</div>
+              <div class="ritual-name">Daily (Times)</div>
+              <div class="ritual-meta"><span class="ritual-meta-icon">📆</span> Segunda a sexta</div>
+              <div class="ritual-meta"><span class="ritual-meta-icon">🕐</span> 9h – 9h20</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    html += '</div>';
+  });
+
+  main.innerHTML = html;
+}
+
+renderSidebar('');
+renderMain();
+</script>
+</body>
+</html>

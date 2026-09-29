@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guia de Ligação · SDR Suri</title>
+<link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/hub.css"/>
+<link rel="stylesheet" href="../assets/guide.css"/>
+<script src="../assets/hub.js"></script>
+<script>Hub.guard('../');</script>
+</head>
+<body>
+
+<div class="top-fixed">
+  <header class="topnav">
+    <div class="wrap">
+      <a class="brand" href="../guias/index.html" aria-label="Voltar aos guias">
+        <img src="../assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/>
+        <div class="crumb"><div><div class="crumb-title">Guia de Ligação</div><div class="crumb-sub">SDR · Uso interno</div></div></div>
+      </a>
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm hide-sm" href="../guias/index.html">← Guias</a>
+        <div class="score-pill" id="scorePill">🏆 <span id="scoreText">0%</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-steps" id="progressSteps"></div>
+  </div>
+
+  <div class="overall-score-wrap">
+    <div class="overall-score-card">
+      <div class="overall-score-label">Progresso da ligação</div>
+      <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallFill" style="width:0%"></div></div>
+      <div class="overall-score-num" id="overallNum">0%</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="motivation-banner">
+    <div class="motivation-quote">"Se você quer algo que nunca teve, precisa estar disposto a fazer algo que nunca fez." — Thomas Jefferson</div>
+    <div class="motivation-source">Inspirado em SPIN Selling, BANT e técnicas modernas de qualificação</div>
+  </div>
+
+  <div id="blocksContainer"></div>
+
+  <div class="finish-wrap" id="finishWrap">
+    <button class="btn-finish" onclick="showResult()">🏁 Finalizar ligação e ver pontuação</button>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-card">
+      <div class="result-trophy" id="resultTrophy">🏆</div>
+      <div class="result-rank" id="resultRank">RESULTADO</div>
+      <div class="result-score"><span id="resultScoreNum">0</span><span>%</span></div>
+      <div class="result-message" id="resultMessage"></div>
+      <div class="result-breakdown" id="resultBreakdown"></div>
+      <div class="result-btns">
+        <button class="btn-back" onclick="hideResult()">← Voltar ao guia</button>
+        <button class="btn-restart" onclick="restart()">↺ Nova ligação</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+
+// Autenticação: Hub.guard() no <head>
+
+// ─────────────────────────────────────────────
+// BLUEPRINT — cada item tem: text (critério) + options (2 alternativas de script)
+// tip: dica de técnica que NÃO pontua, só orienta
+// condition: aviso de quando o critério se aplica
+// ─────────────────────────────────────────────
+const BLOCKS = [
+  {
+    id: 1,
+    icon: "🤝",
+    title: "Abordagem Inicial e Rapport",
+    weight: 15,
+    color: "#4A54FF",
+    items: [
+      {
+        text: "O SDR se apresentou informando seu nome e seu papel na Suri?",
+        options: [
+          "Me chamo [nome], especialista da Suri.",
+          "Oi, aqui é o [nome], sou especialista da Suri."
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    icon: "🎯",
+    title: "BANT",
+    weight: 35,
+    color: "#6B4EE6",
+    items: [
+      {
+        text: "O SDR VALIDOU qual a dor principal do lead?",
+        tip: "Faça uma pergunta de implicação (SPIN) logo depois que o lead falar sobre a dor — aprofunda o impacto antes de avançar.",
+        options: [
+          "Você se conectou com a gente, o que te motivou? Qual é o maior gargalo no seu atendimento hoje?",
+          "Antes de te contar mais sobre a Suri, me conta: qual é o maior desafio no seu atendimento via WhatsApp?"
+        ]
+      },
+      {
+        text: "Falou que a Suri faz parte da TOTVS, a maior empresa de tecnologia do Brasil e que é uma plataforma especializada em IA para vendas e atendimento conversacional?",
+        options: [
+          "A Suri é uma plataforma especializada em IA para vendas e atendimento conversacional e faz parte da TOTVS, a maior empresa de tecnologia do Brasil.",
+          "Somos parte da TOTVS, maior empresa de tecnologia do Brasil, e desenvolvemos IA especializada em vendas e atendimento via WhatsApp."
+        ]
+      },
+      {
+        text: "Validou urgência ou interesse em resolver o problema?",
+        options: [
+          "Isso é algo que vocês querem resolver nos próximos meses ou já está urgente agora?",
+          "Você está em fase de pesquisa ou já tem um prazo em mente pra implementar uma solução?"
+        ]
+      },
+      {
+        text: "Validou quantos funcionários a empresa possui?",
+        options: [
+          "Só pra eu entender o tamanho da operação: quantas pessoas trabalham na empresa hoje?",
+          "Me fala um pouco do porte da empresa — quantos colaboradores vocês têm?"
+        ]
+      },
+      {
+        text: "Validou se há capacidade de investimento mínima de R$ 660,00?",
+        condition: "Apenas se quantidade de funcionários for menor que 10",
+        options: [
+          "Nossos planos começam a partir de R$ 660 por mês. Isso está dentro da faixa de investimento que vocês têm disponível?",
+          "Só pra alinhar expectativa: o plano de entrada é R$ 660/mês. Faz sentido pro momento de vocês?"
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    icon: "🌐",
+    title: "Validação de Requisitos Técnicos",
+    weight: 25,
+    color: "#000F9B",
+    items: [
+      {
+        text: "O SDR validou a situação atual do site do lead e informou ser necessário ter um site?",
+        condition: "Apenas se o site não estiver disponível no cadastro",
+        options: [
+          "Vocês têm um site no ar? Pergunto porque pra ativar o WhatsApp Oficial, a Meta exige um site ativo da empresa.",
+          "Só uma validação rápida: vocês têm site? É um requisito obrigatório da Meta pra homologar o número."
+        ]
+      }
+    ]
+  },
+  {
+    id: 4,
+    icon: "📅",
+    title: "Agendamento e Próximos Passos",
+    weight: 15,
+    color: "#E3A008",
+    textColor: "#020519",
+    items: [
+      {
+        text: "O SDR confirmou dia, data e hora da reunião?",
+        options: [
+          "Então fica confirmado: [dia], [data] às [hora]. Você vai receber o convite agora pelo WhatsApp.",
+          "Perfeito, agendado pra [dia] às [hora]. Vou te mandar o link da reunião por WhatsApp já."
+        ]
+      },
+      {
+        text: "Confirmou envio do convite por WhatsApp?",
+        options: [
+          "Vou te mandar o link agora mesmo nesse número. Confirma pra mim que chegou, tá?",
+          "O convite vai chegar aí no WhatsApp em instantes. Qualquer coisa é só me chamar nesse mesmo número."
+        ]
+      }
+    ]
+  },
+  {
+    id: 5,
+    icon: "🔁",
+    title: "Repasse de Contexto ao Closer",
+    weight: 10,
+    color: "#00B914",
+    items: [
+      {
+        text: "O lead foi contextualizado sobre o que acontecerá na reunião com o closer?",
+        options: [
+          "Na reunião, o especialista já vai entrar sabendo do seu cenário e vai te mostrar como a Suri resolve isso na prática. Vai ser rápido e direto — uns 30 minutos.",
+          "Você vai conversar com um dos nossos especialistas. Ele já vai estar por dentro do que você me contou e vai te mostrar a solução aplicada ao seu negócio."
+        ]
+      }
+    ]
+  }
+];
+
+// ── STATE ──
+let checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
+let notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
+let expanded = new Array(BLOCKS.length).fill(false);
+
+function totalItems() { return BLOCKS.reduce((s,b) => s + b.items.length, 0); }
+function isDone(bi, ii) { return checked[bi][ii] || notApplicable[bi][ii]; }
+function blockChecked(bi) { return checked[bi].filter((v,ii) => isDone(bi,ii)).length; }
+
+function weightedScore() {
+  let score = 0;
+  BLOCKS.forEach((b, bi) => {
+    const frac = b.items.length ? blockChecked(bi) / b.items.length : 0;
+    score += frac * b.weight;
+  });
+  return score; // 0-100
+}
+
+function render() {
+  renderProgressSteps();
+  renderBlocks();
+  updateScore();
+}
+
+function renderProgressSteps() {
+  const el = document.getElementById('progressSteps');
+  el.innerHTML = BLOCKS.map((b, i) => {
+    const complete = blockChecked(i) === b.items.length;
+    const cls = complete ? 'complete' : '';
+    return `<div class="step-tab ${cls}" onclick="jumpToBlock(${i})">
+      <div class="step-num">${complete ? '✓' : (i+1)}</div>
+      <div class="step-label">${b.title}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderBlocks() {
+  const container = document.getElementById('blocksContainer');
+
+  container.innerHTML = BLOCKS.map((b, bi) => {
+    const textColor = b.textColor || '#ffffff';
+    const count = blockChecked(bi);
+    const total = b.items.length;
+    const pct = Math.round((count/total)*100);
+    const complete = count === total;
+
+    const itemsHTML = b.items.map((item, ii) => {
+      const key = `${bi}-${ii}`;
+      const isChecked = checked[bi][ii];
+      const isNA = notApplicable[bi][ii];
+      const checkedCls = isChecked ? ' checked' : '';
+      const naCls = isNA ? ' na' : '';
+
+      const optsHTML = item.options.map((opt, oi) =>
+        `<div class="option-item"><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`
+      ).join('');
+
+      const tipHTML = item.tip ? `<div class="item-tip">
+        <span class="item-tip-icon">💡</span>
+        <div><span class="item-tip-label">DICA SPIN — NÃO PONTUA</span>${item.tip}</div>
+      </div>` : '';
+
+      const naToggleHTML = item.condition ? `<div class="item-na-toggle${isNA ? ' active' : ''}" onclick="toggleNA(event,${bi},${ii})">
+          <div class="item-na-box">
+            <svg class="item-na-svg" width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>Não se aplica — contar automaticamente</span>
+        </div>` : '';
+
+      return `<div class="item${checkedCls}${naCls}" onclick="toggleCheck(${bi},${ii})">
+        <div class="item-checkbox">
+          <svg class="item-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="item-content">
+          <div class="item-text">${item.text}</div>
+          ${item.condition ? `<div class="item-condition">${item.condition}</div>` : ''}
+          ${naToggleHTML}
+          ${tipHTML}
+          <button class="instr-toggle" onclick="toggleInstr(event,'instr-${key}',this)">
+            <span class="instr-arrow">▶</span> ver instrução
+          </button>
+          <div class="instr-box" id="instr-${key}">${optsHTML}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="phase-card ${complete ? 'complete' : ''} ${expanded[bi] ? 'expanded' : ''}" id="block-${bi}" style="--phase-color:${b.color}">
+      <div class="phase-header" onclick="togglePhase(${bi})">
+        <div class="phase-badge" style="background:${b.color};color:${textColor}">
+          ${b.icon}
+          <div class="phase-check">✓</div>
+        </div>
+        <div class="phase-info">
+          <div class="phase-tag">Fase ${bi+1}</div>
+          <div class="phase-name">${b.title} <span class="phase-weight-badge">${b.weight}%</span></div>
+          <div class="phase-progress-row">
+            <div class="phase-bar-bg"><div class="phase-bar-fill" style="width:${pct}%;background:${b.color}"></div></div>
+            <div class="phase-count">${count}/${total}</div>
+          </div>
+        </div>
+        <div class="phase-arrow">▶</div>
+      </div>
+      <div class="phase-body">
+        <div class="item-list">${itemsHTML}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function togglePhase(bi) {
+  expanded[bi] = !expanded[bi];
+  render();
+}
+
+function jumpToBlock(bi) {
+  expanded[bi] = true;
+  render();
+  setTimeout(() => {
+    const el = document.getElementById('block-' + bi);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
+}
+
+function toggleCheck(bi, ii) {
+  checked[bi][ii] = !checked[bi][ii];
+  if (checked[bi][ii]) notApplicable[bi][ii] = false;
+  render();
+  const pill = document.getElementById('scorePill');
+  pill.classList.add('bump');
+  setTimeout(() => pill.classList.remove('bump'), 200);
+}
+
+function toggleNA(e, bi, ii) {
+  e.stopPropagation();
+  notApplicable[bi][ii] = !notApplicable[bi][ii];
+  if (notApplicable[bi][ii]) checked[bi][ii] = false;
+  render();
+  const pill = document.getElementById('scorePill');
+  pill.classList.add('bump');
+  setTimeout(() => pill.classList.remove('bump'), 200);
+}
+
+function toggleInstr(e, id, btn) {
+  e.stopPropagation();
+  const box = document.getElementById(id);
+  box.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function updateScore() {
+  const pct = Math.round(weightedScore());
+  document.getElementById('scoreText').textContent = `${pct}%`;
+  document.getElementById('overallFill').style.width = pct + '%';
+  document.getElementById('overallNum').textContent = pct + '%';
+}
+
+function showResult() {
+  const pct = Math.round(weightedScore());
+
+  let rank, trophy, message;
+  if (pct >= 90) { rank = 'Excelente'; trophy = '🏆'; message = 'Ligação completa! Execução no mais alto nível.'; }
+  else if (pct >= 70) { rank = 'Muito bem'; trophy = '🥈'; message = 'Ótima condução — só faltaram alguns detalhes.'; }
+  else if (pct >= 40) { rank = 'Bom progresso'; trophy = '🥉'; message = 'Vários pontos cumpridos, mas dá pra ir além.'; }
+  else { rank = 'Em construção'; trophy = '🚀'; message = 'Ainda no começo — use o guia como apoio na próxima.'; }
+
+  document.getElementById('resultTrophy').textContent = trophy;
+  document.getElementById('resultRank').textContent = rank;
+  document.getElementById('resultScoreNum').textContent = pct;
+  document.getElementById('resultMessage').textContent = message;
+
+  document.getElementById('resultBreakdown').innerHTML = BLOCKS.map((b, bi) => {
+    const c = blockChecked(bi);
+    const frac = b.items.length ? c / b.items.length : 0;
+    const earned = (frac * b.weight).toFixed(1);
+    return `<div class="result-row">
+      <div class="result-row-name">${b.icon} ${b.title} <span class="phase-weight-badge">${b.weight}%</span></div>
+      <div class="result-row-score">${earned} / ${b.weight}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('blocksContainer').style.display = 'none';
+  document.getElementById('finishWrap').style.display = 'none';
+  document.getElementById('resultScreen').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hideResult() {
+  document.getElementById('resultScreen').classList.remove('visible');
+  document.getElementById('blocksContainer').style.display = '';
+  document.getElementById('finishWrap').style.display = '';
+}
+
+function restart() {
+  checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
+  notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
+  expanded = new Array(BLOCKS.length).fill(false);
+  hideResult();
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+render();
+</script>
+</body>
+</html>

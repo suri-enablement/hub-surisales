@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Como Quebrar Objeções · Nova Precificação da Meta · HUB Suri</title>
+<link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/hub.css"/>
+<script src="../assets/hub.js"></script>
+<script>Hub.guard('../');</script>
+<style>
+main{max-width:960px;margin:0 auto;padding:60px 28px 100px;}
+@media (max-width:560px){main{padding:40px 16px 80px;}}
+
+.eyebrow{margin-bottom:14px;}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--grad);}
+.hub-intro{margin-bottom:28px;max-width:760px;}
+.hub-title{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1.08;margin-bottom:16px;}
+.hub-title span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hub-subtitle{font-size:17px;color:var(--text-secondary);font-weight:300;line-height:1.6;max-width:64ch;}
+@media (max-width:560px){.hub-title{font-size:32px;}}
+
+.price-warning{display:block;background:var(--warning-soft);border:1px solid #EED9AE;border-radius:var(--radius-lg);padding:16px 20px;font-size:13px;color:#7A5308;line-height:1.6;margin-bottom:36px;}
+.price-warning b{color:#5E3F05;}
+
+/* navegação rápida */
+.quicknav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px 20px;box-shadow:var(--shadow-sm);}
+.quicknav a{font-size:12.5px;font-weight:600;color:var(--text-secondary);background:var(--surface);border:1px solid var(--border-strong);padding:7px 14px;border-radius:var(--radius-full);text-decoration:none;transition:all .15s;}
+.quicknav a:hover{border-color:var(--accent);color:var(--accent-strong);background:var(--accent-soft);}
+.quicknav .grp-label{width:100%;font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--text-tertiary);text-transform:uppercase;margin:12px 0 2px;}
+.quicknav .grp-label:first-child{margin-top:0;}
+
+/* cabeçalhos de seção */
+.section-eyebrow{display:flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.09em;color:var(--accent-strong);text-transform:uppercase;margin:60px 0 10px;}
+.section-eyebrow .n{width:24px;height:24px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;font-family:var(--font-mono);}
+.section-title{font-size:28px;font-weight:700;letter-spacing:-.015em;margin-bottom:10px;scroll-margin-top:100px;}
+.section-sub{font-size:15px;color:var(--text-secondary);font-weight:300;margin-bottom:24px;line-height:1.6;max-width:66ch;}
+.title-rule{display:none;}
+
+/* cards de objeção */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:24px 26px;margin-bottom:16px;scroll-margin-top:100px;transition:box-shadow .2s,border-color .2s;}
+.obj-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-strong);}
+.obj-card:target{border-color:var(--accent);box-shadow:0 0 0 4px rgba(74,84,255,.12);}
+.obj-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+.obj-numbadge{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent-strong);font-size:13px;font-weight:700;flex-shrink:0;font-family:var(--font-mono);}
+.obj-label{font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--danger);text-transform:uppercase;margin-bottom:5px;}
+.obj-q{font-size:16.5px;font-weight:600;color:var(--text);line-height:1.45;}
+.obj-src{display:block;font-size:12px;font-weight:400;color:var(--text-tertiary);margin-top:6px;}
+@media (max-width:560px){.obj-card{padding:20px 18px;}.obj-head{gap:10px;}}
+
+.block{border-radius:var(--radius-md);padding:14px 16px;margin-bottom:10px;font-size:13.5px;line-height:1.65;color:var(--text-secondary);}
+.block:last-child{margin-bottom:0;}
+.block-label{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;display:block;}
+.block b{color:var(--text);font-weight:600;}
+.block-official{background:var(--success-soft);border:1px solid #BFE6D3;}
+.block-official .block-label{color:var(--success);}
+.block-misconception{background:var(--danger-soft);border:1px solid #F1CACA;}
+.block-misconception .block-label{color:var(--danger);}
+.block-script{background:var(--text);border:none;color:#fff;}
+.block-script .block-label{color:rgba(255,255,255,.6);}
+.block-script p{font-family:var(--font-assist);font-style:italic;font-size:15px;line-height:1.55;color:#fff;}
+.block-strategy{background:var(--surface-2);border:1px solid var(--border);}
+.block-strategy .block-label{color:var(--text-tertiary);}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.03em;color:var(--accent-strong);background:var(--accent-soft);padding:4px 10px;border-radius:var(--radius-full);white-space:nowrap;}
+.tag-mov{color:#1E6B33;background:var(--shop-green-soft);}
+
+/* tabela */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow-x:auto;margin-bottom:24px;box-shadow:var(--shadow-sm);}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:620px;}
+.tbl th{background:var(--surface-2);color:var(--text-tertiary);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:13px 16px;text-align:left;}
+.tbl td{padding:13px 16px;border-top:1px solid var(--border);color:var(--text);vertical-align:middle;}
+.tbl .val-blue{color:var(--accent-strong);font-weight:700;font-family:var(--font-mono);}
+.tbl .val-green{color:var(--success);font-weight:700;}
+.tbl .strikethrough{text-decoration:line-through;color:var(--text-tertiary);}
+
+/* estratégias / movimentos */
+.strat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:10px;}
+.strat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:8px;}
+.strat-card .n{font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--accent-strong);background:var(--accent-soft);padding:3px 9px;border-radius:6px;width:fit-content;}
+.strat-card.mov .n{color:#fff;background:var(--shop-green);}
+.strat-card .t{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;}
+.strat-card .d{font-size:13px;color:var(--text-secondary);font-weight:300;line-height:1.55;}
+
+.hub-footer-note{margin-top:56px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-tertiary);font-weight:300;line-height:1.6;}
+.hub-footer-note a{color:var(--accent-strong);}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Voltar ao HUB">
+      <img src="../assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/>
+      <div class="crumb"><div><div class="crumb-title">Como Quebrar Objeções</div><div class="crumb-sub">Nova Precificação da Meta</div></div></div>
+    </a>
+    <div class="nav-actions">
+      <span class="user-pill hide-sm" data-user-pill hidden></span>
+      <a class="btn btn-ghost btn-sm" href="index.html">← Nova Precificação</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hub-intro">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> Matriz de objeções</div>
+    <div class="hub-title">Como quebrar <span>objeções</span></div>
+    <div class="hub-subtitle">Objeções reais levantadas por clientes sobre a nova cobrança por mensagem da Meta, com a resposta oficial (quando houve), a estratégia ou Movimento do plano Suri Shop por trás dela, e o argumento pronto para usar na conversa.</div>
+  </div>
+
+  <div class="price-warning">
+    ⚠️ <b>Valores sujeitos a alteração.</b> A Meta publica o preço oficial por país em <b>1º de setembro de 2026</b>; a cobrança passa a valer em <b>1º de outubro de 2026</b>. Os valores citados nesta matriz (ex. R$ 0,04 por mensagem de Serviço, R$ 0,36 Marketing) são a sinalização do Webinar F5 baseada no rastreio até 19/08/2026 — confirme os valores oficiais após 1/09/2026 antes de repassar como fato fechado ao cliente.
+  </div>
+
+  <div class="quicknav">
+    <div class="grp-label">Comportamento na conversa</div>
+    <a href="#obj1">1. Responde aos poucos</a>
+    <a href="#obj2">2. Susto com o volume</a>
+    <a href="#obj3">3. Bot também é cobrado?</a>
+    <a href="#obj4">4. "Toda resposta é cobrada"</a>
+    <a href="#obj5">5. Receptivo x emissivo</a>
+    <a href="#obj6">6. Reeducar o cliente</a>
+    <a href="#obj7">7. Preciso de relatório</a>
+    <div class="grp-label">Sobre o negócio e o plano Suri Shop</div>
+    <a href="#obj8">8. "Ninguém vai comprar mais"</a>
+    <a href="#obj9">9. "Vou perder o controle"</a>
+    <a href="#obj10">10. Plataformas não oficiais</a>
+    <a href="#obj11">11. "IA vai ficar cara"</a>
+  </div>
+
+  <div class="section-eyebrow"><span class="n">1</span> Bloco 1</div>
+  <div class="section-title">Comportamento na conversa</div>
+  <div class="title-rule"></div>
+  <div class="section-sub">Objeções operacionais, levantadas por clientes na comunidade Suri, sobre como a cobrança por mensagem muda o dia a dia do atendimento.</div>
+
+  <!-- OBJEÇÃO 1 -->
+  <div class="obj-card" id="obj1">
+    <div class="obj-head">
+      <span class="obj-numbadge">1</span>
+      <div>
+        <div class="obj-label">Objeção · Comportamento do cliente</div>
+        <div class="obj-q">"O cliente só responde uma pergunta de cada vez. Preciso saber data, horário e quantidade de uma vez, e ele não manda tudo junto — e agora?"</div>
+        <span class="obj-src">Fonte: comunidade Suri (relato de operação de locação de salas)</span>
+      </div>
+    </div>
+    <div class="block block-official">
+      <span class="block-label">Confirmado na comunidade</span>
+      "Infelizmente o cliente não responde tudo de uma vez" é um comportamento reconhecido — outros participantes confirmam o mesmo padrão ("às vezes nem a gente responde tudo de uma vez").
+    </div>
+    <div class="block block-strategy">
+      <span class="block-label">Estratégia relacionada</span>
+      <b>Preserve contexto.</b> O problema não é o cliente fragmentar a resposta, é o atendimento fragmentar a pergunta. Toda vez que o cliente precisa repetir algo, a operação adiciona mensagens e fricção.
+      <div class="tag-row"><span class="tag">Estratégia · Preserve contexto</span><span class="tag tag-mov">Movimento 4 · Agentes de IA</span></div>
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"O ponto não é forçar o cliente a responder tudo de uma vez — é fazer sua operação lembrar o que ele já disse. Com o Commerce Agent, incluso no plano, a mesma pergunta não é repetida pelo bot, pelo vendedor e no checkout. É isso que reduz mensagem, não pedir menos coisa pro cliente."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 2 -->
+  <div class="obj-card" id="obj2">
+    <div class="obj-head">
+      <span class="obj-numbadge">2</span>
+      <div>
+        <div class="obj-label">Objeção · Susto com custo</div>
+        <div class="obj-q">"Gerei meus últimos 30 dias de mensagens e fiquei assustado — deu mais de 30 mil. Qual a média de vocês?"</div>
+        <span class="obj-src">Fonte: comunidade Suri</span>
+      </div>
+    </div>
+    <div class="block block-strategy">
+      <span class="block-label">Números para contextualizar o susto</span>
+      Cada mensagem de Serviço deve custar <b>~R$ 0,04</b> (sinalização, a confirmar em 1/09). 30 mil mensagens/mês seriam ~R$ 1.200 de custo novo — mas no plano antigo Suri, esse mesmo cliente já pagava até <b>16× o valor real da Meta</b> em Utilidade embutida. O novo modelo de margem zero tende a compensar boa parte do susto.
+    </div>
+    <div class="block block-strategy">
+      <span class="block-label">Estratégia + Movimento relacionados</span>
+      <b>Recomende, não transforme o WhatsApp em prateleira.</b> Volume alto quase sempre é sintoma de catálogo (20 produtos, 20 links, "qual você gostou?") em vez de curadoria. Mais opções não aumentam conversão — mais contexto aumenta. Some a isso o <b>teto de gasto</b> do Movimento 3, que dá previsibilidade sobre esse valor.
+      <div class="tag-row"><span class="tag">Estratégia · Recomende, não catálogo</span><span class="tag tag-mov">Movimento 3 · Teto de gasto</span><span class="tag tag-mov">Movimento 2 · Preço da Meta</span></div>
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"Volume alto quase sempre é sinal de jornada repetitiva, não de operação grande demais — vale olhar o fluxo antes de olhar o preço. E diferente de hoje, você vai poder definir um teto de gasto mensal pra mensagens da Meta: ao bater o teto, os envios pausam sozinhos. Não tem mais fatura surpresa."</p>
+    </div>
+    <div class="block block-strategy">
+      <span class="block-label">Ferramenta de apoio</span>
+      Use a aba <b>"Impacto da Cobrança"</b> na Proposta Comercial para transformar esse volume em um número concreto — e o Gerador de Propostas para simular o plano com teto de gasto.
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 3 -->
+  <div class="obj-card" id="obj3">
+    <div class="obj-head">
+      <span class="obj-numbadge">3</span>
+      <div>
+        <div class="obj-label">Objeção · O que é cobrado</div>
+        <div class="obj-q">"Mesmo as interações do bot serão cobradas, correto?"</div>
+        <span class="obj-src">Fonte: comunidade Suri — respondido oficialmente por @sejasuri</span>
+      </div>
+    </div>
+    <div class="block block-official">
+      <span class="block-label">Resposta oficial da Suri (@sejasuri)</span>
+      "Isso. As mensagens do chatbot também contam como 'service message'." Ou seja, cada mensagem enviada pelo bot ao cliente entra na conta de ~R$ 0,04 (a confirmar em 1/09).
+    </div>
+    <div class="block block-strategy">
+      <span class="block-label">Estratégia + Movimento relacionados</span>
+      <b>Não use IA para responder mais — use IA para chegar mais rápido à venda.</b> Automação tradicional (pergunta → resposta → pergunta → resposta) multiplica mensagens cobráveis. O <b>Commerce Agent</b>, incluso no plano Suri Shop, faz a mesma venda com até 3× menos mensagens — reduzindo o custo de conversa em ~67% (R$ 1,60 → R$ 0,53).
+      <div class="tag-row"><span class="tag">Estratégia · IA pra vender mais rápido</span><span class="tag tag-mov">Movimento 4 · Agentes de IA inclusos</span></div>
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"Sim, mensagem de bot é enviada pela empresa, então conta como as demais. Por isso o ponto não é 'ter menos bot', é ter um bot que resolve em menos trocas. O Commerce Agent já vem incluso no plano e reduz em média 3× as mensagens até o fechamento — ele paga o próprio custo."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 4 -->
+  <div class="obj-card" id="obj4">
+    <div class="obj-head">
+      <span class="obj-numbadge">4</span>
+      <div>
+        <div class="obj-label">Objeção · Mal-entendido a corrigir</div>
+        <div class="obj-q">"Pelo que estão dizendo, qualquer resposta que eu dê ao cliente é cobrada."</div>
+        <span class="obj-src">Fonte: comunidade Suri</span>
+      </div>
+    </div>
+    <div class="block block-misconception">
+      <span class="block-label">Isso é um mal-entendido — corrija com a resposta oficial</span>
+      A resposta oficial da Suri (@sejasuri) é clara: <b>"A cobrança é pelo envio da empresa → cliente. As mensagens que o cliente responde às suas não serão cobradas."</b> A mensagem do cliente para a empresa é gratuita; o que é cobrado é a empresa enviando para o cliente — hoje avulso, e a partir de 1/10 também as de Serviço.
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"Isso não procede — o que o cliente te manda não é cobrado, só o que sua empresa envia pra ele. Então o foco de economia está em quantas vezes você precisa mandar mensagem, não em quantas o cliente manda. Jornada curta e sem repetição é o que faz diferença real na conta."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 5 -->
+  <div class="obj-card" id="obj5">
+    <div class="obj-head">
+      <span class="obj-numbadge">5</span>
+      <div>
+        <div class="obj-label">Objeção · Sem confirmação oficial</div>
+        <div class="obj-q">"Se você for pelo lado emissivo é uma coisa. E o receptivo, como fica?"</div>
+        <span class="obj-src">Fonte: comunidade Suri, sem resposta oficial registrada</span>
+      </div>
+    </div>
+    <div class="block block-misconception">
+      <span class="block-label">Sem confirmação oficial neste material</span>
+      Essa pergunta específica não teve resposta registrada nos materiais analisados. Não crie uma resposta definitiva sem validar — direcione para o time técnico/CS ou confirme com a documentação oficial da Meta antes de responder ao cliente.
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto (para não deixar sem resposta)</span>
+      <p>"Essa é uma dúvida pontual sobre a regra da Meta que eu prefiro confirmar com precisão antes de te passar — não quero te dar uma informação errada sobre cobrança. Te retorno com a resposta certa."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 6 -->
+  <div class="obj-card" id="obj6">
+    <div class="obj-head">
+      <span class="obj-numbadge">6</span>
+      <div>
+        <div class="obj-label">Objeção · Mudança de hábito</div>
+        <div class="obj-q">"Vai ser um período pra 'educar o cliente' — hoje ele está acostumado a tratar qualquer assunto pelo WhatsApp, do jeito dele."</div>
+        <span class="obj-src">Fonte: comunidade Suri, com concordância de outros participantes</span>
+      </div>
+    </div>
+    <div class="block block-strategy">
+      <span class="block-label">Estratégia + Movimento relacionados</span>
+      <b>Encurte o caminho entre "quero" e "comprei".</b> Uma jornada fragmentada (WhatsApp → link → site → busca → carrinho → login → checkout → pagamento) multiplica pontos de fricção. O <b>Movimento 5 — Canais Integrados</b> permite migrar a conversa para o Webchat (sem custo de mensageria Meta) nas etapas que mais consomem mensagens, preservando histórico e contexto, e voltar ao WhatsApp sem o cliente perceber a troca.
+      <div class="tag-row"><span class="tag">Estratégia · Encurte a jornada</span><span class="tag tag-mov">Movimento 5 · Canais integrados / Webchat</span></div>
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"Educar o cliente é real, mas não precisa ser só discurso — dá pra desenhar a conversa pra já vir com contexto, e ainda migrar pro Webchat nas partes que mais geram mensagem, sem custo de Meta e sem o cliente perceber a troca. Isso tira a dependência de 'reeducar hábito' e coloca a responsabilidade na jornada que você desenha."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 7 -->
+  <div class="obj-card" id="obj7">
+    <div class="obj-head">
+      <span class="obj-numbadge">7</span>
+      <div>
+        <div class="obj-label">Objeção · Pedido de relatório</div>
+        <div class="obj-q">"A Suri consegue disponibilizar um relatório que responde a essas perguntas? Se é métrica/indicador, precisa ser disponibilizado."</div>
+        <span class="obj-src">Fonte: comunidade Suri</span>
+      </div>
+    </div>
+    <div class="block block-strategy">
+      <span class="block-label">Ferramenta de apoio já disponível</span>
+      O HUB já conta com a aba <b>"Impacto da Cobrança"</b> dentro da Proposta Comercial, e o <b>Gerador de Propostas</b> permite simular volumetria, disparos e teto de gasto em tempo real. Um relatório nativo de acompanhamento contínuo dentro da plataforma Suri não foi confirmado no material analisado — não prometa isso sem validar com o time responsável.
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"Hoje eu consigo te mostrar o impacto estimado com base no seu volume, usando nossa calculadora, e simular o plano com teto de gasto no Gerador de Propostas. Um relatório contínuo dentro da plataforma é uma pergunta que prefiro confirmar com o time certo antes de te prometer prazo."</p>
+    </div>
+  </div>
+
+  <div class="section-eyebrow"><span class="n">2</span> Bloco 2</div>
+  <div class="section-title">Sobre o negócio e o plano Suri Shop</div>
+  <div class="title-rule"></div>
+  <div class="section-sub">Objeções de nível mais estratégico — vindas do material do Webinar F5, sobre a resposta comercial do Suri Shop à mudança da Meta.</div>
+
+  <!-- OBJEÇÃO 8 -->
+  <div class="obj-card" id="obj8">
+    <div class="obj-head">
+      <span class="obj-numbadge">8</span>
+      <div>
+        <div class="obj-label">Objeção · Mercado inteiro</div>
+        <div class="obj-q">"Ninguém vai querer comprar agora que o WhatsApp ficou caro."</div>
+        <span class="obj-src">Fonte: Webinar F5 · Guia de Estudo Suri Shop</span>
+      </div>
+    </div>
+    <div class="block block-official">
+      <span class="block-label">Resposta</span>
+      A mudança vale para <b>todas as plataformas ao mesmo tempo</b> — nenhum concorrente escapa. Enquanto o mercado ainda está explicando o problema, você já apresenta a solução.
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"O custo novo não é uma desvantagem do Suri — é uma mudança da Meta que atinge toda plataforma oficial do mercado ao mesmo tempo. A diferença é que a gente já chega com resposta pronta: plano simples, preço da Meta sem margem, teto de gasto e IA inclusa."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 9 -->
+  <div class="obj-card" id="obj9">
+    <div class="obj-head">
+      <span class="obj-numbadge">9</span>
+      <div>
+        <div class="obj-label">Objeção · Medo de perder controle</div>
+        <div class="obj-q">"Vou perder o controle da minha conta."</div>
+        <span class="obj-src">Fonte: Webinar F5 · Guia de Estudo Suri Shop</span>
+      </div>
+    </div>
+    <div class="block block-official">
+      <span class="block-label">Resposta</span>
+      Nenhum concorrente tem <b>teto de gasto dentro do produto</b> — só calculadoras externas. Na Suri, o cliente define o teto mensal para mensagens Meta, acompanha o consumo em tempo real e os envios pausam automaticamente ao atingir 100% do limite.
+      <div class="tag-row"><span class="tag tag-mov">Movimento 3 · Teto de gasto</span></div>
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"Essa é justamente a diferença — você define até quanto quer gastar por mês com mensagens da Meta, acompanha em tempo real, e quando bate o teto, os envios pausam sozinhos. Zero surpresa na fatura. Isso não existe em nenhum concorrente."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 10 -->
+  <div class="obj-card" id="obj10">
+    <div class="obj-head">
+      <span class="obj-numbadge">10</span>
+      <div>
+        <div class="obj-label">Objeção · Fuga para não oficiais</div>
+        <div class="obj-q">"As empresas vão migrar para plataformas não oficiais pra fugir da cobrança."</div>
+        <span class="obj-src">Fonte: Webinar F5 · Guia de Estudo Suri Shop</span>
+      </div>
+    </div>
+    <div class="block block-official">
+      <span class="block-label">Resposta</span>
+      A Meta está <b>bloqueando números fora da API oficial</b>. Na prática, empresas bloqueadas migram para a solução oficial — não o contrário.
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"É o oposto do que parece: a Meta está bloqueando quem usa solução não oficial. Isso empurra empresa pra API oficial, não pra longe dela. Fugir da cobrança nesse caminho é arriscar o número inteiro."</p>
+    </div>
+  </div>
+
+  <!-- OBJEÇÃO 11 -->
+  <div class="obj-card" id="obj11">
+    <div class="obj-head">
+      <span class="obj-numbadge">11</span>
+      <div>
+        <div class="obj-label">Objeção · IA parece mais cara agora</div>
+        <div class="obj-q">"A IA vai ficar cara com a cobrança por mensagem de Serviço."</div>
+        <span class="obj-src">Fonte: Webinar F5 · Guia de Estudo Suri Shop</span>
+      </div>
+    </div>
+    <div class="block block-official">
+      <span class="block-label">Resposta</span>
+      É o contrário. O <b>Commerce Agent</b> faz a mesma venda com <b>3× menos mensagens</b> — R$ 1,60 vira R$ 0,53 por conversa, uma redução de ~67% no custo de mensageria. E está incluso no plano, sem custo adicional.
+      <div class="tag-row"><span class="tag tag-mov">Movimento 4 · Agentes de IA inclusos</span></div>
+    </div>
+    <div class="block block-script">
+      <span class="block-label">Argumento pronto</span>
+      <p>"Na verdade a IA é sua maior aliada nesse cenário, não vilã: o Commerce Agent reduz em média 3× as mensagens até a venda, cortando ~67% do custo de mensageria por conversa. E já vem incluso — não é um upgrade pago."</p>
+    </div>
+  </div>
+
+  <div class="section-eyebrow"><span class="n">3</span> Referência</div>
+  <div class="section-title">Tabela de preços de referência</div>
+  <div class="title-rule"></div>
+  <div class="section-sub">Valores sinalizados pelo Webinar F5 (rastreio até 19/08/2026) — confirmar com os valores oficiais publicados pela Meta em 1º de setembro de 2026.</div>
+
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr><th>Mensagem</th><th>Custo equiv. no plano antigo Suri</th><th>Novo modelo (Meta, margem zero)</th><th>Redução</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Marketing</td><td class="strikethrough">R$ 0,49 – 0,66</td><td class="val-blue">R$ 0,36</td><td class="val-green">27% a 45%</td></tr>
+        <tr><td>Utilidade</td><td class="strikethrough">R$ 0,25 – 0,66</td><td class="val-blue">R$ 0,04</td><td class="val-green">84% a 94%</td></tr>
+        <tr><td>Autenticação</td><td style="color:var(--text-secondary)">No plano</td><td class="val-blue">R$ 0,04</td><td style="color:var(--text-tertiary)">—</td></tr>
+        <tr><td><b>Serviço</b></td><td style="color:var(--success)">Gratuita (janela 24h)</td><td class="val-blue">R$ 0,04*</td><td style="color:var(--text-secondary)">Repasse integral, a partir de 1/10</td></tr>
+        <tr><td><b>Utilidade na janela 24h</b></td><td style="color:var(--success)">Gratuita (quando na 24h)</td><td class="val-blue">R$ 0,04*</td><td style="color:var(--text-secondary)">Repasse integral, a partir de 1/10</td></tr>
+        <tr><td><b>Webchat (canal integrado)</b></td><td style="color:var(--text-tertiary)">—</td><td class="val-green">R$ 0,00</td><td style="color:var(--text-secondary)">Sem custo Meta</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- STRATEGIES SUMMARY -->
+  <div class="section-eyebrow"><span class="n">4</span> Resumo</div>
+  <div class="section-title" id="estrategias">As 5 estratégias de venda</div>
+  <div class="title-rule"></div>
+  <div class="section-sub">Como conduzir a conversa e desenhar a jornada — origem: material "A Nova Precificação do WhatsApp"</div>
+  <div class="strat-grid">
+    <div class="strat-card">
+      <div class="n">Estratégia</div>
+      <div class="t">Recomende, não transforme o WhatsApp em prateleira</div>
+      <div class="d">Curadoria em vez de catálogo. Mais opções nem sempre aumentam conversão — mais contexto aumenta.</div>
+    </div>
+    <div class="strat-card">
+      <div class="n">Estratégia</div>
+      <div class="t">Preserve contexto</div>
+      <div class="d">Evite que o cliente repita a mesma informação para o bot, o vendedor e o checkout.</div>
+    </div>
+    <div class="strat-card">
+      <div class="n">Estratégia</div>
+      <div class="t">Use IA para chegar mais rápido à venda</div>
+      <div class="d">Não para responder mais. Um agente que entende intenção e recomenda reduz até 3× as mensagens até o fechamento.</div>
+    </div>
+    <div class="strat-card">
+      <div class="n">Estratégia</div>
+      <div class="t">Encurte o caminho entre "quero" e "comprei"</div>
+      <div class="d">Jornada conversacional em um único ambiente. Cada mudança de ambiente é uma oportunidade de abandono.</div>
+    </div>
+    <div class="strat-card">
+      <div class="n">Bônus</div>
+      <div class="t">A eficiência começa antes da conversa</div>
+      <div class="d">Anúncios Click to WhatsApp aproveitam a janela gratuita de 72h. Marketing deveria entregar contexto, não só leads.</div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow" style="margin-top:44px;"><span class="n">5</span> Resumo</div>
+  <div class="section-title">Os 5 Movimentos do plano Suri Shop</div>
+  <div class="title-rule"></div>
+  <div class="section-sub">A resposta comercial do Suri Shop à mudança da Meta — origem: Webinar F5 · Guia de Estudo</div>
+  <div class="strat-grid">
+    <div class="strat-card mov">
+      <div class="n">Movimento 1</div>
+      <div class="t">Plano único e simples</div>
+      <div class="d">Cliente escolhe só quantos atende/mês. Mensagens da Meta saem do plano e são cobradas pelo consumo real.</div>
+    </div>
+    <div class="strat-card mov">
+      <div class="n">Movimento 2</div>
+      <div class="t">Preço da Meta — margem zero</div>
+      <div class="d">Marketing R$ 0,36, Utilidade R$ 0,04. Preço de tabela da Meta, sem margem da Suri, fatura no mês seguinte.</div>
+    </div>
+    <div class="strat-card mov">
+      <div class="n">Movimento 3</div>
+      <div class="t">Cliente no controle — teto de gasto</div>
+      <div class="d">Cliente define até quanto quer investir em msgs Meta/mês. Ao atingir 100%, os envios pausam automaticamente.</div>
+    </div>
+    <div class="strat-card mov">
+      <div class="n">Movimento 4</div>
+      <div class="t">Agentes de IA inclusos</div>
+      <div class="d">Service Agent e Commerce Agent inclusos para todos. Commerce Agent vende com 3× menos mensagens (−67% custo).</div>
+    </div>
+    <div class="strat-card mov">
+      <div class="n">Movimento 5</div>
+      <div class="t">Canais Integrados — Webchat gratuito</div>
+      <div class="d">Conversa migra do WhatsApp pro Webchat nas etapas que mais consomem mensagem, e volta — com contexto preservado e custo Meta zero.</div>
+    </div>
+  </div>
+
+  <div class="hub-footer-note">Conteúdo baseado no material "A Nova Precificação do WhatsApp", em objeções reais discutidas na comunidade Suri e no Guia de Estudo do Webinar F5 (Agosto 2026). Valores de preço sujeitos a confirmação oficial da Meta em 1º/09/2026.</div>
+</main>
+
+
+</body>
+</html>
