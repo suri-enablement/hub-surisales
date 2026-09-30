@@ -3,646 +3,339 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Guia de Reunião · Closer Suri</title>
-<link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+<title>HUB Suri · Enablement</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="../assets/hub.css"/>
-<link rel="stylesheet" href="../assets/guide.css"/>
-<script src="../assets/hub.js"></script>
-<script>Hub.guard('../');</script>
+<link rel="stylesheet" href="assets/hub.css"/>
+<script src="assets/hub.js"></script>
+<style>
+  /* ---------- LOGIN ---------- */
+  #loginScreen{display:none;}
+  .login-hero{padding:72px 0 88px;}
+  .login-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+  @media (max-width:900px){.login-grid{grid-template-columns:1fr;gap:36px;}}
+  .login-grid h1{margin:16px 0 18px;}
+  .login-grid .lede{margin-bottom:28px;}
+  .login-feats{list-style:none;display:flex;flex-direction:column;gap:14px;}
+  .login-feats li{display:flex;gap:12px;align-items:flex-start;}
+  .login-feats .dot{width:8px;height:8px;border-radius:50%;background:var(--grad);margin-top:7px;flex-shrink:0;}
+  .login-feats b{font-weight:600;font-size:14.5px;}
+  .login-feats span{display:block;font-size:13.5px;color:var(--text-secondary);font-weight:300;margin-top:2px;line-height:1.5;}
+  .login-card{padding:34px 32px;box-shadow:var(--shadow-lg);}
+  .login-card h2{font-size:22px;margin:10px 0 6px;}
+  .login-card .sub{font-size:13.5px;color:var(--text-secondary);font-weight:300;margin-bottom:24px;line-height:1.55;}
+  .login-card .btn{margin-top:6px;}
+  .login-foot{margin-top:18px;font-size:11.5px;color:var(--text-tertiary);text-align:center;}
+
+  /* ---------- HUB ---------- */
+  #mainContent{display:none;}
+  .hero{padding:64px 0 52px;}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  .hero h1{margin:16px 0 18px;}
+  .hero .lede{margin-bottom:28px;font-size:18px;}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+
+  .quick{padding:22px;box-shadow:var(--shadow-lg);}
+  .quick .vt{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+  .quick-list{display:flex;flex-direction:column;gap:8px;}
+  .quick-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:var(--radius-md);background:var(--surface-2);text-decoration:none;transition:background .15s,transform .15s;}
+  .quick-item:hover{background:var(--accent-soft);transform:translateX(2px);}
+  .quick-item .ico{width:36px;height:36px;border-radius:10px;background:var(--surface);box-shadow:var(--shadow-sm);}
+  .quick-item .ico svg{width:18px;height:18px;}
+  .quick-item .t{flex:1;min-width:0;}
+  .quick-item .t b{display:block;font-size:13.5px;font-weight:600;}
+  .quick-item .t span{display:block;font-size:11.5px;color:var(--text-secondary);font-weight:300;}
+  .quick-item .go{color:var(--text-tertiary);}
+  .quick .sold{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--text);color:#fff;border-radius:var(--radius-md);padding:14px 16px;text-decoration:none;}
+  .quick .sold .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.6);font-weight:600;}
+  .quick .sold .v{font-size:15px;font-weight:700;}
+
+  .stats{margin-top:48px;}
+
+  /* flow (treinamentos RD) */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+  @media (max-width:900px){.flow{grid-template-columns:1fr;gap:18px;}}
+  .flow-step{padding-right:18px;display:flex;flex-direction:column;}
+  .flow-step:last-child{padding-right:0;}
+  .flow-step .top{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .flow-step .n{min-width:30px;height:30px;padding:0 10px;border-radius:var(--radius-full);background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;font-family:var(--font-mono);flex-shrink:0;}
+  .flow-step.alt .n{background:var(--surface);border:1.5px solid var(--border-strong);color:var(--text-tertiary);}
+  .flow-line{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--border-strong) 0 6px,transparent 6px 11px);}
+  @media (max-width:900px){.flow-line{display:none;}}
+  .flow-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;flex:1;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:8px;}
+  .flow-card h4{font-size:14.5px;font-weight:600;}
+  .flow-card p{font-size:13px;color:var(--text-secondary);font-weight:300;line-height:1.5;}
+  .flow-card .kinds{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px;}
+  .rd-cta{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+</style>
 </head>
 <body>
 
-<div class="top-fixed">
-  <header class="topnav">
+<!-- ============ TOPNAV ============ -->
+<header class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="HUB Suri">
+      <img src="assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/>
+      <div class="crumb hide-sm"><div><div class="crumb-title">HUB de Vendas</div><div class="crumb-sub">Uso interno</div></div></div>
+    </a>
+    <nav id="hubNav" hidden>
+      <a href="#materiais">Materiais</a>
+      <a href="#treinamentos">Treinamentos RD</a>
+      <a href="guias/index.html">Guias</a>
+      <a href="proposta/index.html">Proposta</a>
+    </nav>
+    <div class="nav-actions" id="navActions">
+      <span class="pill pill-muted" id="restrictedPill">Acesso restrito</span>
+      <span class="user-pill hide-sm" data-user-pill hidden></span>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn" onclick="Hub.logout('')" hidden>Sair</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ LOGIN ============ -->
+<main id="loginScreen">
+  <section class="login-hero">
+    <div class="wrap login-grid">
+      <div class="fade-in">
+        <span class="eyebrow"><span class="dot"></span>HUB Comercial · Suri + RD</span>
+        <h1>Tudo que o time precisa pra <span class="grad-text">conduzir, propor e fechar.</span></h1>
+        <p class="lede">Guias gamificados de reunião, playbook, gerador de proposta, matriz de objeções e os treinamentos do time RD — num lugar só.</p>
+        <ul class="login-feats">
+          <li><div class="dot"></div><div><b>Guias de Closer e SDR</b><span>Scorecard ponderado com SPIN, SPICED e BANT, direto na call.</span></div></li>
+          <li><div class="dot"></div><div><b>Proposta em tempo real</b><span>Volumetria, teto de gasto e ROI calculados com o lead — com PDF no final.</span></div></li>
+          <li><div class="dot"></div><div><b>Treinamentos RD</b><span>Gravações e slides dos workshops de vendas com a Suri.</span></div></li>
+        </ul>
+      </div>
+      <div class="card login-card fade-in">
+        <span class="pill pill-accent">Acesso restrito</span>
+        <h2>Entrar no HUB</h2>
+        <p class="sub">Use seu e-mail corporativo e a senha do time para acessar guias, playbook e materiais de vendas.</p>
+        <div class="field">
+          <label for="emailInput">E-mail corporativo</label>
+          <input class="input" id="emailInput" type="email" autocomplete="email" placeholder="voce@suri.ai"/>
+        </div>
+        <div class="field">
+          <label for="passwordInput">Senha</label>
+          <input class="input" id="passwordInput" type="password" autocomplete="current-password" placeholder="Senha"/>
+        </div>
+        <div class="form-error" id="loginError">E-mail ou senha incorretos. Verifique e tente novamente.</div>
+        <button class="btn btn-primary btn-block" onclick="checkLogin()">Entrar →</button>
+        <div class="login-foot">A sessão fica ativa por 30 dias neste navegador.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ HUB ============ -->
+<main id="mainContent">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="fade-in">
+        <span class="eyebrow"><span class="dot"></span>HUB Comercial · 2026</span>
+        <h1>Materiais de vendas pra <span class="grad-text">cada etapa da conversa.</span></h1>
+        <p class="lede">Escolha sua área para acessar guias de reunião, scorecards, playbook, proposta comercial e os treinamentos do time RD.</p>
+        <div class="hero-ctas">
+          <a href="#materiais" class="btn btn-primary">Ver materiais</a>
+          <a href="treinamentos-rd/index.html" class="btn btn-ghost">Treinamentos RD</a>
+        </div>
+      </div>
+
+      <div class="card quick fade-in">
+        <div class="vt"><span>Atalhos da call</span><span class="pill pill-soft-green">Pronto pra usar</span></div>
+        <div class="quick-list">
+          <a class="quick-item" href="closer/index.html">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>
+            <div class="t"><b>Guia do Closer</b><span>Reunião com scorecard SPICED</span></div>
+            <span class="go">→</span>
+          </a>
+          <a class="quick-item" href="sdr/index.html">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></div>
+            <div class="t"><b>Guia do SDR</b><span>Ligação com qualificação BANT</span></div>
+            <span class="go">→</span>
+          </a>
+          <a class="quick-item" href="meta/quebra-objecoes.html">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4" stroke-linecap="round"/></svg></div>
+            <div class="t"><b>Quebra de objeções</b><span>Nova precificação da Meta</span></div>
+            <span class="go">→</span>
+          </a>
+        </div>
+        <a class="sold" href="proposta/index.html">
+          <span class="k">Gerador de proposta</span>
+          <span class="v">Montar com o lead →</span>
+        </a>
+      </div>
+    </div>
+
     <div class="wrap">
-      <a class="brand" href="../guias/index.html" aria-label="Voltar aos guias">
-        <img src="../assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/>
-        <div class="crumb"><div><div class="crumb-title">Guia de Reunião</div><div class="crumb-sub">Closer · Uso interno</div></div></div>
-      </a>
-      <div class="nav-actions">
-        <a class="btn btn-ghost btn-sm hide-sm" href="../guias/index.html">← Guias</a>
-        <div class="score-pill" id="scorePill">🏆 <span id="scoreText">0%</span></div>
+      <div class="stat-row stats">
+        <div class="cell"><span class="num">2 guias</span><span class="lbl">Gamificados, com scorecard ponderado para Closer e SDR</span></div>
+        <div class="cell"><span class="num">11 objeções</span><span class="lbl">Mapeadas sobre a nova cobrança da Meta, com argumento pronto</span></div>
+        <div class="cell"><span class="num">3 simuladores</span><span class="lbl">Proposta, impacto da cobrança e ROI do WhatsApp</span></div>
+        <div class="cell"><span class="num">3 workshops</span><span class="lbl">Treinamentos RD gravados, com slides e material de apoio</span></div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <div class="progress-bar-wrap">
-    <div class="progress-steps" id="progressSteps"></div>
-  </div>
+  <!-- MATERIAIS -->
+  <section class="section" id="materiais">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow"><span class="dot"></span>Materiais de vendas</span>
+        <h2>Escolha por onde começar</h2>
+        <p class="sub">Cada card leva a um material de uso direto na operação — do primeiro contato do SDR até o PDF da proposta.</p>
+      </div>
 
-  <div class="overall-score-wrap">
-    <div class="overall-score-card">
-      <div class="overall-score-label">Progresso da reunião</div>
-      <div class="overall-bar-bg"><div class="overall-bar-fill" id="overallFill" style="width:0%"></div></div>
-      <div class="overall-score-num" id="overallNum">0%</div>
-    </div>
-  </div>
-</div>
+      <div class="hub-grid">
+        <a href="guias/index.html" class="hub-card">
+          <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div><span class="num">01</span></div>
+          <h3>Guias</h3>
+          <p>Guias gamificados de reunião e ligação, com scorecards ponderados, dicas de SPIN/SPICED e critérios de qualificação.</p>
+          <ul class="mats"><li>Guia do Closer</li><li>Guia do SDR</li></ul>
+          <span class="cta">Acessar guias <span class="arr">→</span></span>
+        </a>
 
-<main>
-  <div class="motivation-banner">
-    <div class="motivation-quote">"As pessoas não compram o que você faz, elas compram por que você acredita no que faz." — Simon Sinek</div>
-    <div class="motivation-source">Inspirado em SPIN Selling, SPICED e técnicas modernas de vendas consultivas</div>
-  </div>
+        <a href="playbook/index.html" class="hub-card">
+          <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5" /><path d="M8 7.5h8M8 11h5" stroke-linecap="round"/></svg></div><span class="num">02</span></div>
+          <h3>Playbook</h3>
+          <p>Playbook comercial completo — metodologia, processos e diretrizes de vendas da Suri.</p>
+          <ul class="mats"><li>Sobre a Suri, Rituais, Treinamentos</li><li class="off">Demais seções <span class="pill pill-muted">Em migração</span></li></ul>
+          <span class="cta">Acessar playbook <span class="arr">→</span></span>
+        </a>
 
-  <div id="blocksContainer"></div>
+        <a href="proposta/index.html" class="hub-card">
+          <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8l-5-5Z"/><path d="M14 3v5h5M8.5 13h7M8.5 16.5h4.5" stroke-linecap="round"/></svg></div><span class="num">03</span></div>
+          <h3>Gerador de Proposta</h3>
+          <p>Monte a proposta com o lead na call: volumetria, mensagens, teto de gasto e ROI calculados em tempo real, com geração de PDF.</p>
+          <ul class="mats"><li>Calculadora de plano</li><li>Impacto da cobrança e ROI</li><li>Gerador de PDF</li></ul>
+          <span class="cta">Acessar <span class="arr">→</span></span>
+        </a>
 
-  <div id="alwaysCardWrap"></div>
+        <a href="meta/index.html" class="hub-card feature-green">
+          <div class="top"><div class="ico green"><svg viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg></div><span class="pill pill-green">Novo</span></div>
+          <h3>Nova precificação da Meta</h3>
+          <p>Como conduzir a conversa sobre a mudança no modelo de cobrança do WhatsApp: objeções reais de clientes e como quebrá-las.</p>
+          <ul class="mats"><li>Como quebrar objeções</li><li>5 estratégias + 5 Movimentos</li></ul>
+          <span class="cta">Acessar <span class="arr">→</span></span>
+        </a>
 
-  <div class="finish-wrap" id="finishWrap">
-    <button class="btn-finish" onclick="showResult()">🏁 Finalizar reunião e ver pontuação</button>
-  </div>
+        <a href="treinamentos-rd/index.html" class="hub-card feature-blue">
+          <div class="top"><div class="ico dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M2.5 9 12 4.5 21.5 9 12 13.5 2.5 9Z"/><path d="M6.5 11v4.5c1.5 1.5 3.4 2.3 5.5 2.3s4-.8 5.5-2.3V11M21.5 9v5" stroke-linecap="round"/></svg></div><span class="pill pill-accent">Novo</span></div>
+          <h3>Treinamentos RD</h3>
+          <p>Gravações, slides e material de apoio dos workshops de vendas com a Suri — estrutura, contorno de objeções e apresentação de proposta.</p>
+          <ul class="mats"><li>3 gravações de workshop</li><li>4 apresentações em slides</li><li>Estrutura do treinamento</li></ul>
+          <span class="cta">Acessar treinamentos <span class="arr">→</span></span>
+        </a>
 
-  <div class="result-screen" id="resultScreen">
-    <div class="result-card">
-      <div class="result-trophy" id="resultTrophy">🏆</div>
-      <div class="result-rank" id="resultRank">RESULTADO</div>
-      <div class="result-score"><span id="resultScoreNum">0</span><span>%</span></div>
-      <div class="result-message" id="resultMessage"></div>
-      <div class="result-breakdown" id="resultBreakdown"></div>
-      <div class="result-btns">
-        <button class="btn-back" onclick="hideResult()">← Voltar ao guia</button>
-        <button class="btn-restart" onclick="restart()">↺ Nova reunião</button>
+        <div class="hub-card disabled">
+          <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M7 12l3-3 2 2 4-4" stroke-linecap="round"/></svg></div><span class="num">06</span></div>
+          <h3>Apresentações e Materiais Técnicos</h3>
+          <p>Apresentação institucional e comercial da Suri, demos interativas e arquivos gerais de apoio para reuniões com leads.</p>
+          <ul class="mats"><li class="off">Apresentação comercial <span class="pill pill-muted">Em breve</span></li><li class="off">Apresentações técnicas <span class="pill pill-muted">Em breve</span></li><li class="off">Demos interativas <span class="pill pill-muted">Em breve</span></li></ul>
+          <span class="cta">Em breve</span>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- TREINAMENTOS RD -->
+  <section class="section tight" id="treinamentos">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow"><span class="dot"></span>Treinamentos RD · Setembro 2026</span>
+        <h2>A trilha do workshop de vendas, em ordem</h2>
+        <p class="sub">Três encontros com o time de vendas da Suri. Cada etapa tem a gravação completa e os slides usados — assista na sequência para ter o contexto inteiro.</p>
+      </div>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="top"><div class="n">23/09</div><div class="flow-line"></div></div>
+          <div class="flow-card">
+            <h4>Workshop de Vendas</h4>
+            <p>Estrutura do treinamento e visão de enablement e vendas da Suri.</p>
+            <div class="kinds"><span class="pill pill-accent">Vídeo</span><span class="pill pill-muted">Slides</span><span class="pill pill-muted">Doc</span></div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="top"><div class="n">24/09</div><div class="flow-line"></div></div>
+          <div class="flow-card">
+            <h4>Contorno de Objeções</h4>
+            <p>Metodologia para identificar, investigar e responder objeções do lead.</p>
+            <div class="kinds"><span class="pill pill-accent">Vídeo</span><span class="pill pill-muted">Slides</span></div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="top"><div class="n">25/09</div><div class="flow-line"></div></div>
+          <div class="flow-card">
+            <h4>Apresentação de Proposta</h4>
+            <p>Como montar e apresentar a proposta comercial para fechar a venda.</p>
+            <div class="kinds"><span class="pill pill-accent">Vídeo</span><span class="pill pill-muted">Slides</span></div>
+          </div>
+        </div>
+        <div class="flow-step alt">
+          <div class="top"><div class="n">+</div></div>
+          <div class="flow-card">
+            <h4>Material de apoio</h4>
+            <p>Slides de apoio distribuídos antes do workshop do dia 23/09.</p>
+            <div class="kinds"><span class="pill pill-muted">Slides</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="rd-cta">
+        <div class="pitchline" style="flex:1;min-width:260px;"><p>"Assista à gravação antes de abrir os slides — o slide sozinho não traz o raciocínio da conversa."</p></div>
+        <a class="btn btn-primary" href="treinamentos-rd/index.html">Abrir treinamentos →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap foot-grid">
+      <div class="foot-brand"><img src="assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/><span class="tag">HUB de Vendas · Uso interno</span></div>
+      <div class="src">Mais materiais serão adicionados aqui em breve.</div>
+    </div>
+  </footer>
 </main>
 
 <script>
-// Autenticação: Hub.guard() no <head>
-
-// ─────────────────────────────────────────────
-// BLUEPRINT — cada item tem: text (ação) + options (2 alternativas de instrução)
-// A pontuação é normalizada pela soma dos pesos dos 5 blocos (90),
-// já que Comunicação e Técnica é lembrete e não pontua.
-// ─────────────────────────────────────────────
-const BLOCKS = [
-  {
-    id: 1,
-    icon: "🎯",
-    title: "Abertura e Postura",
-    weight: 15,
-    color: "#4A54FF",
-    items: [
-      {
-        text: "Se identifique como especialista da Suri",
-        options: [
-          "Me chamo [nome], sou especialista da Suri.",
-          "Oi, aqui é o [nome], vou conduzir nossa conversa como especialista da Suri."
-        ]
-      },
-      {
-        text: "Agradeça a disponibilidade do lead",
-        options: [
-          "Antes de começar, obrigado por reservar esse tempo — sei que a agenda de vocês é corrida.",
-          "Valeu por topar essa conversa. Vamos aproveitar bem esse tempo."
-        ]
-      },
-      {
-        text: "Alinhe o tempo disponível para a reunião",
-        options: [
-          "Combinamos 30 minutos, certo? Consegue esse tempo hoje?",
-          "Quanto tempo você tem disponível agora? Quero respeitar sua agenda."
-        ]
-      },
-      {
-        text: "Alinhe expectativas e estrutura da reunião logo no início",
-        options: [
-          "Vou entender melhor o cenário de vocês, mostrar como a Suri se encaixa, e a gente fecha os detalhes pra dar andamento.",
-          "Minha ideia é: primeiro entender a situação de vocês hoje, depois mostrar a solução, e ao final definimos os próximos passos."
-        ]
-      }
-    ]
-  },
-  {
-    id: 2,
-    icon: "🔍",
-    title: "Diagnóstico",
-    weight: 20,
-    color: "#6B4EE6",
-    items: [
-      {
-        text: "Mencione ao menos uma informação trazida pelo SDR na qualificação",
-        options: [
-          "O [SDR] me passou que vocês têm alto volume de leads pelo Instagram — isso ainda é verdade?",
-          "Vi aqui que o gargalo de vocês é X. Continua sendo essa a prioridade?"
-        ]
-      },
-      {
-        text: "Investigue o papel e responsabilidade do lead na empresa",
-        options: [
-          "Qual é seu papel hoje na operação comercial da empresa?",
-          "Você é quem decide sobre esse tipo de ferramenta ou também envolve mais alguém?"
-        ]
-      },
-      {
-        text: "Demonstre entendimento do modelo de negócio do lead",
-        options: [
-          "No mercado de [segmento], é bem comum o gargalo estar em [característica do setor] — é algo que faz sentido pra vocês também?",
-          "Uma coisa que costuma acontecer em negócios de [segmento] é [dinâmica do setor]. Vocês sentem isso no dia a dia?"
-        ]
-      },
-      {
-        text: "Identifique o objetivo principal do lead com a solução",
-        options: [
-          "Se a Suri resolver um problema nos próximos 90 dias, qual seria o impacto mais importante pra você?",
-          "O que faria você dizer que essa implementação valeu a pena daqui a 3 meses?"
-        ]
-      },
-      {
-        text: "Explore impactos, consequências e ganhos esperados",
-        options: [
-          "Hoje, quanto vocês estimam que perdem em vendas por demora no atendimento?",
-          "Se isso continuar do jeito que está, qual o custo real pra operação nos próximos meses?"
-        ]
-      },
-      {
-        text: "Entenda a volumetria de contatos/clientes atendidos no WhatsApp (por dia ou mês)",
-        options: [
-          "Mais ou menos quantas conversas chegam no WhatsApp de vocês por dia?",
-          "Dá pra estimar quantos clientes diferentes vocês atendem por mês?"
-        ]
-      },
-      {
-        text: "Investigue orçamento disponível",
-        options: [
-          "Vocês já têm um orçamento definido pra esse tipo de solução, ou ainda estão validando?",
-          "Existe uma faixa de investimento que vocês têm em mente pra resolver isso?"
-        ]
-      }
-    ]
-  },
-  {
-    id: 3,
-    icon: "💡",
-    title: "Apresentação da Solução",
-    weight: 15,
-    color: "#000F9B",
-    items: [
-      {
-        text: "Gere autoridade mencionando o endosso da Suri",
-        options: [
-          "A Suri faz parte da TOTVS, a maior empresa de tecnologia do Brasil, e é especializada em IA para vendas e atendimento conversacional.",
-          "Somos parte da TOTVS, maior empresa de tecnologia do Brasil, e desenvolvemos IA aplicada a vendas e atendimento via WhatsApp."
-        ]
-      },
-      {
-        text: "Conecte as dores do lead à solução Suri antes de apresentar",
-        options: [
-          "Você mencionou [dor específica]. A Suri resolve exatamente isso automatizando [processo]. Deixa eu te mostrar.",
-          "Com base no que você me contou, vou focar em mostrar como resolvemos [dor], não em passar a plataforma inteira."
-        ]
-      },
-      {
-        text: "Apresente o produto com foco nas funcionalidades relevantes ao cenário do lead",
-        options: [
-          "Baseado no volume que você me passou, essa funcionalidade de [X] vai ser essencial pra vocês.",
-          "Já que vocês recebem [volume] de contatos, o recurso de [Y] resolve exatamente esse gargalo."
-        ]
-      },
-      {
-        text: "Seja convincente ao apresentar benefícios e implicações práticas",
-        options: [
-          "Na prática, isso significa que vocês deixam de perder vendas por demora, e ganham tempo da equipe.",
-          "O impacto direto disso é: menos tempo de resposta, mais conversão, sem aumentar a equipe."
-        ]
-      },
-      {
-        text: "Gere autoridade com dados, cases, clientes ou premiações",
-        options: [
-          "Temos mais de [X] clientes ativos e fomos reconhecidos com [prêmio/certificação]. Um cliente parecido com você, de [segmento], teve [resultado].",
-          "Hoje atendemos [X] empresas do seu segmento, e um dos cases mais recentes foi [resultado numérico] em [prazo]."
-        ]
-      },
-      {
-        text: "Confirme interesse e valide se a Suri atende as necessidades",
-        options: [
-          "Baseado em tudo que vimos, isso resolve o que você precisa?",
-          "Ficou claro como a Suri se encaixa no seu cenário, ou tem algo que ainda não ficou claro?"
-        ]
-      }
-    ]
-  },
-  {
-    id: 4,
-    icon: "💬",
-    title: "Negociação e Objeções",
-    weight: 15,
-    color: "#E3A008",
-    textColor: "#020519",
-    items: [
-      {
-        text: "Explique o processo de jornada de ativação/treinamento",
-        options: [
-          "A jornada de ativação/treinamento leva até 30 dias corridos, com 6 encontros com nosso time pra deixar tudo configurado.",
-          "Em até 30 dias vocês já estão operando — são 6 sessões durante a jornada de ativação/treinamento nesse período."
-        ]
-      },
-      {
-        text: "Explique de forma clara o conceito de contato/cliente atendido no mês",
-        options: [
-          "O plano é dimensionado pelo número de clientes atendidos no mês — cada cliente diferente que fala com vocês no WhatsApp durante o mês conta como 1 atendido.",
-          "Atendido é simples: é cada cliente ou contato diferente que vocês atendem no mês. É isso que dimensiona o plano."
-        ]
-      },
-      {
-        text: "Apresente valores, plano e formas de pagamento com segurança",
-        options: [
-          "O investimento no plano é R$ [X]/mês pra [Y] atendidos, e as mensagens da Meta entram à parte, pelo preço real dela — sem markup nosso. Você pode parcelar em até 12x no cartão ou fechar à vista com desconto.",
-          "Nosso plano de entrada é R$ [X] pra [Y] atendidos por mês. Aceita cartão parcelado ou boleto — qual funciona melhor pra vocês?"
-        ]
-      },
-      {
-        text: "Investigue o que está por trás da objeção antes de responder",
-        options: [
-          "O que exatamente te preocupa nessa objeção — é o valor em si ou o momento pra investir?",
-          "Antes de eu responder, me ajuda a entender: o que está pesando mais nessa decisão?"
-        ]
-      },
-      {
-        text: "Redirecione para o custo de não resolver o problema",
-        condition: "Apenas se houve objeção de preço",
-        options: [
-          "Entendo a preocupação com o valor. Mas quanto vocês já perderam esse mês por demora no atendimento?",
-          "Faz sentido pensar no investimento. Só que o custo de continuar sem resolver isso também é real — quanto isso representa hoje?"
-        ]
-      },
-      {
-        text: "Valide se as objeções foram resolvidas",
-        options: [
-          "Isso esclarece sua dúvida, ou ainda tem algo que te deixa inseguro?",
-          "Com essa explicação, você sente que faz sentido avançar?"
-        ]
-      },
-      {
-        text: "Use contrapartida clara (prazo ou condições)",
-        condition: "Apenas se houve desconto",
-        options: [
-          "Consigo esse desconto se fecharmos ainda hoje, ou se for num plano anual.",
-          "Esse valor especial vale se você confirmar até [prazo] ou optar pelo plano de [X] meses."
-        ]
-      }
-    ]
-  },
-  {
-    id: 5,
-    icon: "🏁",
-    title: "Fechamento e Próximos Passos",
-    weight: 25,
-    color: "#00B914",
-    items: [
-      {
-        text: "Peça a venda",
-        highlight: true,
-        options: [
-          "Com base em tudo que vimos, a gente consegue dar andamento hoje?",
-          "Podemos dar continuidade aos próximos passos do contrato pra iniciarmos a jornada de ativação/treinamento ainda essa semana?"
-        ]
-      },
-      {
-        text: "Não ofereça desconto sem o cliente pedir",
-        options: [
-          "Aguardar o lead trazer a objeção de preço antes de mencionar qualquer desconto.",
-          "Sustentar o valor cheio até que o lead explicitamente questione o investimento."
-        ]
-      },
-      {
-        text: "Ofereça o desconto em troca de um prazo ou condição",
-        condition: "Apenas se houve desconto",
-        options: [
-          "Consigo um desconto se fecharmos até [data] ou no plano anual.",
-          "Esse valor eu libero se for uma decisão hoje ou com um compromisso de [condição]."
-        ]
-      },
-      {
-        text: "Explique que o contrato tem 12 meses de duração",
-        options: [
-          "O contrato tem duração de 12 meses — é importante você já saber disso antes de fecharmos.",
-          "Só um detalhe importante: nosso contrato padrão é de 12 meses. Faz sentido pra vocês?"
-        ]
-      },
-      {
-        text: "Agende data e hora para novo contato",
-        condition: "Apenas se o fechamento não foi bem-sucedido na reunião",
-        options: [
-          "Vamos marcar um retorno pra [dia] às [hora] pra fechar os últimos detalhes?",
-          "Consigo te ligar [dia] de manhã pra darmos sequência? Fica bom?"
-        ]
-      }
-    ]
-  }
-];
-
-// ─────────────────────────────────────────────
-// LEMBRETE PERMANENTE — não pontua, não tem checkbox. Vale para a reunião inteira.
-// ─────────────────────────────────────────────
-const REMINDERS = [
-  {
-    text: "Evite vícios de linguagem, jargões, clichês ou postura robótica",
-    options: [
-      "Falar de forma natural, sem repetir 'né', 'então', 'tipo assim' excessivamente.",
-      "Manter fluidez na fala, evitando parecer um script decorado."
-    ]
-  },
-  {
-    text: "Transmita bom humor, entusiasmo e segurança",
-    options: [
-      "Demonstrar energia genuína ao falar da solução, sem soar ansioso ou robótico.",
-      "Manter tom confiante e positivo durante toda a reunião, mesmo diante de objeções."
-    ]
-  },
-  {
-    text: "Mantenha o controle da condução da reunião, sem deixar o lead dominar nem monopolizar a conversa",
-    options: [
-      "Entendi seu ponto — deixa eu voltar pra esse tema que você trouxe daqui a pouco, porque agora quero fechar uma parte importante antes.",
-      "Boa pergunta. Antes de responder, deixa eu terminar de te mostrar esse ponto, porque isso vai esclarecer também o que você perguntou."
-    ]
-  }
-];
-
-// ── STATE ──
-let checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
-let notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
-let expanded = BLOCKS.map((b, i) => i === 0);
-let alwaysExpanded = false;
-const TOTAL_WEIGHT = BLOCKS.reduce((s, b) => s + b.weight, 0); // 90 — normaliza pra 100%
-
-function totalItems() { return BLOCKS.reduce((s,b) => s + b.items.length, 0); }
-function isDone(bi, ii) { return checked[bi][ii] || notApplicable[bi][ii]; }
-function blockChecked(bi) { return checked[bi].filter((v,ii) => isDone(bi,ii)).length; }
-
-function weightedScore() {
-  let score = 0;
-  BLOCKS.forEach((b, bi) => {
-    const frac = b.items.length ? blockChecked(bi) / b.items.length : 0;
-    score += frac * b.weight;
-  });
-  return (score / TOTAL_WEIGHT) * 100; // normalizado 0-100
+function showLoggedInUI() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('hubNav').hidden = false;
+  document.getElementById('restrictedPill').hidden = true;
+  document.getElementById('logoutBtn').hidden = false;
+  Hub.mountUserPill();
 }
 
-function render() {
-  renderProgressSteps();
-  renderBlocks();
-  renderAlwaysCard();
-  updateScore();
-}
-
-function renderProgressSteps() {
-  const wrap = document.getElementById('progressSteps').closest('.progress-bar-wrap');
-  if (BLOCKS.length <= 1) { if (wrap) wrap.style.display = 'none'; return; }
-  if (wrap) wrap.style.display = '';
-  const el = document.getElementById('progressSteps');
-  el.innerHTML = BLOCKS.map((b, i) => {
-    const complete = blockChecked(i) === b.items.length;
-    const cls = complete ? 'complete' : '';
-    return `<div class="step-tab ${cls}" onclick="jumpToBlock(${i})">
-      <div class="step-num">${complete ? '✓' : (i+1)}</div>
-      <div class="step-label">${b.title}</div>
-    </div>`;
-  }).join('');
-}
-
-function renderBlocks() {
-  const container = document.getElementById('blocksContainer');
-
-  container.innerHTML = BLOCKS.map((b, bi) => {
-    const textColor = b.textColor || '#ffffff';
-    const count = blockChecked(bi);
-    const total = b.items.length;
-    const pct = Math.round((count/total)*100);
-    const complete = count === total;
-
-    const itemsHTML = b.items.map((item, ii) => {
-      const key = `${bi}-${ii}`;
-      const isChecked = checked[bi][ii];
-      const isNA = notApplicable[bi][ii];
-      const checkedCls = isChecked ? ' checked' : '';
-      const naCls = isNA ? ' na' : '';
-      const highlightCls = item.highlight ? ' item-highlight' : '';
-
-      const optsHTML = item.options.map((opt, oi) =>
-        `<div class="option-item"><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`
-      ).join('');
-
-      const naToggleHTML = item.condition ? `<div class="item-na-toggle${isNA ? ' active' : ''}" onclick="toggleNA(event,${bi},${ii})">
-          <div class="item-na-box">
-            <svg class="item-na-svg" width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <span>Não se aplica — contar automaticamente</span>
-        </div>` : '';
-
-      return `<div class="item${checkedCls}${naCls}${highlightCls}" onclick="toggleCheck(${bi},${ii})">
-        <div class="item-checkbox">
-          <svg class="item-check-svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="item-content">
-          <div class="item-text">${item.text}</div>
-          ${item.condition ? `<div class="item-condition">${item.condition}</div>` : ''}
-          ${naToggleHTML}
-          <button class="instr-toggle" onclick="toggleInstr(event,'instr-${key}',this)">
-            <span class="instr-arrow">▶</span> ver instrução
-          </button>
-          <div class="instr-box" id="instr-${key}">${optsHTML}</div>
-        </div>
-      </div>`;
-    }).join('');
-
-    return `<div class="phase-card ${complete ? 'complete' : ''} ${expanded[bi] ? 'expanded' : ''}" id="block-${bi}" style="--phase-color:${b.color}">
-      <div class="phase-header" onclick="togglePhase(${bi})">
-        <div class="phase-badge" style="background:${b.color};color:${textColor}">
-          ${b.icon}
-          <div class="phase-check">✓</div>
-        </div>
-        <div class="phase-info">
-          <div class="phase-tag">${BLOCKS.length > 1 ? 'Fase ' + (bi+1) : 'Scorecard'}</div>
-          <div class="phase-name">${b.title} <span class="phase-weight-badge">${b.weight}%</span></div>
-          <div class="phase-progress-row">
-            <div class="phase-bar-bg"><div class="phase-bar-fill" style="width:${pct}%;background:${b.color}"></div></div>
-            <div class="phase-count">${count}/${total}</div>
-          </div>
-        </div>
-        <div class="phase-arrow">▶</div>
-      </div>
-      <div class="phase-body">
-        <div class="item-list">${itemsHTML}</div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function renderAlwaysCard() {
-  const wrap = document.getElementById('alwaysCardWrap');
-  const itemsHTML = REMINDERS.map((r, ri) => {
-    const optsHTML = r.options.map((opt, oi) =>
-      `<div class="option-item"><span class="option-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`
-    ).join('');
-    return `<div class="always-item">
-      <div class="always-item-text">${r.text}</div>
-      <button class="always-toggle" onclick="toggleAlwaysInstr(event,'always-instr-${ri}',this)">
-        <span class="instr-arrow">▶</span> ver instrução
-      </button>
-      <div class="always-instr-box" id="always-instr-${ri}">${optsHTML}</div>
-    </div>`;
-  }).join('');
-
-  wrap.innerHTML = `<div class="always-card ${alwaysExpanded ? 'expanded' : ''}">
-    <div class="always-header" onclick="toggleAlwaysCard()">
-      <div class="always-badge">💬</div>
-      <div class="always-info">
-        <div class="always-tag">Lembrete <span class="always-pill">SEMPRE VÁLIDO</span></div>
-        <div class="always-name">Comunicação e Técnica</div>
-        <div class="always-sub">Vale para a reunião inteira — não pontua, é orientação de postura</div>
-      </div>
-      <div class="always-arrow">▶</div>
-    </div>
-    <div class="always-body">${itemsHTML}</div>
-  </div>`;
-}
-
-function toggleAlwaysCard() {
-  alwaysExpanded = !alwaysExpanded;
-  renderAlwaysCard();
-}
-
-function toggleAlwaysInstr(e, id, btn) {
-  e.stopPropagation();
-  const box = document.getElementById(id);
-  box.classList.toggle('open');
-  btn.classList.toggle('open');
-}
-
-function scrollToBlock(bi) {
-  const el = document.getElementById('block-' + bi);
-  const headerEl = document.querySelector('.top-fixed');
-  if (!el || !headerEl) return;
-  const headerHeight = headerEl.offsetHeight;
-  const rect = el.getBoundingClientRect();
-  const targetY = window.scrollY + rect.top - headerHeight - 14;
-  window.scrollTo({ top: Math.max(targetY, 0), behavior: 'smooth' });
-}
-
-function togglePhase(bi) {
-  const opening = !expanded[bi];
-  if (opening) {
-    expanded = expanded.map((v, i) => i === bi);
+function checkLogin() {
+  const emailInput = document.getElementById('emailInput');
+  const passInput = document.getElementById('passwordInput');
+  const error = document.getElementById('loginError');
+  if (Hub.login(emailInput.value, passInput.value)) {
+    emailInput.classList.remove('error');
+    passInput.classList.remove('error');
+    error.classList.remove('visible');
+    showLoggedInUI();
+    window.scrollTo({ top: 0 });
   } else {
-    expanded[bi] = false;
-  }
-  render();
-  if (opening) {
-    setTimeout(() => scrollToBlock(bi), 50);
-  }
-}
-
-function jumpToBlock(bi) {
-  expanded = expanded.map((v, i) => i === bi);
-  render();
-  setTimeout(() => scrollToBlock(bi), 50);
-}
-
-function maybeAutoAdvance(bi) {
-  const b = BLOCKS[bi];
-  const complete = blockChecked(bi) === b.items.length;
-  if (!complete) return;
-  expanded[bi] = false;
-  const next = bi + 1;
-  if (next < BLOCKS.length) {
-    expanded[next] = true;
-    setTimeout(() => scrollToBlock(next), 250);
+    emailInput.classList.add('error');
+    passInput.classList.add('error');
+    error.classList.add('visible');
+    passInput.value = '';
   }
 }
 
-function toggleCheck(bi, ii) {
-  checked[bi][ii] = !checked[bi][ii];
-  if (checked[bi][ii]) notApplicable[bi][ii] = false;
-  maybeAutoAdvance(bi);
-  render();
-  const pill = document.getElementById('scorePill');
-  pill.classList.add('bump');
-  setTimeout(() => pill.classList.remove('bump'), 200);
-}
+document.getElementById('emailInput').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('passwordInput').focus(); });
+document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkLogin(); });
 
-function toggleNA(e, bi, ii) {
-  e.stopPropagation();
-  notApplicable[bi][ii] = !notApplicable[bi][ii];
-  if (notApplicable[bi][ii]) checked[bi][ii] = false;
-  maybeAutoAdvance(bi);
-  render();
-  const pill = document.getElementById('scorePill');
-  pill.classList.add('bump');
-  setTimeout(() => pill.classList.remove('bump'), 200);
-}
+// Links internos só funcionam com sessão válida
+document.querySelectorAll('#mainContent a[href$=".html"], #hubNav a[href$=".html"]').forEach(a => {
+  a.addEventListener('click', e => { if (!Hub.isValid()) { e.preventDefault(); location.reload(); } });
+});
 
-function toggleInstr(e, id, btn) {
-  e.stopPropagation();
-  const box = document.getElementById(id);
-  box.classList.toggle('open');
-  btn.classList.toggle('open');
-}
-
-function updateScore() {
-  const pct = Math.round(weightedScore());
-  document.getElementById('scoreText').textContent = `${pct}%`;
-  document.getElementById('overallFill').style.width = pct + '%';
-  document.getElementById('overallNum').textContent = pct + '%';
-}
-
-function showResult() {
-  const pct = Math.round(weightedScore());
-
-  let rank, trophy, message;
-  if (pct >= 90) { rank = 'Excelente'; trophy = '🏆'; message = 'Reunião completa! Execução no mais alto nível.'; }
-  else if (pct >= 70) { rank = 'Muito bem'; trophy = '🥈'; message = 'Ótima condução — só faltaram alguns detalhes.'; }
-  else if (pct >= 40) { rank = 'Bom progresso'; trophy = '🥉'; message = 'Vários pontos cumpridos, mas dá pra ir além.'; }
-  else { rank = 'Em construção'; trophy = '🚀'; message = 'Ainda no começo — use o guia como apoio na próxima.'; }
-
-  document.getElementById('resultTrophy').textContent = trophy;
-  document.getElementById('resultRank').textContent = rank;
-  document.getElementById('resultScoreNum').textContent = pct;
-  document.getElementById('resultMessage').textContent = message;
-
-  const rows = BLOCKS.map((b, bi) => {
-    const c = blockChecked(bi);
-    const frac = b.items.length ? c / b.items.length : 0;
-    const earned = ((frac * b.weight / TOTAL_WEIGHT) * 100).toFixed(1);
-    return `<div class="result-row">
-      <div class="result-row-name">${b.icon} ${b.title} <span class="phase-weight-badge">${b.weight}%</span></div>
-      <div class="result-row-score">${earned}%</div>
-    </div>`;
-  });
-  document.getElementById('resultBreakdown').innerHTML = rows.join('');
-
-  document.getElementById('blocksContainer').style.display = 'none';
-  document.getElementById('alwaysCardWrap').style.display = 'none';
-  document.getElementById('finishWrap').style.display = 'none';
-  document.getElementById('resultScreen').classList.add('visible');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function hideResult() {
-  document.getElementById('resultScreen').classList.remove('visible');
-  document.getElementById('blocksContainer').style.display = '';
-  document.getElementById('alwaysCardWrap').style.display = '';
-  document.getElementById('finishWrap').style.display = '';
-}
-
-function restart() {
-  checked = BLOCKS.map(b => new Array(b.items.length).fill(false));
-  notApplicable = BLOCKS.map(b => new Array(b.items.length).fill(false));
-  expanded = BLOCKS.map((b, i) => i === 0);
-  alwaysExpanded = false;
-  hideResult();
-  render();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-
-render();
+if (Hub.isValid()) showLoggedInUI();
+else document.getElementById('loginScreen').style.display = 'block';
 </script>
 </body>
 </html>
