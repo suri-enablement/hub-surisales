@@ -26,4 +26,9 @@ Em `treinamentos-rd/index.html`, inclua um item no array `FILES` (`id` do arquiv
 
 ## Acesso
 
-O login é validado no navegador (domínio `@suri.ai` + senha do time, em `assets/hub.js`) e a sessão fica salva por 30 dias. Serve para evitar acesso casual — não é proteção real, já que o código é público no repositório.
+O login é validado no navegador e a sessão fica salva por 30 dias. Há duas formas de entrar:
+
+- **Entrar com Google** (Google Identity Services): aceita só contas `@suri.ai` com e-mail verificado. Usa apenas o *Client ID* OAuth (`Hub.GOOGLE_CLIENT_ID` em `assets/hub.js`). A chave secreta do cliente **não** é usada e não deve ser commitada. No Google Cloud Console, o domínio do GitHub Pages precisa estar em *Origens JavaScript autorizadas* do cliente OAuth.
+- **E-mail + senha do time** (`assets/hub.js`), como alternativa.
+
+A validação é feita no navegador. Serve para evitar acesso casual — não é proteção real, já que o código é público no repositório.
