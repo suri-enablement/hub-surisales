@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Painel de Desempenho · Closer Suri</title>
+<link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/hub.css"/>
+<link rel="stylesheet" href="desempenho.css"/>
+<script src="../assets/hub.js"></script>
+<script>Hub.guard('../');</script>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Voltar ao HUB">
+      <img src="../assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/>
+      <div class="crumb"><div><div class="crumb-title">Painel de Desempenho</div><div class="crumb-sub">Closer · Notas das reuniões</div></div></div>
+    </a>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm hide-sm" href="../closer/index.html">Guia do Closer</a>
+      <a class="btn btn-ghost btn-sm" href="../index.html">← HUB</a>
+      <span class="user-pill hide-sm" data-user-pill hidden></span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="dash-hero">
+    <div class="wrap">
+      <div class="row">
+        <div class="fade-in">
+          <span class="eyebrow"><span class="dot"></span>Desempenho · IA + Avaliação Humana</span>
+          <h1 id="greeting">Seu desempenho nas reuniões</h1>
+          <p class="lede" id="heroLede">Acompanhe a evolução das notas das suas reuniões de fechamento por semana, mês, trimestre e ano.</p>
+        </div>
+        <span class="demo-pill" id="demoPill" hidden><span class="dot"></span>Dados fictícios · demonstração</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filtros: uma linha, escopo de tudo abaixo -->
+  <div class="filters" id="filters">
+    <div class="wrap">
+      <div class="segtabs" role="tablist" aria-label="Granularidade" id="granularityTabs">
+        <button class="segtab" role="tab" data-g="week">Semanal</button>
+        <button class="segtab" role="tab" data-g="month">Mensal</button>
+        <button class="segtab" role="tab" data-g="quarter">Trimestral</button>
+        <button class="segtab" role="tab" data-g="year">Anual</button>
+      </div>
+      <div class="period-nav">
+        <button class="icon-btn" id="prevBtn" aria-label="Período anterior">‹</button>
+        <div class="period-label" id="periodLabel" aria-live="polite">…</div>
+        <button class="icon-btn" id="nextBtn" aria-label="Próximo período">›</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="currentBtn" hidden>Voltar ao atual</button>
+      <div class="spacer"></div>
+      <label class="closer-field" id="closerField" hidden>
+        <span>Closer</span>
+        <select class="closer-select" id="closerSelect" aria-label="Escolher closer"></select>
+      </label>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div id="stateRoot"></div>
+
+    <div class="dash" id="dash" hidden>
+      <!-- KPIs -->
+      <div class="grid-kpi">
+        <div class="panel hero-card" id="heroCard">
+          <div class="k"><span>Nota média · <span id="heroPeriod"></span></span><span class="lvl-emoji" id="heroLevelEmoji" aria-hidden="true"></span></div>
+          <div>
+            <div class="hero-value"><span class="v" id="heroValue">–</span><span class="of">/10</span><span class="hero-delta" id="heroDelta"></span></div>
+            <div class="hero-meta" id="heroMeta"></div>
+          </div>
+          <div class="hero-stats" id="heroStats"></div>
+          <div class="hero-foot">
+            <div class="level" id="levelBox">
+              <div class="level-top"><b id="levelName"></b><span id="levelNext"></span></div>
+              <div class="level-bar"><i id="levelFill" style="width:0%"></i></div>
+            </div>
+            <div class="spark"><div id="sparkline"></div><span id="sparkLabel"></span></div>
+          </div>
+        </div>
+
+        <div class="panel tile">
+          <div class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/></svg></span>Variação</div>
+          <div class="tile-row"><div class="val" id="deltaValue">–</div><span class="delta-chip flat" id="deltaPct">–</span></div>
+          <div class="foot" id="deltaFoot"></div>
+        </div>
+
+        <div class="panel tile">
+          <div class="lbl"><span class="ico violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M8 14l2.5 2.5L16 12"/></svg></span>Avaliadas vs. realizadas</div>
+          <div class="val"><span id="evalValue">–</span><small id="heldValue"></small></div>
+          <div class="meter" id="coverageMeter" role="img"><i class="a" id="coverageFill" style="width:0%"></i></div>
+          <div class="foot" id="evalFoot"></div>
+        </div>
+
+        <div class="panel tile">
+          <div class="lbl"><span class="ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>Reuniões na meta</div>
+          <div class="tile-row">
+            <div><div class="val" id="targetValue">–</div><div class="foot" id="targetFoot"></div></div>
+            <div class="ring-wrap"><div id="targetRing"></div><div class="ring-label" id="targetRingLabel"></div></div>
+          </div>
+        </div>
+
+        <div class="panel tile">
+          <div class="lbl"><span class="ico warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5 6.8 15M17.2 9l2.6-1.5"/><circle cx="12" cy="12" r="3.2"/></svg></span>Composição da nota</div>
+          <div class="split">
+            <div class="cell"><div class="t"><i style="background:var(--s-ai)"></i>IA</div><div class="n" id="aiValue">–</div></div>
+            <div class="cell"><div class="t"><i style="background:var(--s-human)"></i>Humana</div><div class="n" id="humanValue">–</div></div>
+          </div>
+          <div class="foot" id="weightsFoot"></div>
+        </div>
+      </div>
+
+      <!-- Tendência + insights -->
+      <div class="grid-2-1">
+        <div class="panel trend-panel">
+          <div class="panel-head">
+            <div><h3>Evolução da nota</h3><div class="sub" id="trendSub"></div></div>
+            <div class="series-toggle" id="seriesToggle" aria-label="Séries do gráfico"></div>
+          </div>
+          <div class="trend-box" id="trendChart" aria-describedby="trendHelp"></div>
+          <div class="chart-note" id="trendHelp">Passe o mouse (ou use ← → com o gráfico em foco) para ver os valores de cada ponto.</div>
+          <details class="chart-note"><summary>Ver dados em tabela</summary><div class="table-wrap"><table class="mt" id="trendTable"></table></div></details>
+          <div class="trend-summary" id="trendSummary"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Insights do período</h3><div class="sub">Gerados a partir das suas notas</div></div></div>
+          <div class="insights" id="insights"></div>
+        </div>
+      </div>
+
+      <!-- Trimestres (visões trimestral e anual) -->
+      <div class="panel" id="quartersPanel" hidden>
+        <div class="panel-head"><div><h3 id="quartersTitle">Seu ano em trimestres</h3><div class="sub">Média da nota final por trimestre. Clique para abrir.</div></div></div>
+        <div class="quarters" id="quarters"></div>
+      </div>
+
+      <!-- Distribuição + subcritérios -->
+      <div class="grid-1-1">
+        <div class="panel">
+          <div class="panel-head"><div><h3>Distribuição das notas</h3><div class="sub">Quantas reuniões caíram em cada faixa</div></div></div>
+          <div class="hbars" id="distribution"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Notas por subcritério</h3><div class="sub">Os 5 blocos do scorecard do Closer</div></div></div>
+          <div class="hbars" id="dimensions"></div>
+          <div class="panel-legend">
+            <span><i style="width:14px;height:10px;border-radius:0 3px 3px 0;background:var(--s-final)"></i>Período atual</span>
+            <span><i style="width:2px;height:12px;background:var(--text);opacity:.55"></i>Período anterior</span>
+            <span><i style="width:1.5px;height:12px;background:var(--shop-green)"></i>Meta</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reuniões -->
+      <div class="panel">
+        <div class="panel-head">
+          <div><h3>Reuniões avaliadas</h3><div class="sub" id="meetingsSub"></div></div>
+          <div class="list-filters" id="listFilters" role="group" aria-label="Filtrar reuniões">
+            <button class="chip active" data-f="all">Todas</button>
+            <button class="chip" data-f="below">Abaixo da meta</button>
+            <button class="chip" data-f="pending">Aguardando humano</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="mt" id="meetingsTable">
+            <thead><tr><th>Data</th><th>Lead / empresa</th><th class="num">Nota final</th><th class="num">IA</th><th class="num">Humana</th><th>Feedback</th><th><span class="sr-only">Detalhes</span></th></tr></thead>
+            <tbody id="meetingsBody"></tbody>
+          </table>
+        </div>
+        <div class="mini-empty" id="meetingsEmpty" hidden></div>
+        <div class="list-more"><button class="btn btn-ghost btn-sm" id="moreBtn" hidden>Ver mais reuniões</button></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<dialog class="modal" id="meetingModal" aria-labelledby="modalTitle">
+  <div class="modal-head">
+    <div><h3 id="modalTitle"></h3><div class="sub" id="modalSub"></div></div>
+    <button class="icon-btn" id="modalClose" aria-label="Fechar">✕</button>
+  </div>
+  <div class="modal-body" id="modalBody"></div>
+</dialog>
+
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <div class="foot-brand"><img src="../assets/img/logo-suri-shop.png" alt="Suri Shop by TOTVS"/><span class="tag">HUB de Vendas · Uso interno</span></div>
+    <div class="src">Nota final = IA + Avaliação Humana · <a href="../closer/index.html">Guia do Closer</a></div>
+  </div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
