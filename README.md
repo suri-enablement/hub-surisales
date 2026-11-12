@@ -17,12 +17,14 @@ closer/  sdr/            Guias gamificados com scorecard
 playbook/                Playbook comercial
 proposta/                Gerador de proposta, impacto da cobrança e ROI
 meta/                    Nova precificação da Meta + matriz de objeções
-treinamentos-rd/         Gravações e slides dos workshops RD (Google Drive)
+treinamentos-rd/         Treinamentos RD em duas trilhas: Vendas (Closer) e Pré-vendas (SDR)
 ```
 
 ## Como adicionar um treinamento RD
 
-Em `treinamentos-rd/index.html`, inclua um item no array `FILES` (`id` do arquivo no Drive, `type`: `video | slides | doc`, `day`, `date`, `title`, `size`). Para um novo dia de workshop, inclua também um item em `DAYS`.
+Em `treinamentos-rd/index.html`, inclua um item no array `FILES` com `track` (`vendas` ou `pre`), `id` do arquivo no Drive, `type` (`video | slides | doc | sheet`), `day`, `date`, `title` e `size`. Para um treinamento novo, inclua também um item em `DAYS` com o mesmo `track`. Arquivos fora do Drive (ex.: Zoom) usam `url` e `host`.
+
+Links diretos para cada trilha: `treinamentos-rd/index.html#vendas` e `treinamentos-rd/index.html#pre-vendas`.
 
 ## Acesso
 

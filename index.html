@@ -72,6 +72,14 @@
   .flow-card h4{font-size:14.5px;font-weight:600;}
   .flow-card p{font-size:13px;color:var(--text-secondary);font-weight:300;line-height:1.5;}
   .flow-card .kinds{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:6px;}
+  .flow-3{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:900px){.flow-3{grid-template-columns:1fr;}}
+  .track-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:30px 0 16px;}
+  .track-head:first-of-type{margin-top:6px;}
+  .track-head h3{font-size:18px;font-weight:700;}
+  .track-head h3 span{font-weight:400;color:var(--text-tertiary);}
+  .track-head a{font-size:13px;font-weight:600;color:var(--accent-strong);text-decoration:none;}
+  .track-head a:hover{text-decoration:underline;}
   .rd-cta{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
 </style>
 </head>
@@ -109,7 +117,7 @@
         <ul class="login-feats">
           <li><div class="dot"></div><div><b>Guias de Closer e SDR</b><span>Scorecard ponderado com SPIN, SPICED e BANT, direto na call.</span></div></li>
           <li><div class="dot"></div><div><b>Proposta em tempo real</b><span>Volumetria, teto de gasto e ROI calculados com o lead — com PDF no final.</span></div></li>
-          <li><div class="dot"></div><div><b>Treinamentos RD</b><span>Gravações e slides dos workshops de vendas com a Suri.</span></div></li>
+          <li><div class="dot"></div><div><b>Treinamentos RD</b><span>Trilhas de Vendas e Pré-vendas, com gravações e slides.</span></div></li>
         </ul>
       </div>
       <div class="card login-card fade-in">
@@ -181,7 +189,7 @@
         <div class="cell"><span class="num">2 guias</span><span class="lbl">Gamificados, com scorecard ponderado para Closer e SDR</span></div>
         <div class="cell"><span class="num">11 objeções</span><span class="lbl">Mapeadas sobre a nova cobrança da Meta, com argumento pronto</span></div>
         <div class="cell"><span class="num">3 simuladores</span><span class="lbl">Proposta, impacto da cobrança e ROI do WhatsApp</span></div>
-        <div class="cell"><span class="num">3 workshops</span><span class="lbl">Treinamentos RD gravados, com slides e material de apoio</span></div>
+        <div class="cell"><span class="num">2 trilhas</span><span class="lbl">Treinamentos RD de Vendas e Pré-vendas, com gravações e slides</span></div>
       </div>
     </div>
   </section>
@@ -231,8 +239,8 @@
         <a href="treinamentos-rd/index.html" class="hub-card feature-blue">
           <div class="top"><div class="ico dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M2.5 9 12 4.5 21.5 9 12 13.5 2.5 9Z"/><path d="M6.5 11v4.5c1.5 1.5 3.4 2.3 5.5 2.3s4-.8 5.5-2.3V11M21.5 9v5" stroke-linecap="round"/></svg></div><span class="pill pill-accent">Novo</span></div>
           <h3>Treinamentos RD</h3>
-          <p>Gravações, slides e material de apoio dos workshops de vendas com a Suri — estrutura, contorno de objeções e apresentação de proposta.</p>
-          <ul class="mats"><li>3 gravações de workshop</li><li>4 apresentações em slides</li><li>Estrutura do treinamento</li></ul>
+          <p>Gravações, slides e materiais dos treinamentos da RD com a Suri, separados em duas trilhas: Vendas (Closer) e Pré-vendas (SDR).</p>
+          <ul class="mats"><li>Vendas · 4 treinamentos + acervo de calls</li><li>Pré-vendas · Jornada de Compra, listening e role play</li></ul>
           <span class="cta">Acessar treinamentos <span class="arr">→</span></span>
         </a>
 
@@ -251,10 +259,11 @@
   <section class="section tight" id="treinamentos">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow"><span class="dot"></span>Treinamentos RD · Setembro 2026</span>
-        <h2>A trilha do workshop de vendas, em ordem</h2>
-        <p class="sub">Três encontros com o time de vendas da Suri. Cada etapa tem a gravação completa e os slides usados — assista na sequência para ter o contexto inteiro.</p>
+        <span class="eyebrow"><span class="dot"></span>Treinamentos RD · 2026</span>
+        <h2>Duas trilhas, em ordem: Vendas e Pré-vendas</h2>
+        <p class="sub">Cada etapa tem a gravação completa e os materiais usados. Assista na sequência da sua trilha para ter o contexto inteiro.</p>
       </div>
+      <div class="track-head"><h3>Vendas <span>· Closer</span></h3><a href="treinamentos-rd/index.html#vendas">Abrir trilha de Vendas →</a></div>
       <div class="flow">
         <div class="flow-step">
           <div class="top"><div class="n">23/09</div><div class="flow-line"></div></div>
@@ -280,12 +289,40 @@
             <div class="kinds"><span class="pill pill-accent">Vídeo</span><span class="pill pill-muted">Slides</span></div>
           </div>
         </div>
+        <div class="flow-step">
+          <div class="top"><div class="n">05/11</div></div>
+          <div class="flow-card">
+            <h4>Fechamento de Portas</h4>
+            <p>O risco de não fechar as portas na venda, com acervo de calls para listening.</p>
+            <div class="kinds"><span class="pill pill-accent">Vídeo</span><span class="pill pill-muted">Slides</span><span class="pill pill-muted">Calls</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="track-head"><h3>Pré-vendas <span>· SDR</span></h3><a href="treinamentos-rd/index.html#pre-vendas">Abrir trilha de Pré-vendas →</a></div>
+      <div class="flow flow-3">
+        <div class="flow-step">
+          <div class="top"><div class="n">10/11</div><div class="flow-line"></div></div>
+          <div class="flow-card">
+            <h4>Jornada de Compra</h4>
+            <p>Decodificando a jornada de compra do lead e o papel do SDR em cada momento.</p>
+            <div class="kinds"><span class="pill pill-accent">Vídeo</span><span class="pill pill-muted">Slides</span></div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="top"><div class="n">11/11</div><div class="flow-line"></div></div>
+          <div class="flow-card">
+            <h4>Listening e Aprendizados</h4>
+            <p>Escuta de calls sobre a jornada de compra e o frame de qualificação.</p>
+            <div class="kinds"><span class="pill pill-accent">Vídeo</span></div>
+          </div>
+        </div>
         <div class="flow-step alt">
           <div class="top"><div class="n">+</div></div>
           <div class="flow-card">
-            <h4>Material de apoio</h4>
-            <p>Slides de apoio distribuídos antes do workshop do dia 23/09.</p>
-            <div class="kinds"><span class="pill pill-muted">Slides</span></div>
+            <h4>Check Up Call</h4>
+            <p>Estrutura de call e scorecard para os role plays do time.</p>
+            <div class="kinds"><span class="pill pill-muted">Planilha</span></div>
           </div>
         </div>
       </div>
