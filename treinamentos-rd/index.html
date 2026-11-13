@@ -38,6 +38,10 @@
   .track .n{margin-left:auto;font-family:var(--font-mono);font-size:11.5px;color:var(--text-tertiary);white-space:nowrap;}
   [hidden]{display:none !important;}
   .daytabs{margin-bottom:26px;}
+  .daypanel.active.calls-panel{display:block;}
+  .calls-panel .day-intro{max-width:72ch;}
+  .segtab.tab-calls{display:inline-flex;align-items:center;gap:6px;}
+  .segtab.tab-calls .new{font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--shop-green);border-radius:var(--radius-full);padding:2px 7px;}
   .daypanel{display:none;}
   .daypanel.active{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:start;}
   @media (max-width:900px){.daypanel.active{grid-template-columns:1fr;}}
@@ -123,7 +127,7 @@
       <a href="#pre-vendas">Pré-vendas</a>
       <a href="#biblioteca">Biblioteca</a>
       <a href="#acervo-calls" data-only="vendas">Acervo de calls</a>
-      <a href="#calls-playbook" data-only="pre">Calls de Playbook</a>
+      <a href="#calls-playbook" data-only="pre" onclick="event.preventDefault(); openPlaybook()">Calls de Playbook</a>
     </nav>
     <div class="nav-actions">
       <span class="user-pill hide-sm" data-user-pill hidden></span>
@@ -221,25 +225,6 @@
       </div>
     </div>
   </section>
-
-  <!-- CALLS DE PLAYBOOK (PRÉ-VENDAS) -->
-  <section class="section" id="calls-playbook" data-only="pre">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow"><span class="dot"></span>Calls de Playbook · Pré-vendas</span>
-        <h2>Calls de referência para consultar</h2>
-        <p class="sub">Acervo de calls selecionadas como referência para o time de SDR: use para estudar a condução da conversa e voltar sempre que precisar. São material de consulta, separado das gravações dos treinamentos.</p>
-      </div>
-      <div class="calls" id="playbookCalls"></div>
-      <div class="callout" style="margin-top:22px">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></div>
-        <div>
-          <b>As calls abrem na Salesbud</b>
-          <span>É preciso estar logado na Salesbud da TOTVS para ouvir a gravação. Material de uso interno — não compartilhe fora do time.</span>
-        </div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="site-footer">
@@ -310,6 +295,7 @@ const DAYS = [
   { track:'pre', id:'p1', tab:'10/11 · Jornada de Compra', title:'Decodificando a Jornada de Compra', intro:'Primeiro treinamento da trilha de pré-vendas: a jornada de compra do lead e como o SDR conduz a conversa em cada momento dela. Assista à gravação e acompanhe com o material do treinamento.' },
   { track:'pre', id:'p2', tab:'11/11 · Listening e Aprendizados', title:'Listening de Calls e Aprendizados', intro:'Espaço de listening do treinamento de Jornada de Compra: escuta de calls e os aprendizados sobre a jornada de compra e o frame de qualificação.' },
   { track:'pre', id:'p3', tab:'Role play · Check Up Call', title:'Check Up Call — Role Play', intro:'Estrutura de call para os role plays do time: scorecard por etapa (abertura, objetivo e problema do lead e as demais), com campos para quem interpretou o lead, quem fez o role play e quem mediou. Faça uma cópia da planilha para cada role play.' },
+  { track:'pre', id:'p4', kind:'calls', tab:'Calls de Playbook', title:'Calls de Playbook', intro:'Acervo de calls de referência do time de SDR, para consultar sempre que precisar: escute como a conversa é conduzida e use como modelo nas suas ligações. As calls abrem na Salesbud.' },
 ];
 
 const TYPE = {
@@ -381,9 +367,18 @@ function assetBtn(f){
 function renderDays(){
   const days = DAYS.filter(d => d.track === track);
   document.getElementById('dayTabs').innerHTML = days.map((d,i) =>
-    `<button class="segtab ${i===0?'active':''}" data-day="${d.id}" onclick="showDay('${d.id}')">${esc(d.tab)}</button>`).join('');
+    `<button class="segtab ${i===0?'active':''} ${d.kind === 'calls' ? 'tab-calls' : ''}" data-day="${d.id}" onclick="showDay('${d.id}')">${d.kind === 'calls' ? '🎧 ' : ''}${esc(d.tab)}${d.kind === 'calls' ? ' <span class="new">Novo</span>' : ''}</button>`).join('');
 
   document.getElementById('dayPanels').innerHTML = days.map((d,i) => {
+    if (d.kind === 'calls') return `<div class="daypanel calls-panel ${i===0?'active':''}" data-panel="${d.id}" id="calls-playbook">
+      <h3 class="day-title">${esc(d.title)}</h3>
+      <p class="day-intro">${esc(d.intro)}</p>
+      <div class="calls" id="playbookCalls"></div>
+      <div class="callout" style="margin-top:22px">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></div>
+        <div><b>As calls abrem na Salesbud</b><span>É preciso estar logado na Salesbud da TOTVS para ouvir a gravação. Material de uso interno — não compartilhe fora do time.</span></div>
+      </div>
+    </div>`;
     const files = FILES.filter(f => f.day === d.id).sort((a,b) => ORDER[a.type] - ORDER[b.type]);
     const main = files[0];
     return `<div class="daypanel ${i===0?'active':''}" data-panel="${d.id}">
@@ -410,6 +405,14 @@ function renderDays(){
       </div>
     </div>`;
   }).join('');
+  if (document.getElementById('playbookCalls')) renderPlaybookCalls();
+}
+
+function openPlaybook(){
+  if (track !== 'pre') setTrack('pre', true);
+  showDay('p4');
+  if (location.hash !== '#calls-playbook') history.replaceState(null, '', '#calls-playbook');
+  document.getElementById('dayTabs').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 function showDay(id){
@@ -498,10 +501,10 @@ function renderPlaybookCalls(){
 }
 
 renderCalls();
-renderPlaybookCalls();
 const fromHash = () => { const t = TRACKS.find(x => '#' + x.hash === location.hash); return t ? t.id : null; };
-setTrack(fromHash() || 'vendas', true);
-window.addEventListener('hashchange', () => { const id = fromHash(); if (!id) return; if (id !== track) setTrack(id, true); document.getElementById('trackTabs').scrollIntoView({behavior:'smooth', block:'start'}); });
+if (location.hash === '#calls-playbook') { setTrack('pre', true); showDay('p4'); setTimeout(() => document.getElementById('dayTabs').scrollIntoView({block:'start'}), 50); }
+else setTrack(fromHash() || 'vendas', true);
+window.addEventListener('hashchange', () => { if (location.hash === '#calls-playbook') return openPlaybook(); const id = fromHash(); if (!id) return; if (id !== track) setTrack(id, true); document.getElementById('trackTabs').scrollIntoView({behavior:'smooth', block:'start'}); });
 </script>
 </body>
 </html>
