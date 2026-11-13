@@ -123,6 +123,7 @@
       <a href="#pre-vendas">Pré-vendas</a>
       <a href="#biblioteca">Biblioteca</a>
       <a href="#acervo-calls" data-only="vendas">Acervo de calls</a>
+      <a href="#calls-playbook" data-only="pre">Calls de Playbook</a>
     </nav>
     <div class="nav-actions">
       <span class="user-pill hide-sm" data-user-pill hidden></span>
@@ -220,6 +221,25 @@
       </div>
     </div>
   </section>
+
+  <!-- CALLS DE PLAYBOOK (PRÉ-VENDAS) -->
+  <section class="section" id="calls-playbook" data-only="pre">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow"><span class="dot"></span>Calls de Playbook · Pré-vendas</span>
+        <h2>Calls de referência para consultar</h2>
+        <p class="sub">Acervo de calls selecionadas como referência para o time de SDR: use para estudar a condução da conversa e voltar sempre que precisar. São material de consulta, separado das gravações dos treinamentos.</p>
+      </div>
+      <div class="calls" id="playbookCalls"></div>
+      <div class="callout" style="margin-top:22px">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></div>
+        <div>
+          <b>As calls abrem na Salesbud</b>
+          <span>É preciso estar logado na Salesbud da TOTVS para ouvir a gravação. Material de uso interno — não compartilhe fora do time.</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer">
@@ -259,8 +279,16 @@ const FILES = [
 const TRACKS = [
   { id:'vendas', hash:'vendas', name:'Vendas', role:'Closer', desc:'Workshop de vendas, objeções, proposta, fechamento de portas e COI/ROI',
     src:'Treinamento ICs (Vendas)', srcSub:'Google Drive · pasta compartilhada' },
-  { id:'pre', hash:'pre-vendas', name:'Pré-vendas', role:'SDR', desc:'Jornada de compra, listening de calls e role play',
+  { id:'pre', hash:'pre-vendas', name:'Pré-vendas', role:'SDR', desc:'Jornada de compra, listening, role play e calls de playbook',
     src:'Treinamentos SDR Suri', srcSub:'Arquivos do Drive compartilhados pela RD' },
+];
+
+// Calls de Playbook da trilha de Pré-vendas (Salesbud). Para incluir uma call, adicione um item aqui.
+const PLAYBOOK_CALLS = [
+  { id:'3908724', url:'https://totvs.salesbud.com.br/meetings/3908724' },
+  { id:'3909139', url:'https://totvs.salesbud.com.br/meetings/3909139' },
+  { id:'3836489', url:'https://totvs.salesbud.com.br/meetings/3836489' },
+  { id:'3797277', url:'https://totvs.salesbud.com.br/meetings/3797277' },
 ];
 
 // Acervo de calls RD para listening (separado dos treinamentos)
@@ -457,7 +485,20 @@ function selectPwd(i){
   const s = getSelection(); s.removeAllRanges(); s.addRange(r);
 }
 
+// ── calls de playbook (pré-vendas) ──
+function renderPlaybookCalls(){
+  document.getElementById('playbookCalls').innerHTML = PLAYBOOK_CALLS.map((c,i) => `<div class="card call-card">
+    <div class="top">
+      <div class="ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg></div>
+      <div><span class="stage-lbl">${esc(c.stage || 'Call de referência')} · Salesbud</span><h3>${esc(c.title || 'Call de Playbook ' + String(i + 1).padStart(2, '0'))}</h3></div>
+    </div>
+    <p>${esc(c.desc || 'Reunião #' + c.id + ' na Salesbud.')}</p>
+    <div class="actions"><a class="btn btn-primary btn-sm" href="${esc(c.url)}" target="_blank" rel="noopener">Ouvir na Salesbud ↗</a></div>
+  </div>`).join('');
+}
+
 renderCalls();
+renderPlaybookCalls();
 const fromHash = () => { const t = TRACKS.find(x => '#' + x.hash === location.hash); return t ? t.id : null; };
 setTrack(fromHash() || 'vendas', true);
 window.addEventListener('hashchange', () => { const id = fromHash(); if (!id) return; if (id !== track) setTrack(id, true); document.getElementById('trackTabs').scrollIntoView({behavior:'smooth', block:'start'}); });
