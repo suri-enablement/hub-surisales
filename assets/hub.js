@@ -10,15 +10,15 @@
 
   var Hub = {
     SESSION_KEY: SESSION_KEY,
-    /* Domínios corporativos aceitos no login (Google e senha). */
+    /* Domínios corporativos aceitos no login com Google. */
     ALLOWED_DOMAINS: ['suri.ai', 'chatbotmaker.io', 'rdstation.com'],
-    PASSWORD: 'Suri#Vendas2026!',
     /* OAuth Client ID (público por natureza). A chave secreta NÃO deve ficar neste repositório. */
     GOOGLE_CLIENT_ID: '614405209562-3kdiln3kscc8dr7j1abhbevp3r5rb1ar.apps.googleusercontent.com',
 
+    /* Só vale sessão criada pelo login com Google (sessões antigas de senha caem). */
     isValid: function () {
       var s = read();
-      return !!(s && s.ok && (Date.now() - s.ts) <= THIRTY_DAYS);
+      return !!(s && s.ok && s.via === 'google' && (Date.now() - s.ts) <= THIRTY_DAYS);
     },
 
     email: function () {
@@ -30,13 +30,6 @@
     isAllowedEmail: function (email) {
       var m = /^[^@\s]+@([^@\s]+)$/.exec(String(email || '').trim().toLowerCase());
       return !!m && Hub.ALLOWED_DOMAINS.indexOf(m[1]) !== -1;
-    },
-
-    login: function (email, pass) {
-      email = (email || '').trim().toLowerCase();
-      if (!Hub.isAllowedEmail(email) || pass !== Hub.PASSWORD) return false;
-      try { localStorage.setItem(SESSION_KEY, JSON.stringify({ ok: true, ts: Date.now(), email: email })); } catch (e) {}
-      return true;
     },
 
     /* Login com Google: recebe o ID token (JWT) do Google Identity Services e valida

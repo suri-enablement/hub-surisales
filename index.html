@@ -28,8 +28,6 @@
   .login-card .sub{font-size:13.5px;color:var(--text-secondary);font-weight:300;margin-bottom:24px;line-height:1.55;}
   .login-card .btn{margin-top:6px;}
   .gsi-wrap{display:flex;justify-content:center;min-height:44px;}
-  .login-or{display:flex;align-items:center;gap:12px;margin:20px 0 18px;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-tertiary);}
-  .login-or::before,.login-or::after{content:"";flex:1;height:1px;background:var(--border);}
   .login-foot{margin-top:18px;font-size:11.5px;color:var(--text-tertiary);text-align:center;}
 
   /* ---------- HUB ---------- */
@@ -126,20 +124,9 @@
       <div class="card login-card fade-in">
         <span class="pill pill-accent">Acesso restrito</span>
         <h2>Entrar no HUB</h2>
-        <p class="sub">Entre com sua conta Google <b>@suri.ai</b>, <b>@chatbotmaker.io</b> ou <b>@rdstation.com</b> — ou use o e-mail corporativo e a senha do time — para acessar guias, playbook e materiais de vendas.</p>
+        <p class="sub">Entre com sua conta Google <b>@suri.ai</b>, <b>@chatbotmaker.io</b> ou <b>@rdstation.com</b> para acessar guias, playbook e materiais de vendas.</p>
         <div class="gsi-wrap" id="googleBtn"></div>
         <div class="form-error" id="googleError" style="margin:10px 0 0;text-align:center"></div>
-        <div class="login-or">ou com senha</div>
-        <div class="field">
-          <label for="emailInput">E-mail corporativo</label>
-          <input class="input" id="emailInput" type="email" autocomplete="email" placeholder="voce@rdstation.com"/>
-        </div>
-        <div class="field">
-          <label for="passwordInput">Senha</label>
-          <input class="input" id="passwordInput" type="password" autocomplete="current-password" placeholder="Senha"/>
-        </div>
-        <div class="form-error" id="loginError">E-mail ou senha incorretos. Verifique e tente novamente.</div>
-        <button class="btn btn-primary btn-block" onclick="checkLogin()">Entrar →</button>
         <div class="login-foot">A sessão fica ativa por 30 dias neste navegador.</div>
       </div>
     </div>
@@ -412,27 +399,6 @@ function showLoggedInUI() {
   document.getElementById('logoutBtn').hidden = false;
   Hub.mountUserPill();
 }
-
-function checkLogin() {
-  const emailInput = document.getElementById('emailInput');
-  const passInput = document.getElementById('passwordInput');
-  const error = document.getElementById('loginError');
-  if (Hub.login(emailInput.value, passInput.value)) {
-    emailInput.classList.remove('error');
-    passInput.classList.remove('error');
-    error.classList.remove('visible');
-    showLoggedInUI();
-    window.scrollTo({ top: 0 });
-  } else {
-    emailInput.classList.add('error');
-    passInput.classList.add('error');
-    error.classList.add('visible');
-    passInput.value = '';
-  }
-}
-
-document.getElementById('emailInput').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('passwordInput').focus(); });
-document.getElementById('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkLogin(); });
 
 // Links internos só funcionam com sessão válida
 document.querySelectorAll('#mainContent a[href$=".html"], #hubNav a[href$=".html"]').forEach(a => {
