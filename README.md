@@ -32,7 +32,7 @@ Links diretos para cada trilha: `treinamentos-rd/index.html#vendas` e `treinamen
 
 O login é validado no navegador e a sessão fica salva por 30 dias. Há duas formas de entrar:
 
-- **Entrar com Google** (Google Identity Services): aceita só contas `@suri.ai` com e-mail verificado. Usa apenas o *Client ID* OAuth (`Hub.GOOGLE_CLIENT_ID` em `assets/hub.js`). A chave secreta do cliente **não** é usada e não deve ser commitada. No Google Cloud Console, o domínio do GitHub Pages precisa estar em *Origens JavaScript autorizadas* do cliente OAuth.
+- **Entrar com Google** (Google Identity Services): aceita só contas `@suri.ai`, `@chatbotmaker.io` (domínio principal do workspace da Suri; `@suri.ai` é alias) e `@rdstation.com` com e-mail verificado (lista em `Hub.ALLOWED_DOMAINS`). O cliente OAuth é do Google Cloud da Suri: não precisa de nada no workspace da RD, só que a *Tela de consentimento OAuth* esteja como **Externa** e **Em produção** (com escopos só `openid`/`email`/`profile` não há verificação do Google). Usa apenas o *Client ID* OAuth (`Hub.GOOGLE_CLIENT_ID` em `assets/hub.js`). A chave secreta do cliente **não** é usada e não deve ser commitada. No Google Cloud Console, o domínio do GitHub Pages precisa estar em *Origens JavaScript autorizadas* do cliente OAuth.
 - **E-mail + senha do time** (`assets/hub.js`), como alternativa.
 
 A validação é feita no navegador. Serve para evitar acesso casual — não é proteção real, já que o código é público no repositório.
