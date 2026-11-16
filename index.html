@@ -126,7 +126,7 @@
       <div class="card login-card fade-in">
         <span class="pill pill-accent">Acesso restrito</span>
         <h2>Entrar no HUB</h2>
-        <p class="sub">Entre com sua conta Google <b>@suri.ai</b> ou <b>@rdstation.com</b> — ou use o e-mail corporativo e a senha do time — para acessar guias, playbook e materiais de vendas.</p>
+        <p class="sub">Entre com sua conta Google <b>@suri.ai</b>, <b>@chatbotmaker.io</b> ou <b>@rdstation.com</b> — ou use o e-mail corporativo e a senha do time — para acessar guias, playbook e materiais de vendas.</p>
         <div class="gsi-wrap" id="googleBtn"></div>
         <div class="form-error" id="googleError" style="margin:10px 0 0;text-align:center"></div>
         <div class="login-or">ou com senha</div>
@@ -399,7 +399,7 @@ function onGoogleCredential(resp) {
     return;
   }
   err.textContent = r.reason === 'domain'
-    ? `A conta ${r.email} não é @suri.ai nem @rdstation.com. Entre com seu e-mail corporativo.`
+    ? `A conta ${r.email} não é @suri.ai, @chatbotmaker.io nem @rdstation.com. Entre com seu e-mail corporativo.`
     : 'Não foi possível validar o login com Google. Tente novamente.';
   err.classList.add('visible');
 }
