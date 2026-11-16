@@ -10,7 +10,8 @@
 
   var Hub = {
     SESSION_KEY: SESSION_KEY,
-    ALLOWED_DOMAIN: '@suri.ai',
+    /* Domínios corporativos aceitos no login (Google e senha). */
+    ALLOWED_DOMAINS: ['suri.ai', 'rdstation.com'],
     PASSWORD: 'Suri#Vendas2026!',
     /* OAuth Client ID (público por natureza). A chave secreta NÃO deve ficar neste repositório. */
     GOOGLE_CLIENT_ID: '614405209562-3kdiln3kscc8dr7j1abhbevp3r5rb1ar.apps.googleusercontent.com',
@@ -25,22 +26,30 @@
       return (s && s.email) || '';
     },
 
+    /* true se o e-mail é de um domínio permitido (ex.: nome@rdstation.com) */
+    isAllowedEmail: function (email) {
+      var m = /^[^@\s]+@([^@\s]+)$/.exec(String(email || '').trim().toLowerCase());
+      return !!m && Hub.ALLOWED_DOMAINS.indexOf(m[1]) !== -1;
+    },
+
     login: function (email, pass) {
       email = (email || '').trim().toLowerCase();
-      var okEmail = email.endsWith(Hub.ALLOWED_DOMAIN) && email.length > Hub.ALLOWED_DOMAIN.length;
-      if (!okEmail || pass !== Hub.PASSWORD) return false;
+      if (!Hub.isAllowedEmail(email) || pass !== Hub.PASSWORD) return false;
       try { localStorage.setItem(SESSION_KEY, JSON.stringify({ ok: true, ts: Date.now(), email: email })); } catch (e) {}
       return true;
     },
 
     /* Login com Google: recebe o ID token (JWT) do Google Identity Services e valida
-       audiência, expiração, e-mail verificado e domínio @suri.ai. */
+       audiência, expiração, e-mail verificado e domínio (@suri.ai ou @rdstation.com).
+       Se o token traz `hd` (conta Google Workspace), ele também precisa bater com o domínio. */
     loginWithGoogle: function (credential) {
       var p = decodeJwt(credential);
       if (!p) return { ok: false, reason: 'invalid' };
       var email = String(p.email || '').toLowerCase();
       if (p.aud !== Hub.GOOGLE_CLIENT_ID || !p.exp || p.exp * 1000 < Date.now()) return { ok: false, reason: 'invalid' };
-      if (!p.email_verified || !email.endsWith(Hub.ALLOWED_DOMAIN)) return { ok: false, reason: 'domain', email: email };
+      var domain = email.split('@')[1] || '';
+      var hdOk = !p.hd || String(p.hd).toLowerCase() === domain;
+      if (!p.email_verified || !Hub.isAllowedEmail(email) || !hdOk) return { ok: false, reason: 'domain', email: email };
       try {
         localStorage.setItem(SESSION_KEY, JSON.stringify({
           ok: true, ts: Date.now(), email: email, via: 'google', name: p.name || '', picture: p.picture || ''
